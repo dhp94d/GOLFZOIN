@@ -3,36 +3,36 @@
 		<div>
 			<form @submit.prevent="submitForm" class="form">
 				<div>
-					<label for="nickname">이메일: </label>
-					<input id="nickname" type="text" v-model="email" />
+					<label for="email">이메일: </label>
+					<input id="email" type="text" v-model="email" />
 				</div>
 				<div>
 					<label for="password">비밀번호: </label>
 					<input id="password" type="text" v-model="password" />
 				</div>
 				<div>
-					<label for="password">이름: </label>
-					<input id="password" type="text" v-model="name" />
+					<label for="name">이름: </label>
+					<input id="name" type="text" v-model="name" />
 				</div>
 				<div>
 					<label for="nickname">닉네임: </label>
 					<input id="nickname" type="text" v-model="nickname" />
 				</div>
 				<div>
-					<label for="nickname">생년월일: </label>
-					<input id="nickname" type="text" v-model="birthday" />
+					<label for="birthday">생년월일: </label>
+					<input id="birthday" type="text" v-model="birthday" />
 				</div>
 				<div>
-					<label for="nickname">전화번호: </label>
-					<input id="nickname" type="text" v-model="phoneNumber" />
+					<label for="phoneNumber">전화번호: </label>
+					<input id="phoneNumber" type="text" v-model="phoneNumber" />
 				</div>
 				<div>
-					<label for="nickname">주소: </label>
-					<input id="nickname" type="text" v-model="address" />
+					<label for="address">주소: </label>
+					<input id="address" type="text" v-model="address" />
 				</div>
 				<div>
-					<label for="nickname">타수: </label>
-					<input id="nickname" type="text" v-model="hit" />
+					<label for="hit">타수: </label>
+					<input id="hit" type="text" v-model="hit" />
 				</div>
 
 				<button type="submit" class="btn btn btn-primary">회원 가입</button>
