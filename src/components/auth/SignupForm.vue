@@ -50,7 +50,7 @@
         </div>
         <div>
           <input
-            placeholder="아이디를 입력하세요"
+            placeholder="타수를 입력하세요"
             id="hit"
             type="text"
             v-model="hit"
@@ -59,18 +59,52 @@
 
         <button type="submit" class="btn btn btn-primary">회원 가입</button>
       </form>
-      <p class="log">{{ logMessage }}</p>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
+import axios from 'axios';
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   setup() {
-    const store = useStore();
-    console.log(store);
+    const email = ref('');
+    const password = ref('');
+    const name = ref('');
+    const nickname = ref('');
+    const birthday = ref('');
+    const phoneNumber = ref('');
+    const address = ref('');
+    const hit = ref('');
+    const router = useRouter();
+
+    const submitForm = async () => {
+      const data = {
+        email: email.value,
+        password: password.value,
+        name: name.value,
+        nickname: nickname.value,
+        birthday: birthday.value,
+        phoneNumber: phoneNumber.value,
+        address: address.value,
+        hit: hit.value,
+      };
+      await axios.post('http://localhost:3000/users', data);
+      router.push({
+        name: 'Main',
+      });
+    };
+    return {
+      submitForm,
+      email,
+      password,
+      name,
+      nickname,
+      phoneNumber,
+      address,
+      hit,
+    };
   },
 });
 </script>

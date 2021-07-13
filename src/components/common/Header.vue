@@ -3,13 +3,12 @@
     <div>
       <router-link to="/" class="logo">
         <img src="../../../public/logo.png" />
-        <span v-if="isUserLogin">by {{ username }}</span>
       </router-link>
     </div>
     <div class="user_nav">
       <!-- 1 -->
-      <template v-if="false">
-        <a class="logout-button"> Logout </a>
+      <template v-if="AuthEmail">
+        <a class="logout-button"> by {{ AuthEmail }} </a>
       </template>
       <!-- 2 -->
       <template v-else>
@@ -20,8 +19,22 @@
   </header>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({});
+import { defineComponent, ref } from 'vue';
+import { useAuth } from '@/composable/auth';
+import { useStore } from 'vuex';
+export default defineComponent({
+  setup() {
+    const store = useStore();
+    const { AuthEmail }: any = useAuth();
+    const user = ref(localStorage.getItem('user'));
+    if (user) {
+      store.commit('auth/UPDATE_AUTH_EMAIL', user);
+    }
+    return {
+      AuthEmail,
+    };
+  },
+});
 </script>
 <style scoped>
 .header {

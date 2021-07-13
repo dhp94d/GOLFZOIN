@@ -4,8 +4,8 @@
       <form @submit.prevent="submitForm" class="form">
         <div>
           <input
-            placeholder="아이디를 입력하세요"
-            id="username"
+            placeholder="이메일을 입력하세요"
+            id="email"
             type="text"
             v-model="email"
           />
@@ -18,20 +18,47 @@
             v-model="password"
           />
         </div>
-        <button
-          :disabled="!isUsernameValid || !password"
-          type="submit"
-          class="btn btn btn-primary"
-        >
-          로그인
-        </button>
+        <button type="submit" class="btn btn btn-primary">로그인</button>
       </form>
-      <p class="log">{{ logMessage }}</p>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-export default defineComponent({});
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+  setup() {
+    const router = useRouter();
+    const email = ref('');
+    const password = ref('');
+    const store = useStore();
+
+    const init = () => {
+      email.value = '';
+      password.value = '';
+    };
+
+    const submitForm = async () => {
+      const data = {
+        email: email.value,
+        password: password.value,
+      };
+      const res = await store.dispatch('auth/LOGIN', data);
+      if (res.data) {
+        localStorage.setItem('user', email.value);
+        router.push({
+          name: 'Main',
+        });
+      }
+    };
+    return {
+      email,
+      password,
+      submitForm,
+    };
+  },
+});
 </script>
 <style scoped></style>
