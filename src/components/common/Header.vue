@@ -1,14 +1,14 @@
 <template>
   <header class="header">
     <div>
-      <router-link to="/" class="logo">
+      <router-link to="/">
         <img src="../../../public/logo.png" />
       </router-link>
     </div>
     <div class="user_nav">
       <!-- 1 -->
       <template v-if="AuthEmail">
-        <a class="logout-button"> by {{ AuthEmail }} </a>
+        <i class="fas fa-user fa-2x"></i>
       </template>
       <!-- 2 -->
       <template v-else>
@@ -44,7 +44,7 @@ export default defineComponent({
   height: 7rem;
   justify-content: space-between;
   align-items: center;
-  padding: 0 8rem;
+  padding: 0 22rem 0 22rem;
   margin-bottom: 3rem;
   box-shadow: rgb(0 0 0 / 8%) 0px 1px 12px;
   z-index: 10;
