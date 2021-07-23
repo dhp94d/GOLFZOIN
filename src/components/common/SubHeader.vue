@@ -3,58 +3,37 @@
     <div class="header-logo">
       <HeaderLogo></HeaderLogo>
     </div>
-    <div class="header-nav">
-      <HeaderNavTap></HeaderNavTap>
-      <div class="header-nav-search">
-        <HeaderSearchBar></HeaderSearchBar>
-      </div>
-    </div>
     <div style="width: 10%">
       <HeaderUserIcon></HeaderUserIcon>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useAuth } from '@/composable/auth';
-import { useStore } from 'vuex';
-import HeaderNavTap from '@/components/header/HeaderNavTap.vue';
-import HeaderSearchBar from '@/components/header/HeaderSearchBar.vue';
+import { defineComponent } from 'vue';
 import HeaderUserIcon from '@/components/header/HeaderUserIcon.vue';
 import HeaderLogo from '@/components/header/HeaderLogo.vue';
 
 export default defineComponent({
   components: {
-    HeaderSearchBar,
-    HeaderNavTap,
     HeaderUserIcon,
     HeaderLogo,
   },
-  setup() {
-    const store = useStore();
-    const { AuthEmail }: any = useAuth();
-    const user = ref(localStorage.getItem('user'));
-    if (user) {
-      store.commit('auth/UPDATE_AUTH_EMAIL', user);
-    }
-    return {
-      AuthEmail,
-    };
-  },
+  setup() {},
 });
 </script>
 <style scoped>
 .header {
   display: flex;
   position: relative;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: top;
   min-width: 348px;
   box-sizing: border-box;
-  padding: 3rem 0;
+  padding: 1rem 10rem 5rem 10rem;
   height: 7rem;
   line-height: 1.5rem;
   max-width: 100%;
+  box-shadow: 0px 0px 4px 4px #ebebeb;
   z-index: 1;
 }
 .header-nav {

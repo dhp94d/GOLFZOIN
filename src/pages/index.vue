@@ -1,7 +1,26 @@
-<template><div></div></template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<template>
+  <div>
+    <div class="header-page">
+      <Header></Header>
+    </div>
+  </div>
+</template>
 
-export default defineComponent({});
+<script>
+import Header from '@/components/common/Header.vue';
+
+export default {
+  components: {
+    Header,
+  },
+};
 </script>
-<style></style>
+
+<style scoped>
+.header-page {
+  width: 100%;
+  height: 75rem;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+}
+</style>

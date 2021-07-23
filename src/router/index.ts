@@ -6,7 +6,6 @@ import User from '@/pages/user/index.vue';
 import Calendar from '@/pages/calendar/index.vue';
 import OfflineJoin from '@/pages/offlineJoin/index.vue';
 import OnlineJoin from '@/pages/onlineJoin/index.vue';
-import ChatRoom from '@/components/user/ChatRoom.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
 
 const router = createRouter({
@@ -29,8 +28,8 @@ const router = createRouter({
     },
     {
       path: '/user',
-      name: 'User',
-      component: User,
+      name: 'ChatPage',
+      component: ChatPage,
       children: [
         {
           path: '/user/Chatpage',
@@ -53,15 +52,6 @@ const router = createRouter({
       path: '/onlinejoin',
       name: 'OnlineJoin',
       component: OnlineJoin,
-    },
-    {
-      path: '/user/chatroom',
-      name: 'ChatRoom',
-      component: ChatRoom,
-      props: true,
-      beforeEnter: (to, from, next) => {
-        to.params.name ? next() : next('/');
-      },
     },
   ],
 });
