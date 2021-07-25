@@ -35,7 +35,7 @@ export default defineComponent({
     const { AuthEmail }: any = useAuth();
     const user = ref(localStorage.getItem('user'));
     if (user) {
-      store.commit('auth/UPDATE_AUTH_EMAIL', user);
+      store.commit('auth/SET_TOKEN', user);
     }
     return {
       AuthEmail,
@@ -62,7 +62,6 @@ export default defineComponent({
   flex-shrink: 1;
   flex-grow: 0;
   min-width: 348px;
-  height: 100%;
   text-align: center;
   text-size-adjust: 100%;
   padding-top: 2rem;

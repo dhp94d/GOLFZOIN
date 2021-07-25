@@ -54,7 +54,6 @@ export default defineComponent({
       };
       const res = await store.dispatch('auth/LOGIN', data);
       if (res.data) {
-        localStorage.setItem('user', email.value);
         init();
         router.push({
           name: 'Main',

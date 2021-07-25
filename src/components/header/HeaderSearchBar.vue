@@ -38,7 +38,7 @@ export default defineComponent({
   position: relative;
   width: 100%;
   background-color: #f7f7f7;
-  padding: 1rem;
+  padding-left: 0.3rem;
   align-items: center;
   text-align: left;
 }
@@ -63,23 +63,21 @@ export default defineComponent({
   cursor: pointer;
   display: block;
   border-radius: 2.3rem;
-  min-width: 0px;
   padding: 0.8rem 1rem;
   z-index: 3;
   flex: 1 0 0%;
 }
 .search-bar-tap div {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  padding-bottom: 0.5rem;
 }
 .search-bar-tap input {
   display: block;
   border: 0px;
   width: 100%;
   background: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 18px;
   font-weight: 600;
   color: #222222;

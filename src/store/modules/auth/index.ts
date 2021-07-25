@@ -1,5 +1,12 @@
-import axios from 'axios';
-interface StateDTO {
+import { loginUser } from '@/api/auth';
+import {
+  saveAuthToCookie,
+  saveUserToCookie,
+  getUserFromCookie,
+  deleteCookie,
+} from '@/composable/cookies';
+
+interface userDTO {
   email: string;
   password: string;
   name: string;
@@ -9,69 +16,50 @@ interface StateDTO {
   address: string;
   hit: string;
 }
+interface stateDTO {
+  user: Object;
+  token: string;
+}
 
 export default {
   namespaced: true,
   state: {
-    email: '',
-    password: '',
-    name: '',
-    nickname: '',
-    birthday: '',
-    phoneNumber: '',
-    address: '',
-    hit: '',
-    isLogin: false,
+    user: {},
+    token: '',
+  },
+  getters: {
+    isLoggedIn(state: { token: string }) {
+      return !!state.token || getUserFromCookie();
+    },
+    userToken(state: { token: string }) {
+      return state.token;
+    },
   },
   mutations: {
-    UPDATE_AUTH_ISLOGIN(state: { isLogin: boolean }, payload: boolean) {
-      state.isLogin = payload;
+    SET_USER(state: { user: userDTO }, payload: userDTO) {
+      state.user = payload;
     },
-    UPDATE_AUTH_EMAIL(state: { email: string }, payload: string) {
-      state.email = payload;
+    SET_TOKEN(state: any, payload: any) {
+      state.token = payload;
     },
-    UPDATE_AUTH_PASSWORD(state: { password: string }, payload: string) {
-      state.password = payload;
-    },
-    UPDATE_AUTH_NAME(state: { name: string }, payload: string) {
-      state.name = payload;
-    },
-    UPDATE_AUTH_NICKNAME(state: { nickname: string }, payload: string) {
-      state.nickname = payload;
-    },
-    UPDATE_AUTH_BIRTHDAY(state: { birthday: string }, payload: string) {
-      state.birthday = payload;
-    },
-    UPDATE_AUTH_PHONENUMBER(state: { phoneNumber: string }, payload: string) {
-      state.phoneNumber = payload;
-    },
-    UPDATE_AUTH_ADDRESS(state: { address: string }, payload: string) {
-      state.address = payload;
-    },
-    UPDATE_AUTH_HIT(state: { hit: string }, payload: string) {
-      state.hit = payload;
+    LOGOUT(state: stateDTO) {
+      state.user = {};
+      state.token = '';
+      deleteCookie('til_auth');
+      deleteCookie('til_user');
     },
   },
   actions: {
-    async LOGIN({ commit }: any, data: StateDTO) {
-      const response = await axios.get(
-        `http://localhost:3000/users?email=${data.email}&password=${data.password}`
+    async LOGIN({ commit }: any, data: { email: string; password: string }) {
+      const response = await loginUser(
+        `?email=${data.email}&password=${data.password}`
       );
       const auth = response.data[0];
-      commit('UPDATE_AUTH_EMAIL', auth.email);
-      commit('UPDATE_AUTH_PASSWORD', auth.password);
-      commit('UPDATE_AUTH_NAME', auth.name);
-      commit('UPDATE_AUTH_NICKNAME', auth.nickname);
-      commit('UPDATE_AUTH_BIRTHDAY', auth.birthday);
-      commit('UPDATE_AUTH_PHONENUMBER', auth.phoneNumber);
-      commit('UPDATE_AUTH_ADDRESS', auth.address);
-      commit('UPDATE_AUTH_HIT', auth.hit);
-      commit('UPDATE_AUTH_ISLOGIN', true);
-
-      // saveUserToCookie(response.data.user.username);
-      // saveAuthToCookie(response.data.token);
+      commit('SET_USER', auth);
+      commit('SET_TOKEN', auth.email);
+      saveUserToCookie(auth.email);
+      saveAuthToCookie(auth.email);
       return response;
     },
   },
-  getters: {},
 };
