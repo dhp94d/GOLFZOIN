@@ -18,7 +18,6 @@ export default defineComponent({
   components: { Message },
   setup() {
     const { ChatTarget } = useChat();
-    console.log(ChatTarget);
   },
 });
 </script>

@@ -18,7 +18,7 @@
           ><li>{{ data.title }}</li></router-link
         >
       </div>
-      <li v-show="authIsLoggedIn" @click="authLogout">로그아웃</li>
+      <li v-show="authIsLoggedIn" @click="logout">로그아웃</li>
     </ul>
   </div>
 </template>
@@ -26,6 +26,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useAuth } from '@/composable/auth';
+import { useRouter } from 'vue-router';
+
 const NOTLOGGED = [
   { title: '로그인 하기', link: '/login' },
   { title: '회원가입 하기', link: '/signup' },
@@ -38,10 +40,17 @@ const LOGGED = [
 ];
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const { authIsLoggedIn, authLogout }: any = useAuth();
     const dropdownToggle = ref(false);
     const userToggle = () => {
       dropdownToggle.value = !dropdownToggle.value;
+    };
+    const logout = () => {
+      authLogout();
+      router.push({
+        name: 'Main',
+      });
     };
     return {
       userToggle,
@@ -49,7 +58,7 @@ export default defineComponent({
       LOGGED,
       NOTLOGGED,
       authIsLoggedIn,
-      authLogout,
+      logout,
     };
   },
 });
