@@ -2,7 +2,7 @@
   <div class="dropdown">
     <div class="header-user" @click="userToggle">
       <i class="fa fa-bars fa-1x tap" aria-hidden="true"></i>
-      <template v-if="AuthEmail">
+      <template v-if="authIsLoggedIn">
         <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
       </template>
       <template v-else>
@@ -11,13 +11,14 @@
     </div>
     <ul class="header-user-dropdown" v-show="dropdownToggle">
       <div
-        v-for="(data, index) in AuthEmail === '' ? LOGGED : NOTLOGGED"
+        v-for="(data, index) in authIsLoggedIn ? LOGGED : NOTLOGGED"
         :key="`userTap${index}`"
       >
-        <li>
-          <router-link :to="`${data.link}`">{{ data.title }}</router-link>
-        </li>
+        <router-link :to="`${data.link}`"
+          ><li>{{ data.title }}</li></router-link
+        >
       </div>
+      <li v-show="authIsLoggedIn" @click="authLogout">로그아웃</li>
     </ul>
   </div>
 </template>
@@ -34,23 +35,21 @@ const LOGGED = [
   { title: '알림' },
   { title: '일정관리' },
   { title: '계정' },
-  { title: '로그아웃' },
 ];
 export default defineComponent({
   setup() {
-    const { AuthEmail }: any = useAuth();
+    const { authIsLoggedIn, authLogout }: any = useAuth();
     const dropdownToggle = ref(false);
-
     const userToggle = () => {
       dropdownToggle.value = !dropdownToggle.value;
-      console.log(dropdownToggle.value);
     };
     return {
       userToggle,
       dropdownToggle,
       LOGGED,
       NOTLOGGED,
-      AuthEmail,
+      authIsLoggedIn,
+      authLogout,
     };
   },
 });
@@ -58,16 +57,16 @@ export default defineComponent({
 
 <style>
 .dropdown {
-  position: relative;
-  display: inline-block;
+  position: block;
 }
 
 .header-user {
+  display: block;
+  float: right;
   background-color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: right;
   padding: 0.4rem;
   border: 1px solid black;
   border-radius: 2rem;
@@ -78,30 +77,32 @@ export default defineComponent({
 }
 
 .header-user-dropdown {
-  display: block;
   position: relative;
+  display: inline-block;
+  float: right;
   box-shadow: 0px 0px 1px 1px #ebebeb;
   border-radius: 1rem;
   background-color: white;
-  min-width: 13rem;
-  padding: 1rem 1.3rem 0.5rem 1.3rem;
+  min-width: 9rem;
+  padding: 1rem 1rem 0.5rem 1rem;
   margin-top: 0.4rem;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   list-style: none;
   z-index: 1;
 }
 .header-user-dropdown li {
   padding-bottom: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #797979;
+  text-decoration: none;
 }
 
 .header-user-dropdown a {
   text-decoration: none;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: #797979;
 }
 
-.header-user-dropdown a:hover {
+.header-user-dropdown li:hover {
   color: black;
 }
 </style>
