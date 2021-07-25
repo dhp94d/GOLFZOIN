@@ -1,36 +1,28 @@
 <template>
   <div class="app">
-    <AppHeader></AppHeader>
-    <div class="app-contents">
-      <Navigation></Navigation>
-      <router-view></router-view>
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AppHeader from '@/components/common/Header.vue';
-import Navigation from '@/components/common/Navigation.vue';
 export default defineComponent({
   name: 'App',
-  components: {
-    AppHeader,
-    Navigation,
-  },
 });
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
 #app {
-  font-family: '돋움', dotum, Gulim, Helvetica, Sans-serif;
-  font-size: 12px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
-.app-contents {
-  padding: 1rem 23rem 0 23rem;
+html,
+body {
+  height: 100%;
 }
 </style>

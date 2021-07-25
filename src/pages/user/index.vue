@@ -1,25 +1,25 @@
 <template>
-  <div class="layout">
-    <UserNav></UserNav>
-    <Chat></Chat>
+  <div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import UserNav from '@/components/user/UserNav.vue';
-import Chat from '@/components/user/Chat.vue';
 
+const TAPS = [
+  { title: '팔로우', link: '/user/follow' },
+  { title: '대화', link: '/user/chatpage' },
+  { title: '알림', link: '/user/notification' },
+];
 export default defineComponent({
-  components: {
-    UserNav,
-    Chat,
+  components: {},
+  setup() {
+    return {
+      TAPS,
+    };
   },
 });
 </script>
 
-<style>
-.layout {
-  padding-top: 3rem;
-}
-</style>
+<style></style>
