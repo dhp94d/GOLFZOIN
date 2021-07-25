@@ -1,12 +1,12 @@
 <template>
   <div class="dropdown">
     <div class="header-user" @click="userToggle">
-      <i class="fa fa-bars fa-2x tap" aria-hidden="true"></i>
+      <i class="fa fa-bars fa-1x tap" aria-hidden="true"></i>
       <template v-if="AuthEmail">
-        <i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
       </template>
       <template v-else>
-        <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
       </template>
     </div>
     <ul class="header-user-dropdown" v-show="dropdownToggle">
@@ -25,11 +25,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useAuth } from '@/composable/auth';
-const LOGGED = [
+const NOTLOGGED = [
   { title: '로그인 하기', link: '/login' },
   { title: '회원가입 하기', link: '/signup' },
 ];
-const NOTLOGGED = [
+const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
   { title: '일정관리' },
@@ -66,10 +66,9 @@ export default defineComponent({
   background-color: white;
   cursor: pointer;
   display: flex;
-  width: 100px;
   align-items: center;
   justify-content: right;
-  padding: 0.7rem;
+  padding: 0.4rem;
   border: 1px solid black;
   border-radius: 2rem;
   border-color: rgb(211, 211, 211);

@@ -62,7 +62,6 @@ export default defineComponent({
   flex-shrink: 1;
   flex-grow: 0;
   min-width: 348px;
-  height: 100%;
   text-align: center;
   text-size-adjust: 100%;
   padding-top: 2rem;
