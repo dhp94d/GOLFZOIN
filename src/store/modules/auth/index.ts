@@ -39,7 +39,7 @@ export default {
     SET_USER(state: { user: userDTO }, payload: userDTO) {
       state.user = payload;
     },
-    SET_TOKEN(state: { token: string }, payload: string) {
+    SET_TOKEN(state: any, payload: any) {
       state.token = payload;
     },
     LOGOUT(state: stateDTO) {
@@ -51,12 +51,10 @@ export default {
   },
   actions: {
     async LOGIN({ commit }: any, data: { email: string; password: string }) {
-      console.log(data);
       const response = await loginUser(
-        `users?email=${data.email}&password=${data.password}`
+        `?email=${data.email}&password=${data.password}`
       );
       const auth = response.data[0];
-      console.log(auth);
       commit('SET_USER', auth);
       commit('SET_TOKEN', auth.email);
       saveUserToCookie(auth.email);

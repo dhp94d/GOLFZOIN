@@ -3,11 +3,14 @@ import { useStore } from 'vuex';
 
 export const useAuth = () => {
   const store = useStore();
-  const AuthUser = computed(() => store.state.auth.user);
-  const AuthToken = computed(() => store.state.auth.token);
-
+  const authUser = computed(() => store.state.auth.user);
+  const authToken = computed(() => store.state.auth.token);
+  const authIsLoggedIn = computed(() => store.getters['auth/isLoggedIn']);
+  const authLogout = () => store.commit('auth/LOGOUT');
   return {
-    AuthUser,
-    AuthToken,
+    authUser,
+    authToken,
+    authIsLoggedIn,
+    authLogout,
   };
 };
