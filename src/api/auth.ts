@@ -2,11 +2,11 @@ import { auth } from './index';
 
 // users
 function loginUser(data: any) {
-  return auth.get(data);
+  return auth.get(`users${data}`);
 }
 
 function signupUser(data: any) {
-  return auth.post(data);
+  return auth.post('users', data);
 }
 
 export { loginUser, signupUser };
