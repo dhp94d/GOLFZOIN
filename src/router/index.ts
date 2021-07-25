@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
 import Login from '@/pages/auth/LoginPage.vue';
 import Signup from '@/pages/auth/SignupPage.vue';
-import User from '@/pages/user/index.vue';
 import Calendar from '@/pages/calendar/index.vue';
 import OfflineJoin from '@/pages/offlineJoin/index.vue';
 import OnlineJoin from '@/pages/onlineJoin/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
+import { getUserFromCookie } from '@/composable/cookies';
+import store from '@/store';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -37,11 +38,13 @@ const router = createRouter({
           component: ChatPage,
         },
       ],
+      beforeEnter,
     },
     {
       path: '/calendar',
       name: 'Calendar',
       component: Calendar,
+      beforeEnter,
     },
     {
       path: '/offlinejoin',
@@ -55,4 +58,13 @@ const router = createRouter({
     },
   ],
 });
+function beforeEnter(to: any, from: any, next: any) {
+  if (store.getters['auth/isLoggedIn'] || getUserFromCookie()) {
+    next();
+  } else {
+    alert('sign in please');
+    next('/login');
+  }
+}
+
 export default router;
