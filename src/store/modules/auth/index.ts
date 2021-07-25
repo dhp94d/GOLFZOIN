@@ -29,7 +29,7 @@ export default {
   },
   getters: {
     isLoggedIn(state: { token: string }) {
-      return !!state.token || getUserFromCookie();
+      return !!state.token || !!getUserFromCookie();
     },
     userToken(state: { token: string }) {
       return state.token;
