@@ -63,9 +63,9 @@
   </div>
 </template>
 <script lang="ts">
-import axios from 'axios';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { signupUser } from '@/api/auth';
 
 export default defineComponent({
   setup() {
@@ -90,7 +90,7 @@ export default defineComponent({
         address: address.value,
         hit: hit.value,
       };
-      await axios.post('http://localhost:3000/users', data);
+      await await signupUser(data);
       router.push({
         name: 'Main',
       });
