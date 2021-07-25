@@ -35,7 +35,7 @@ export default defineComponent({
     const { AuthEmail }: any = useAuth();
     const user = ref(localStorage.getItem('user'));
     if (user) {
-      store.commit('auth/UPDATE_AUTH_EMAIL', user);
+      store.commit('auth/SET_TOKEN', user);
     }
     return {
       AuthEmail,
