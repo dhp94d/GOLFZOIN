@@ -87,7 +87,7 @@ export default defineComponent({
 
 .header-user-dropdown {
   position: relative;
-  display: inline-block;
+  display: block;
   float: right;
   box-shadow: 0px 0px 1px 1px #ebebeb;
   border-radius: 1rem;

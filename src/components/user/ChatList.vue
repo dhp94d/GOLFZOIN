@@ -24,8 +24,6 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-import Message from '@/components/user/Message.vue';
-import axios from 'axios';
 import { useStore } from 'vuex';
 export default defineComponent({
   //   components: {
@@ -39,11 +37,12 @@ export default defineComponent({
     const messageData = ref([]);
     const newMessage = ref('');
     const onClick = (id) => {
-      store.commit('chat/UPDATE_CHAT_TARGET', id);
+      store.commit('chat/SET_CHAT_TARGET', id);
       messageData.value = [];
       messageData.value.push(
         ...props.chatData.filter((v) => v.id === id)[0].data
       );
+      store.commit('chat/SET_CHAT_DATA', messageData.value);
     };
     const addMessage = async () => {};
     return {

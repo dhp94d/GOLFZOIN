@@ -9,7 +9,7 @@
         <HeaderSearchBar></HeaderSearchBar>
       </div>
     </div>
-    <div style="width: 10%">
+    <div style="width: 5%">
       <HeaderUserIcon></HeaderUserIcon>
     </div>
   </div>

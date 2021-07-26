@@ -1,6 +1,6 @@
 <template>
   <div class="chat-view">
-    <Message :messages="messageData"></Message>
+    <Message :messages="chatData"></Message>
     <div class="chat-submit">
       <form @submit.prevent="addMessage">
         <input type="text" name="new-message" v-model="newMessage" />
@@ -15,6 +15,9 @@ import { useChat } from '@/composable/chat';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  props: {
+    chatData: Array,
+  },
   components: { Message },
   setup() {
     const { ChatTarget } = useChat();
