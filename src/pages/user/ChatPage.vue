@@ -7,7 +7,7 @@
         <ChatList :chatData="basicData"></ChatList>
       </div>
       <div class="chat-room">
-        <ChatRoom></ChatRoom>
+        <ChatRoom :chatData="chatRoomData"></ChatRoom>
       </div>
       <div class="chat-tool">
         <ChatTool></ChatTool>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import axios from 'axios';
 import SubHeader from '@/components/common/SubHeader.vue';
 import ChatList from '@/components/user/ChatList.vue';
@@ -43,18 +43,21 @@ export default defineComponent({
     const { ChatTarget } = useChat();
     const chatType = ref(true);
     const basicData = ref([]);
-    const joinData = ref([]);
     const getData = async () => {
       const res = await axios.get(`http://localhost:3000/chat`);
-      basicData.value = res.data.filter((v) => v.type === 'basic');
-      joinData.value = res.data.filter((v) => v.type !== 'basic');
+      basicData.value = res.data;
     };
+    const chatRoomData = computed(
+      () =>
+        basicData.value.filter((v) => v.id === store.state.chat.target)[0]?.data
+    );
+    console.log(chatRoomData);
     getData();
     return {
       chatType,
       basicData,
-      joinData,
       ChatTarget,
+      chatRoomData,
     };
   },
 });
