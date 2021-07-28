@@ -6,6 +6,12 @@
         <Banner></Banner>
       </div>
     </div>
+    <div>
+      <div>온라인 조인 탭</div>
+    </div>
+    <div>
+      <div>오프라인 조인 탭</div>
+    </div>
   </div>
 </template>
 
@@ -30,8 +36,6 @@ export default {
 }
 .Banner-contianer {
   display: block;
-  position: relative;
-  bottom: 0;
-  background-color: white;
+  margin-top: 8rem;
 }
 </style>
