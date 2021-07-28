@@ -5,9 +5,7 @@
     </div>
     <div class="header-nav">
       <HeaderNavTap></HeaderNavTap>
-      <div class="header-nav-search">
-        <HeaderSearchBar></HeaderSearchBar>
-      </div>
+      <HeaderSearchBar></HeaderSearchBar>
     </div>
     <div style="width: 5%">
       <HeaderUserIcon></HeaderUserIcon>
@@ -52,7 +50,6 @@ export default defineComponent({
   min-width: 348px;
   box-sizing: border-box;
   padding: 3rem 0;
-  height: 7rem;
   line-height: 1.5rem;
   max-width: 100%;
   z-index: 1;

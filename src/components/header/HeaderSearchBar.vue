@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <div class="search-bar">
-      <div class="search-bar-tap">
-        <div>위치</div>
-        <input placeholder="어디로 치러가세요?" />
-      </div>
-      <div class="search-bar-tap">
-        <div>날짜</div>
-        <input placeholder="날짜 입력" disabled="ture" />
-      </div>
-      <div class="search-bar-tap">
-        <div>인원</div>
-        <input placeholder="인원 추가" disabled="ture" />
-      </div>
-      <div class="search-button">
-        <i class="fa fa-search fa-2x search-icon" aria-hidden="true"></i>
-      </div>
+  <div class="search-bar">
+    <div class="search-bar-tap">
+      <div>위치</div>
+      <input placeholder="어디로 치러가세요?" />
+    </div>
+    <div class="search-bar-tap">
+      <div>날짜</div>
+      <input placeholder="날짜 입력" disabled="ture" />
+    </div>
+    <div class="search-bar-tap">
+      <div>인원</div>
+      <input placeholder="인원 추가" disabled="ture" />
+    </div>
+    <div class="search-button">
+      <i class="fa fa-search fa-2x search-icon" aria-hidden="true"></i>
     </div>
   </div>
 </template>
@@ -31,10 +29,10 @@ export default defineComponent({
 
 <style scoped>
 .search-bar {
+  display: flex;
   border: 1px solid #dddddd;
   border-radius: 32px;
   color: #222222;
-  display: flex;
   position: relative;
   width: 100%;
   background-color: #f7f7f7;
