@@ -45,11 +45,10 @@ export default defineComponent({
 .header {
   display: flex;
   position: relative;
-  justify-content: space-around;
-  align-items: top;
+  justify-content: space-between;
   min-width: 348px;
   box-sizing: border-box;
-  padding: 3rem 0;
+  padding: 2rem 10rem 3rem 10rem;
   line-height: 1.5rem;
   max-width: 100%;
   z-index: 1;
