@@ -29,7 +29,7 @@ export default defineComponent({
   align-items: top;
   min-width: 348px;
   box-sizing: border-box;
-  padding: 1rem 10rem 5rem 10rem;
+  padding: 1rem 20rem 5rem 20rem;
   height: 7rem;
   line-height: 1.5rem;
   max-width: 100%;
