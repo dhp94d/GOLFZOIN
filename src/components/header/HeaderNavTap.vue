@@ -1,8 +1,12 @@
 <template>
   <div class="header-nav-tap">
-    <span>온라인 조인</span>
-    <span>오프라인 조인</span>
-    <router-link to="/">
+    <router-link to="/join/onlinejoin">
+      <span>온라인 조인</span>
+    </router-link>
+    <router-link to="/join/offlinejoin">
+      <span>오프라인 조인</span>
+    </router-link>
+    <router-link to="/join/makejoin">
       <span>조인 만들기</span>
     </router-link>
   </div>
