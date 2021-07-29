@@ -19,12 +19,20 @@
 import Header from '@/components/common/Header.vue';
 import Banner from '@/components/main/Banner.vue';
 import Join from '@/components/join/Join.vue';
+import { useStore } from 'vuex';
+import { onBeforeMount } from 'vue';
 
 export default {
   components: {
     Header,
     Banner,
     Join,
+  },
+  setup() {
+    const store = useStore();
+    onBeforeMount(async () => {
+      await store.dispatch('join/GETJOIN');
+    });
   },
 };
 </script>
