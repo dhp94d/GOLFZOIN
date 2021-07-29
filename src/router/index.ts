@@ -3,9 +3,11 @@ import MainPage from '@/pages/index.vue';
 import Login from '@/pages/auth/LoginPage.vue';
 import Signup from '@/pages/auth/SignupPage.vue';
 import Calendar from '@/pages/calendar/index.vue';
-import OfflineJoin from '@/pages/offlineJoin/index.vue';
-import OnlineJoin from '@/pages/onlineJoin/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
+import JoinPage from '@/pages/join/index.vue';
+import MakeJoinPage from '@/pages/join/MakeJoinPage.vue';
+import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
+import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -47,14 +49,27 @@ const router = createRouter({
       beforeEnter,
     },
     {
-      path: '/offlinejoin',
-      name: 'OfflineJoin',
-      component: OfflineJoin,
-    },
-    {
-      path: '/onlinejoin',
-      name: 'OnlineJoin',
-      component: OnlineJoin,
+      path: '/join',
+      name: 'Join',
+      component: JoinPage,
+      children: [
+        {
+          path: '/join/makejoin',
+          name: 'MakeJoinPage',
+          component: MakeJoinPage,
+        },
+        {
+          path: '/join/onlineJoin',
+          name: 'OnlineJoin',
+          component: OnlineJoinPage,
+        },
+        {
+          path: '/join/offlineJoin',
+          name: 'OfflineJoin',
+          component: OfflineJoinPage,
+        },
+      ],
+      beforeEnter,
     },
   ],
 });
