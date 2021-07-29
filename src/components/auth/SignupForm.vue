@@ -90,7 +90,7 @@ export default defineComponent({
         address: address.value,
         hit: hit.value,
       };
-      await await signupUser(data);
+      await signupUser(data);
       router.push({
         name: 'Main',
       });
