@@ -2,21 +2,16 @@
   <div class="banner">
     <div class="banner-title">
       <div>프로골퍼 / 인플루언서들과 함께하는 온라인 조인</div>
-      <button>지금 둘러보기</button>
+      <router-link to="/join/makejoin">
+        <button>지금 둘러보기</button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity';
-export default {
-  setup() {
-    const index = ref(5);
-    return {
-      index,
-    };
-  },
-};
+import { ref } from 'vue';
+export default {};
 </script>
 
 <style scoped>

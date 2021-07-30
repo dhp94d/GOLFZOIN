@@ -1,13 +1,13 @@
 <template>
   <div class="join-item-container">
-    <h4>{{ title }}</h4>
-    <div>
+    <h4 style="padding-bottom: 1rem">{{ title }}</h4>
+    <div class="clock">
       <div>{{ date }}</div>
       <div>{{ time }}</div>
     </div>
     <img src="http://placehold.it/300x200" />
     <div class="join-detail">
-      {{ limitDetailText }}
+      {{ detailText }}
     </div>
     <img src="" alt="" />
     <div class="join-item-button-container">
@@ -52,5 +52,9 @@ export default {
   position: relative;
   justify-content: space-around;
   align-items: center;
+}
+.clock {
+  display: flex;
+  float: right;
 }
 </style>
