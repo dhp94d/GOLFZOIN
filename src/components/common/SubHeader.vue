@@ -3,7 +3,7 @@
     <div class="header-logo">
       <HeaderLogo></HeaderLogo>
     </div>
-    <div style="width: 10%">
+    <div>
       <HeaderUserIcon></HeaderUserIcon>
     </div>
   </div>
