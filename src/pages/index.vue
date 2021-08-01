@@ -20,7 +20,7 @@ import Header from '@/components/common/Header.vue';
 import Banner from '@/components/main/Banner.vue';
 import Join from '@/components/join/Join.vue';
 import { useStore } from 'vuex';
-import { onBeforeMount } from 'vue';
+import { onMounted } from 'vue';
 
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    onBeforeMount(async () => {
+    onMounted(async () => {
       await store.dispatch('join/GETJOIN');
     });
   },
