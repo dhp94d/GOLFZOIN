@@ -3,6 +3,7 @@
     <JoinLen></JoinLen>
     <div class="join-page-title">온라인 조인</div>
     <JoinFilter class="join-page-filter"></JoinFilter>
+    <JoinMap></JoinMap>
     <JoinItemList></JoinItemList>
   </div>
 </template>
@@ -10,12 +11,14 @@
 import JoinLen from '@/components/join/JoinLen.vue';
 import JoinFilter from '@/components/join/JoinFilter.vue';
 import JoinItemList from '@/components/join/JoinItemList.vue';
+import JoinMap from '@/components/join/JoinMap.vue';
 
 export default {
   components: {
     JoinLen,
     JoinFilter,
     JoinItemList,
+    JoinMap,
   },
   setup() {},
 };
