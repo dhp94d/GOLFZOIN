@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <DropDown>
+  <div style="position: relative">
+    <DropDown :marginTop="0.3">
       <template v-slot:header>
         <div class="header-user">
           <i class="fa fa-bars fa-1x tap" aria-hidden="true"></i>
@@ -42,7 +42,7 @@ const NOTLOGGED = [
 const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
-  { title: '일정관리' },
+  { title: '일정관리', link: '/calendar' },
   { title: '계정' },
 ];
 export default defineComponent({
@@ -71,6 +71,7 @@ export default defineComponent({
 <style>
 .header-user {
   position: relative;
+  width: 50%;
   background-color: white;
   cursor: pointer;
   display: flex;

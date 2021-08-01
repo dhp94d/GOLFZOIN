@@ -7,7 +7,7 @@
       <HeaderNavTap></HeaderNavTap>
       <HeaderSearchBar></HeaderSearchBar>
     </div>
-    <div>
+    <div style="width: 8%">
       <HeaderUserIcon></HeaderUserIcon>
     </div>
   </div>
