@@ -12,6 +12,9 @@
 <script>
 import { ref } from '@vue/reactivity';
 export default {
+  props: {
+    marginTop: String,
+  },
   setup() {
     const toggle = ref(false);
 
@@ -34,7 +37,7 @@ export default {
 }
 .dropdown-body {
   position: absolute;
-  margin-top: 0.3rem;
+  margin-top: v-bind(marginTop + 'rem');
   padding: 0.5rem;
   border-radius: 1rem;
   align-content: center;
