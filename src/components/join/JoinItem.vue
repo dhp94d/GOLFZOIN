@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import { useJoin } from '@/composable/join';
-import { ref } from '@vue/reactivity';
 export default {
   props: {
     title: String,
