@@ -2,7 +2,7 @@
   <div class="banner">
     <div class="banner-title">
       <div>프로골퍼 / 인플루언서들과 함께하는 온라인 조인</div>
-      <router-link to="/join/makejoin">
+      <router-link to="/join/onlinejoin">
         <button>지금 둘러보기</button>
       </router-link>
     </div>
