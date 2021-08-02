@@ -7,7 +7,6 @@ import { useJoin } from '@/composable/join';
 export default {
   setup() {
     const { onlineJoinLen, offlineJoinLen } = useJoin();
-    console.log(onlineJoinLen, offlineJoinLen);
     return {
       onlineJoinLen,
       offlineJoinLen,

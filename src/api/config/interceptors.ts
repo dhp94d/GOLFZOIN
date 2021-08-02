@@ -2,7 +2,6 @@ import { useStore } from 'vuex';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 function setInterceptors(instance: any) {
-  console.log('너가 문제?');
   const store = useStore();
   instance.interceptors.request.use(
     (config: any) => {

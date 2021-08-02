@@ -5,12 +5,27 @@
       <input placeholder="어디로 치러가세요?" />
     </div>
     <div class="search-bar-tap">
-      <div>날짜</div>
-      <input placeholder="날짜 입력" disabled="ture" />
+      <Dropdown :marginTop="1.2">
+        <template v-slot:header>
+          <div>날짜</div>
+          <input placeholder="날짜 입력" disabled="ture" />
+        </template>
+        <template v-slot:body>
+          <div>왜 안떠요</div>
+          <Calendar></Calendar>
+        </template>
+      </Dropdown>
     </div>
     <div class="search-bar-tap">
-      <div>인원</div>
-      <input placeholder="인원 추가" disabled="ture" />
+      <Dropdown :marginTop="1.2">
+        <template v-slot:header>
+          <div>인원</div>
+          <input placeholder="인원을 입력하세요" disabled="ture" />
+        </template>
+        <template v-slot:body>
+          <NumberUpDown></NumberUpDown>
+        </template>
+      </Dropdown>
     </div>
     <div class="search-button">
       <i class="fa fa-search fa-2x search-icon" aria-hidden="true"></i>
@@ -20,7 +35,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Dropdown from '@/components/common/DropDown.vue';
+import NumberUpDown from '@/components/common/NumberUpDown.vue';
+import Calendar from '@/components/common/Calendar.vue';
 export default defineComponent({
+  components: {
+    Dropdown,
+    NumberUpDown,
+    Calendar,
+  },
   props: {
     taps: Array,
   },
