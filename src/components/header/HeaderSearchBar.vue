@@ -1,26 +1,33 @@
 <template>
   <div class="search-bar">
     <div class="search-bar-tap">
-      <div>위치</div>
-      <input placeholder="어디로 치러가세요?" />
-    </div>
-    <div class="search-bar-tap">
       <Dropdown :marginTop="1.2">
         <template v-slot:header>
-          <div>날짜</div>
-          <input placeholder="날짜 입력" disabled="ture" />
+          <div>위치</div>
+          <input
+            placeholder="어디로 치러가세요?"
+            disabled="false"
+            :value="SearchAddress === '' ? '' : '입력 되었습니다.'"
+          />
         </template>
         <template v-slot:body>
-          <div>왜 안떠요</div>
-          <Calendar></Calendar>
+          <FindAddress></FindAddress>
         </template>
       </Dropdown>
+    </div>
+    <div class="search-bar-tap">
+      <div>날짜</div>
+      <HeaderCalendar></HeaderCalendar>
     </div>
     <div class="search-bar-tap">
       <Dropdown :marginTop="1.2">
         <template v-slot:header>
           <div>인원</div>
-          <input placeholder="인원을 입력하세요" disabled="ture" />
+          <input
+            placeholder="인원을 입력하세요"
+            disabled="ture"
+            :value="SearchPNumber === 0 ? '' : SearchPNumber"
+          />
         </template>
         <template v-slot:body>
           <NumberUpDown></NumberUpDown>
@@ -37,15 +44,27 @@
 import { defineComponent } from 'vue';
 import Dropdown from '@/components/common/DropDown.vue';
 import NumberUpDown from '@/components/common/NumberUpDown.vue';
-import Calendar from '@/components/common/Calendar.vue';
+import HeaderCalendar from '@/components/header/HeaderCalendar.vue';
+import FindAddress from '@/components/common/FindAddress.vue';
+import { useAddress } from '@/composable/address';
+
 export default defineComponent({
   components: {
     Dropdown,
     NumberUpDown,
-    Calendar,
+    HeaderCalendar,
+    FindAddress,
   },
   props: {
     taps: Array,
+  },
+  setup() {
+    const { SearchDate, SearchAddress, SearchPNumber } = useAddress();
+    return {
+      SearchDate,
+      SearchAddress,
+      SearchPNumber,
+    };
   },
 });
 </script>
@@ -73,7 +92,7 @@ export default defineComponent({
   margin-right: 1rem;
   cursor: pointer;
   background-color: #ff385c;
-  z-index: 3;
+  z-index: 5;
 }
 
 .search-icon {
