@@ -5,6 +5,7 @@
     </div>
     <div class="dropdown-body" v-show="toggle">
       <slot name="body"></slot>
+      <div class="dropdown-background" @click="toggleButton">하이</div>
     </div>
   </div>
 </template>
@@ -42,7 +43,15 @@ export default {
   border-radius: 1rem;
   align-content: center;
   background: white;
-
   box-shadow: 0px 0px 1px 1px #ebebeb;
+}
+.dropdown-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  z-index: -1;
 }
 </style>
