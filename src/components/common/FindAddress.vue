@@ -13,22 +13,38 @@ export default {
     const store = useStore();
     const latitude = ref('');
     const longitude = ref('');
+    const addressName = ref('');
+    const tempName = ref('');
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    const callback = (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        tempName.value = result[0].address.address_name;
+      }
+    };
+
+    const getAddressName = async (lng, lat) => {
+      let coord = new kakao.maps.LatLng(lng, lat);
+      await geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    };
 
     const addressMutation = () => {
       store.commit('search/SET_SEARCH_ADDRESS', {
         latitude: latitude.value,
         longitude: longitude.value,
+        addressName: addressName.value,
       });
     };
     const findAddress = () => {
       new daum.Postcode({
         oncomplete: function (data) {
-          console.log(data);
           const geocoder = new kakao.maps.services.Geocoder();
           geocoder.addressSearch(data.roadAddress, function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
-              latitude.value = result[0].x;
-              longitude.value = result[0].y;
+              latitude.value = result[0].y;
+              longitude.value = result[0].x;
+              getAddressName(result[0].y, result[0].x);
+              addressName.value = tempName.value;
             }
             addressMutation();
           });
@@ -42,6 +58,8 @@ export default {
           function (position) {
             latitude.value = position.coords.latitude;
             longitude.value = position.coords.longitude;
+            getAddressName(position.coords.longitude, position.coords.latitude);
+            addressName.value = tempName.value;
             addressMutation();
           },
           function (error) {
@@ -57,11 +75,14 @@ export default {
         alert('GPS를 지원하지 않습니다');
       }
     };
+
     return {
       findAddress,
       getLocation,
       latitude,
       longitude,
+      addressName,
+      tempName,
     };
   },
 };
