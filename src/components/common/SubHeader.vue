@@ -1,9 +1,10 @@
 <template>
-  <div class="header">
-    <div class="header-logo">
-      <HeaderLogo></HeaderLogo>
+  <div class="header-fixed-container">
+    <HeaderLogo></HeaderLogo>
+    <div class="fixed-toggle" style="padding-top: 1rem">
+      <HeaderNavTap :navColor="'#4b4b4b'" :hoverColor="'black'"></HeaderNavTap>
     </div>
-    <div>
+    <div class="icon-position">
       <HeaderUserIcon></HeaderUserIcon>
     </div>
   </div>
@@ -12,39 +13,45 @@
 import { defineComponent } from 'vue';
 import HeaderUserIcon from '@/components/header/HeaderUserIcon.vue';
 import HeaderLogo from '@/components/header/HeaderLogo.vue';
+import HeaderNavTap from '@/components/header/HeaderNavTap.vue';
 
 export default defineComponent({
   components: {
     HeaderUserIcon,
     HeaderLogo,
+    HeaderNavTap,
   },
   setup() {},
 });
 </script>
 <style scoped>
-.header {
+.header-fixed-container {
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
-  align-items: top;
-  min-width: 348px;
-  box-sizing: border-box;
-  padding: 1rem 20rem 5rem 20rem;
-  height: 7rem;
-  line-height: 1.5rem;
-  max-width: 100%;
-  box-shadow: 0px 0px 4px 4px #ebebeb;
-  z-index: 1;
+  background-color: white;
+  width: 100%;
+  padding: 1rem 10rem;
+  border-bottom: 1px solid black;
+  margin-bottom: 0.5rem;
+  z-index: 10;
 }
-.header-nav {
-  display: block;
-  flex-shrink: 1;
-  flex-grow: 0;
-  min-width: 348px;
-  height: 100%;
-  text-align: center;
-  text-size-adjust: 100%;
-  padding-top: 2rem;
-  width: 35%;
+@media (max-width: 1400px) {
+  .header-fixed-container {
+    display: flex;
+    position: static;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .fixed-toggle {
+    display: none;
+  }
+  .icon-position {
+    position: absolute;
+    margin-right: 1rem;
+    right: 0;
+  }
 }
 </style>
