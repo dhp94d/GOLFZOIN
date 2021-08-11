@@ -33,13 +33,12 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 .chat-submit {
-  display: block;
-  position: absolute;
-  text-align: center;
-  width: 60%;
-  padding-bottom: 3rem;
+  position: fixed;
+  width: 55%;
+  padding-bottom: 1rem;
   bottom: 0;
 }
 
