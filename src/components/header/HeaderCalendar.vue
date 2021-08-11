@@ -1,9 +1,5 @@
 <template>
-  <Datepicker
-    style="border: none; background-color: #f7f7f7"
-    v-model="picked"
-    :lower-limit="lowerLimit"
-  />
+  <Datepicker class="date-picker" v-model="picked" :lower-limit="lowerLimit" />
 </template>
 
 <script>
@@ -29,4 +25,9 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style lang="scss" scopre>
+.date-picker {
+  border: none;
+  background-color: #f7f7f7;
+}
+</style>
