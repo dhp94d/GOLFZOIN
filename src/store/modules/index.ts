@@ -1,10 +1,10 @@
 import auth from './auth';
 import chat from './chat';
-import join from './join';
 import search from './search';
+import join from './join';
 export default {
   auth,
   chat,
-  join,
   search,
+  join,
 };
