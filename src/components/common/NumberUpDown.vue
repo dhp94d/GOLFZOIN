@@ -1,13 +1,44 @@
 <template>
   <div class="number-updown-container">
-    <div class="number-updown-mutation">&lt;</div>
-    <input class="number-updown-view" type="text" />
-    <div class="number-updown-mutation">&gt;</div>
+    <div class="number-updown-mutation" @click="lClick">&lt;</div>
+    <input
+      class="number-updown-view"
+      type="text"
+      :value="number"
+      maxlength="500"
+    />
+    <div class="number-updown-mutation" @click="RClick">&gt;</div>
   </div>
 </template>
 
 <script>
-export default {};
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+export default {
+  setup() {
+    const number = ref(0);
+    const store = useStore();
+
+    const addressMutation = () => {
+      store.commit('search/SET_SEARCH_PNUMBER', number.value);
+    };
+    const lClick = () => {
+      if (number.value <= 0) return;
+      number.value -= 1;
+      addressMutation();
+    };
+    const RClick = () => {
+      if (number.value > 500) return;
+      number.value += 1;
+      addressMutation();
+    };
+    return {
+      number,
+      lClick,
+      RClick,
+    };
+  },
+};
 </script>
 
 <style scoped>

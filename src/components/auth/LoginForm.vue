@@ -1,23 +1,21 @@
 <template>
-  <div class="contents">
-    <div>
-      <form @submit.prevent="submitForm" class="form">
-        <div>
-          <input
-            placeholder="이메일을 입력하세요"
-            id="email"
-            type="text"
-            v-model="email"
-          />
-        </div>
-        <div>
-          <input
-            placeholder="비밀번호를 입력하세요"
-            id="password"
-            type="text"
-            v-model="password"
-          />
-        </div>
+  <div>
+    <form @submit.prevent="submitForm" class="form">
+      <div>
+        <input placeholder="이메일을 입력하세요" type="text" v-model="email" />
+      </div>
+      <div>
+        <input
+          placeholder="비밀번호를 입력하세요"
+          type="password"
+          v-model="password"
+        />
+      </div>
+      <div style="color: red" v-if="!isUsernameValid || !password">
+        {{ errorMessage() }}
+      </div>
+      <div else>{{ '    ' }}</div>
+      <div class="auth-button">
         <button
           :disabled="!isUsernameValid || !password"
           type="submit"
@@ -25,8 +23,8 @@
         >
           로그인
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </template>
 <script lang="ts">
@@ -60,6 +58,15 @@ export default defineComponent({
         });
       }
     };
+    const errorMessage = () => {
+      let message = [];
+      if (!email.value) message.push('1) 이메일을 입력하세요. ');
+      if (email.value && !isUsernameValid.value) {
+        message.push('1) 이메일 형식이 맞지않습니다. ex) a@a.com ');
+      }
+      if (!password.value) message.push('비밀번호를 입력하세요. ');
+      return message.join('2) ');
+    };
 
     const isUsernameValid = computed(() => validateEmail(email.value));
 
@@ -68,6 +75,7 @@ export default defineComponent({
       password,
       submitForm,
       isUsernameValid,
+      errorMessage,
     };
   },
 });
@@ -83,8 +91,10 @@ export default defineComponent({
 .auth-page {
   padding: 10px 20px;
   border: 0.5px solid rgb(161, 161, 161);
-  z-index: 2;
-  margin: 10rem 20rem;
+  top: 50%;
+  height: 50%;
+  width: 50%;
+  margin: auto;
 }
 .form div {
   justify-content: flex-start;
@@ -111,5 +121,15 @@ export default defineComponent({
   cursor: pointer;
   color: white;
   height: 3rem;
+}
+.auth-button {
+  text-align: center;
+}
+
+@media (max-width: 1400px) {
+  .auth-page {
+    margin: 0;
+    width: 100%;
+  }
 }
 </style>

@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 export default {};
 </script>
 
@@ -20,8 +19,8 @@ export default {};
   position: relative;
   justify-content: space-between;
   align-content: center;
-  font-size: 4rem;
-  padding: 0 10rem 3rem 10rem;
+  font-size: 3rem;
+  padding: 10rem 10rem 1rem 10rem;
 }
 .banner-title {
   display: block;
@@ -29,8 +28,13 @@ export default {};
   color: #e0e0e0;
 }
 .banner-title button {
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0.5rem;
   border-radius: 1rem;
+}
+@media (max-width: 1400px) {
+  .banner {
+    display: none;
+  }
 }
 </style>

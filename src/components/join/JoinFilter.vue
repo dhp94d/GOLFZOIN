@@ -1,9 +1,9 @@
 <template>
   <div class="join-filter-container">
-    <button class="btn btn-default" type="submit">전체</button>
-    <button class="btn btn-default" type="submit">인플루언서</button>
-    <button class="btn btn-default" type="submit">날짜</button>
-    <button class="btn btn-default" type="submit">인원</button>
+    <button>전체</button>
+    <button>인플루언서</button>
+    <button>날짜</button>
+    <button>인원</button>
   </div>
 </template>
 
@@ -11,16 +11,22 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .join-filter-container {
   display: flex;
 }
 .join-filter-container button {
   font-size: 0.9rem;
   align-items: center;
+  background-color: white;
   border: 1px solid gray;
   border-radius: 2rem;
   padding: 0.4rem 0.6rem;
   margin-right: 0.5rem;
+  &:active {
+    box-shadow: 1px 1px 0 black;
+    position: relative;
+    top: 2px;
+  }
 }
 </style>

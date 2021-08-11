@@ -9,9 +9,10 @@ import {
 interface userDTO {
   email: string;
   password: string;
-  name: string;
   nickname: string;
   birthday: string;
+  gender: string;
+  profile: string;
   phoneNumber: string;
   address: string;
   hit: string;
@@ -37,9 +38,9 @@ export default {
   },
   mutations: {
     SET_USER(state: { user: userDTO }, payload: userDTO) {
-      state.user = payload;
+      state.user = { ...payload };
     },
-    SET_TOKEN(state: any, payload: any) {
+    SET_TOKEN(state: { token: string }, payload: string) {
       state.token = payload;
     },
     LOGOUT(state: stateDTO) {
@@ -55,6 +56,7 @@ export default {
         `?email=${data.email}&password=${data.password}`
       );
       const auth = response.data[0];
+      console.log(auth);
       commit('SET_USER', auth);
       commit('SET_TOKEN', auth.email);
       saveUserToCookie(auth.email);

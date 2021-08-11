@@ -1,6 +1,6 @@
 <template>
-  <div style="position: relative">
-    <DropDown :marginTop="0.3">
+  <div class="header-icon">
+    <DropDown :marginTop="'0.3'">
       <template v-slot:header>
         <div class="header-user">
           <i class="fa fa-bars fa-1x tap" aria-hidden="true"></i>
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { useAuth } from '@/composable/auth';
 import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
@@ -43,7 +43,7 @@ const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
   { title: '일정관리', link: '/calendar' },
-  { title: '계정' },
+  { title: '계정', link: '/info' },
 ];
 export default defineComponent({
   components: {
@@ -68,43 +68,49 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
+.header-icon {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  bottom: 0;
+  z-index: 1;
+}
 .header-user {
-  position: relative;
-  width: 50%;
   background-color: white;
   cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 0.4rem;
+  justify-content: center;
+  padding: 0.5rem;
   border-radius: 2rem;
+  border: 1px solid black;
   border-color: rgb(211, 211, 211);
-}
-.header-user .tap {
-  padding-right: 0.5rem;
+  .tap {
+    padding-right: 0.5rem;
+  }
 }
 
 .header-user-dropdown {
-  font-size: 1.2rem;
+  font-size: 1rem;
   list-style: none;
-  padding: 0.5rem 0.5rem 0 0.5rem;
+  padding: 0 0.2rem;
   margin: 0;
-  z-index: 1;
-}
-.header-user-dropdown li {
-  padding-bottom: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  color: #797979;
-  text-decoration: none;
-}
-
-.header-user-dropdown a {
-  text-decoration: none;
-}
-
-.header-user-dropdown li:hover {
-  color: black;
+  a {
+    text-decoration: none;
+    color: black;
+    &:hover {
+      cursor: pointer;
+      font-weight: 800;
+      color: black;
+    }
+  }
+  li {
+    &:hover {
+      cursor: pointer;
+      font-weight: 800;
+      color: black;
+    }
+  }
 }
 </style>

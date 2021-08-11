@@ -13,32 +13,35 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    navColor: String,
+    hoverColor: String,
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header-nav {
-  display: block;
-  flex-shrink: 1;
-  flex-grow: 0;
-  min-width: 348px;
   height: 100%;
-  text-align: center;
   text-size-adjust: 100%;
-  padding-top: 2rem;
   width: 35%;
 }
 .header-nav-tap {
-  padding-bottom: 3rem;
-}
-.header-nav-tap span {
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.3rem;
-  padding: 0.8rem 1.2rem;
-}
-.header-nav a {
-  text-decoration: none;
+  padding-bottom: 1rem;
+  span {
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0 1.2rem;
+    color: v-bind(navColor);
+    &:hover {
+      color: v-bind(hoverColor);
+    }
+  }
+  a {
+    text-decoration: none;
+  }
 }
 </style>

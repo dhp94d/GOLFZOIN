@@ -1,26 +1,37 @@
 <template>
   <div class="search-bar">
     <div class="search-bar-tap">
-      <div>위치</div>
-      <input placeholder="어디로 치러가세요?" />
-    </div>
-    <div class="search-bar-tap">
-      <Dropdown :marginTop="1.2">
+      <Dropdown :marginTop="'1.2'">
         <template v-slot:header>
-          <div>날짜</div>
-          <input placeholder="날짜 입력" disabled="ture" />
+          <div>위치</div>
+          <input
+            placeholder="어디로 치러가세요?"
+            disabled="false"
+            :value="
+              SearchAddress === ''
+                ? '주소를 입력하시오'
+                : '주소가 입력되었습니다'
+            "
+          />
         </template>
         <template v-slot:body>
-          <div>왜 안떠요</div>
-          <Calendar></Calendar>
+          <FindAddress></FindAddress>
         </template>
       </Dropdown>
     </div>
     <div class="search-bar-tap">
-      <Dropdown :marginTop="1.2">
+      <div>날짜</div>
+      <HeaderCalendar></HeaderCalendar>
+    </div>
+    <div class="search-bar-tap">
+      <Dropdown :marginTop="'1.2'">
         <template v-slot:header>
           <div>인원</div>
-          <input placeholder="인원을 입력하세요" disabled="ture" />
+          <input
+            placeholder="인원을 입력하세요"
+            disabled="ture"
+            :value="SearchPNumber === 0 ? '' : SearchPNumber"
+          />
         </template>
         <template v-slot:body>
           <NumberUpDown></NumberUpDown>
@@ -33,24 +44,36 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 import Dropdown from '@/components/common/DropDown.vue';
 import NumberUpDown from '@/components/common/NumberUpDown.vue';
-import Calendar from '@/components/common/Calendar.vue';
-export default defineComponent({
+import HeaderCalendar from '@/components/header/HeaderCalendar.vue';
+import FindAddress from '@/components/common/FindAddress.vue';
+import { useAddress } from '@/composable/address';
+
+export default {
   components: {
     Dropdown,
     NumberUpDown,
-    Calendar,
+    HeaderCalendar,
+    FindAddress,
   },
   props: {
     taps: Array,
   },
-});
+  setup() {
+    const { SearchDate, SearchAddress, SearchPNumber } = useAddress();
+
+    return {
+      SearchDate,
+      SearchAddress,
+      SearchPNumber,
+    };
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .search-bar {
   display: flex;
   border: 1px solid #dddddd;
@@ -59,9 +82,8 @@ export default defineComponent({
   position: relative;
   width: 100%;
   background-color: #f7f7f7;
-  padding-left: 0.3rem;
+  padding-left: 2rem;
   align-items: center;
-  text-align: left;
 }
 .search-button {
   position: absolute;
@@ -73,7 +95,7 @@ export default defineComponent({
   margin-right: 1rem;
   cursor: pointer;
   background-color: #ff385c;
-  z-index: 3;
+  z-index: 5;
 }
 
 .search-icon {
@@ -84,26 +106,26 @@ export default defineComponent({
   cursor: pointer;
   display: block;
   border-radius: 2.3rem;
-  padding: 0.8rem 1rem;
+  padding: 0.4rem;
   z-index: 3;
   flex: 1 0 0%;
-}
-.search-bar-tap div {
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.search-bar-tap input {
-  display: block;
-  border: 0px;
-  width: 100%;
-  background: none;
-  font-size: 1rem;
-  line-height: 18px;
-  font-weight: 600;
-  color: #222222;
-}
-.search-bar-tap:hover {
-  background-color: #dfdfdf;
+  div {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  input {
+    display: block;
+    border: 0px;
+    width: 100%;
+    background: none;
+    font-size: 0.8rem;
+    line-height: 18px;
+    font-weight: 600;
+    color: #222222;
+  }
+  &:hover {
+    background-color: $low-white;
+  }
 }
 </style>

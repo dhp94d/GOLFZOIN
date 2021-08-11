@@ -3,16 +3,10 @@ import { useStore } from 'vuex';
 
 export const useJoin = () => {
   const store = useStore();
-  const onlineJoinList = computed(() => store.state.join.onlineJoin);
-  const offlineJoinList = computed(() => store.state.join.offlineJoin);
-  const onlineJoinLen = computed(() => store.getters['join/getOnlineJoinLen']);
-  const offlineJoinLen = computed(
-    () => store.getters['join/getOfflineJoinLen']
-  );
+  const target = computed(() => store.state.join.target);
+  const updateTarget = (data: string) => store.commit('join/SET_TARGET', data);
   return {
-    onlineJoinList,
-    offlineJoinList,
-    onlineJoinLen,
-    offlineJoinLen,
+    target,
+    updateTarget,
   };
 };
