@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Join></Join>
+    <Offline></Offline>
   </div>
 </template>
 <script>
-import Join from '@/components/join/Join.vue';
+import Offline from '@/components/join/Offline.vue';
 export default {
   components: {
-    Join,
+    Offline,
   },
 };
 </script>
