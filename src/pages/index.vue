@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="main-page">
     <div class="header-contianer">
-      <Header></Header>
-      <div class="Banner-contianer">
+      <div>
+        <Header></Header>
+      </div>
+      <div>
         <Banner></Banner>
       </div>
     </div>
-    <div>
-      <Join></Join>
+    <div class="main-join">
+      <MainOnline></MainOnline>
     </div>
-    <div>
-      <div>오프라인 조인 탭</div>
+    <div class="main-join">
+      <MainOffline></MainOffline>
     </div>
   </div>
 </template>
@@ -18,26 +20,25 @@
 <script>
 import Header from '@/components/common/Header.vue';
 import Banner from '@/components/main/Banner.vue';
-import Join from '@/components/join/Join.vue';
-import { useStore } from 'vuex';
-import { onMounted } from 'vue';
-
+import MainOnline from '@/components/main/mainOnline.vue';
+import MainOffline from '@/components/main/mainOffline.vue';
 export default {
   components: {
     Header,
     Banner,
-    Join,
+    MainOnline,
+    MainOffline,
   },
-  setup() {
-    const store = useStore();
-    onMounted(async () => {
-      await store.dispatch('join/GETJOIN');
-    });
-  },
+  setup() {},
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.main-page {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+}
 .header-contianer {
   width: 100%;
   height: 100%;
@@ -47,5 +48,8 @@ export default {
 .Banner-contianer {
   display: block;
   margin-top: 8rem;
+}
+.main-join {
+  padding: 3rem 10rem;
 }
 </style>
