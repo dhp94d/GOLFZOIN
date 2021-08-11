@@ -8,6 +8,9 @@ import JoinPage from '@/pages/join/index.vue';
 import MakeJoinPage from '@/pages/join/MakeJoinPage.vue';
 import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
+import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
+import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
+import UserPage from '@/pages/auth/UserPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -28,6 +31,11 @@ const router = createRouter({
       path: '/signup',
       name: 'Signup',
       component: Signup,
+    },
+    {
+      path: '/info',
+      name: 'UserPage',
+      component: UserPage,
     },
     {
       path: '/user',
@@ -57,6 +65,7 @@ const router = createRouter({
           path: '/join/makejoin',
           name: 'MakeJoinPage',
           component: MakeJoinPage,
+          beforeEnter,
         },
         {
           path: '/join/onlineJoin',
@@ -68,8 +77,23 @@ const router = createRouter({
           name: 'OfflineJoin',
           component: OfflineJoinPage,
         },
+        {
+          path: '/join/makejoin',
+          name: 'MakeJoinPage',
+          component: MakeJoinPage,
+          beforeEnter,
+        },
+        {
+          path: '/join/onlinedetailJoin',
+          name: 'OnlineDetailJoin',
+          component: OnlineJoinDetailPage,
+        },
+        {
+          path: '/join/offlinedetailJoin',
+          name: 'OfflineDetailJoin',
+          component: OfflineJoinDetailPage,
+        },
       ],
-      beforeEnter,
     },
   ],
 });
