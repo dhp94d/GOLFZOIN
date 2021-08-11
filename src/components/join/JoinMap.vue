@@ -9,21 +9,12 @@ import { onMounted } from 'vue';
 export default {
   setup() {
     const initMap = () => {
-      const container = document.querySelector('#map');
-      const options = {
-        center: new kakao.maps.LatLng(35.19656853772262, 129.0807270648317),
-        level: 3,
-      };
-      const map = new kakao.maps.Map(container, options);
-      const markerPosition = new kakao.maps.LatLng(
-        35.19656853772262,
-        129.0807270648317
-      );
-
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(map);
+      const mapContainer = document.getElementById('#map'),
+        mapOption = {
+          center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+          level: 3, // 지도의 확대 레벨
+        };
+      const map = new kakao.maps.Map(mapContainer, mapOption);
     };
     onMounted(() => {
       if (window.kakao && window.kakao.maps) {
