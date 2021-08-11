@@ -4,11 +4,13 @@
       <div @click="joinType = true">온라인 조인</div>
       <div @click="joinType = false">오프라인 조인</div>
     </div>
-    <div v-if="joinType">
-      <MakeOnlineJoin></MakeOnlineJoin>
-    </div>
-    <div v-else>
-      <MakeOfflineJoin></MakeOfflineJoin>
+    <div>
+      <div v-if="joinType">
+        <MakeOnlineJoin></MakeOnlineJoin>
+      </div>
+      <div v-else>
+        <MakeOfflineJoin></MakeOfflineJoin>
+      </div>
     </div>
   </div>
 </template>
@@ -33,20 +35,22 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .make-join-container {
-  margin: 1rem 20rem;
+  margin: auto;
 }
 .make-join-change-type {
   display: flex;
   justify-content: space-around;
-  padding-bottom: 1.3rem;
   font-size: 1.5rem;
+  font-weight: bold;
   color: gray;
-}
-.make-join-change-type div:hover {
-  border-radius: 1rem;
-  cursor: pointer;
-  color: black;
+  :hover {
+    cursor: pointer;
+    color: black;
+  }
+  div {
+    box-shadow: 0 4px 4px -4px black;
+  }
 }
 </style>
