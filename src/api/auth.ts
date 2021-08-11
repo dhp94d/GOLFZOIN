@@ -9,4 +9,8 @@ function signupUser(data: any) {
   return auth.post('users', data);
 }
 
-export { loginUser, signupUser };
+function patchUser(query: string, data: any) {
+  return auth.patch(`users/${query}`, data);
+}
+
+export { loginUser, signupUser, patchUser };
