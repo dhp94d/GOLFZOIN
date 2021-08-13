@@ -1,48 +1,65 @@
 <template>
   <div class="join-page-offline-container">
     <div class="join-page-offline-map">
-      <div class="join-page-offline-header">
+      <div class="join-page-offline-body">
         <div>{{ offlineJoinData?.length }}개 이상의 조인</div>
         <div class="join-page-offline-title">오프라인 조인</div>
         <JoinFilter class="join-page-offline-filter"></JoinFilter>
       </div>
-      <div class="join-page-offline-container">
+      <br />
+      <div class="join-page-offline-list">
         <div
           v-for="(offlinejoin, index) in offlineJoinData"
           :key="`offlinejoin${index}`"
         >
-          <div @click="offlineJoinClick(offlinejoin)">
-            <JoinItem
-              :title="offlinejoin.data.title"
-              :time="offlinejoin.data.time"
-              :date="offlinejoin.data.date"
-              :maximum="offlinejoin.data.maximum"
-              :thumbnail="offlinejoin.data.thumbnail"
-              :detailText="offlinejoin.data.detailText"
-              :participants="offlinejoin.data.participants"
-              :id="offlinejoin.id"
-              :simple="false"
-            ></JoinItem>
+          <hr />
+          <div class="offline-box" @click="offlineJoinClick(offlinejoin)">
+            <img :src="offlinejoin.data.thumbnail" />
+            <div class="offline-box-detail">
+              <div class="offline-box-gray-color">
+                {{ offlinejoin.data.date }}&nbsp;
+                {{ offlinejoin.data.time }}
+              </div>
+              <h5>
+                {{
+                  offlinejoin.data.title.length > 22
+                    ? offlinejoin.data.title.slice(0, 22) + '...'
+                    : offlinejoin.data.title
+                }}
+              </h5>
+              <div>
+                <div>{{ offlinejoin.data.address.addressName }}</div>
+              </div>
+              <div class="offline-box-body">
+                {{
+                  offlinejoin.data.detailText.length > 40
+                    ? offlinejoin.data.detailText.slice(0, 40) + '...'
+                    : offlinejoin.data.detailText
+                }}
+              </div>
+              <div>
+                남은인원&nbsp;:&nbsp;{{ offlinejoin.data.participants }}/{{
+                  offlinejoin.data.maximum
+                }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <div id="map"></div>
-    </div>
+    <div id="map"></div>
   </div>
 </template>
 <script>
 import JoinFilter from '@/components/join/JoinFilter.vue';
-import JoinItem from '@/components/join/JoinItem.vue';
 import { ref, onMounted } from 'vue';
 import { getJoinAll } from '@/api/join';
 import { useJoin } from '@/composable/join';
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
     JoinFilter,
-    JoinItem,
   },
   setup() {
     const { updateTarget } = useJoin();
@@ -53,7 +70,7 @@ export default {
     const bounds = new kakao.maps.LatLngBounds();
     const positions = ref([]);
     const title = ref([]);
-
+    const router = useRouter();
     const getOfflineData = async () => {
       const res = await getJoinAll('offline');
       offlineJoinData.value = res.data;
@@ -71,6 +88,9 @@ export default {
 
     const offlineJoinClick = (offlinejoin) => {
       updateTarget(offlinejoin.id);
+      router.push({
+        name: 'OfflineDetailJoin',
+      });
     };
 
     const initMap = () => {
@@ -140,13 +160,12 @@ export default {
 
 <style lang="scss">
 .join-page-offline-map {
-  overflow: auto;
   flex: 1;
 }
-.join-page-offlinee-title {
+.join-page-offline-title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 .join-page-offline-filter {
   margin-bottom: 2rem;
@@ -157,12 +176,41 @@ export default {
   gap: 1rem;
   padding-left: 1rem;
 }
+.join-page-offline-body {
+  padding-top: 3rem;
+  padding-left: 2rem;
+}
+.offline-box {
+  display: flex;
+  cursor: pointer;
+  color: #717188;
+  img {
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 20rem;
+    height: 15rem;
+  }
+  h5 {
+    color: black;
+  }
+}
+.offline-box-detail {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+.offline-box-body {
+  color: black;
+  height: 8rem;
+  padding: 1rem 0;
+}
 #map {
-  position: sticky;
-  top: 8rem;
-  width: 46vw;
-  height: 86vh;
+  position: fixed;
+  right: 0;
+  width: 58vw;
+  height: 90vh;
   flex: 1;
+  object-fit: cover;
 }
 .join-page-offline-customoverlay {
   position: relative;
@@ -207,8 +255,5 @@ export default {
   padding: 10px 15px;
   font-size: 14px;
   font-weight: bold;
-}
-.join-page-offline-header {
-  padding-left: 1rem;
 }
 </style>
