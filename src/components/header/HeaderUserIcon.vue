@@ -14,15 +14,28 @@
       </template>
       <template v-slot:body>
         <ul class="header-user-dropdown">
-          <div
-            v-for="(data, index) in authIsLoggedIn ? LOGGED : NOTLOGGED"
-            :key="`userTap${index}`"
-          >
-            <router-link :to="`${data.link}`"
-              ><li>{{ data.title }}</li></router-link
-            >
-          </div>
-          <li v-show="authIsLoggedIn" @click="logout">로그아웃</li>
+          <template v-if="authIsLoggedIn">
+            <div v-for="(data, index) in LOGGED" :key="`userTap${index}`">
+              <router-link :to="`${data.link}`"
+                ><li>{{ data.title }}</li></router-link
+              >
+            </div>
+            <li @click="logout">로그아웃</li>
+          </template>
+          <template v-else>
+            <li>
+              <div @click="loginToggle">로그인</div>
+              <div v-if="openLogin">
+                <LoginForm @toggle="loginToggle"></LoginForm>
+              </div>
+            </li>
+            <li>
+              <div @click="signupToggle">회원가입</div>
+              <div v-if="openSignup">
+                <SignupForm @toggle="signupToggle"></SignupForm>
+              </div>
+            </li>
+          </template>
         </ul>
       </template>
     </DropDown>
@@ -34,11 +47,10 @@ import { defineComponent } from 'vue';
 import { useAuth } from '@/composable/auth';
 import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
+import LoginForm from '@/components/auth/LoginForm.vue';
+import SignupForm from '@/components/auth/SignupForm.vue';
+import { ref } from 'vue';
 
-const NOTLOGGED = [
-  { title: '로그인 하기', link: '/login' },
-  { title: '회원가입 하기', link: '/signup' },
-];
 const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
@@ -48,9 +60,13 @@ const LOGGED = [
 export default defineComponent({
   components: {
     DropDown,
+    LoginForm,
+    SignupForm,
   },
   setup() {
     const router = useRouter();
+    const openLogin = ref(false);
+    const openSignup = ref(false);
     const { authIsLoggedIn, authLogout }: any = useAuth();
     const logout = () => {
       authLogout();
@@ -58,11 +74,23 @@ export default defineComponent({
         name: 'Main',
       });
     };
+
+    const loginToggle = () => {
+      openLogin.value = !openLogin.value;
+      openSignup.value = false;
+    };
+    const signupToggle = () => {
+      openSignup.value = !openSignup.value;
+      openLogin.value = false;
+    };
     return {
       LOGGED,
-      NOTLOGGED,
       authIsLoggedIn,
       logout,
+      openLogin,
+      openSignup,
+      loginToggle,
+      signupToggle,
     };
   },
 });
