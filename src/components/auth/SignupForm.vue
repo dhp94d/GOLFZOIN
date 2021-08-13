@@ -1,89 +1,103 @@
 <template>
-  <div class="contents">
-    <div>
-      <form @submit.prevent="submitForm" class="form">
-        <div>
-          <input placeholder="이메일" id="email" type="text" v-model="email" />
-        </div>
-        <div>
-          <input
-            placeholder="비밀번호"
-            id="password"
-            type="text"
-            v-model="password"
-          />
-        </div>
-        <div>
-          <input
-            placeholder="닉네임"
-            id="nickname"
-            type="text"
-            v-model="nickname"
-          />
-        </div>
-        <span>생년월일</span><br />
-        <div>
-          <input
-            type="date"
-            placeholder="생년월일을 입력하세요."
-            class="box"
-            v-model="birthday"
-          />
-        </div>
-        <span>전화번호</span><br />
-        <div class="signup-phone">
-          <input type="text" class="pbox" v-model="phoneNumber" />
-          <br />
-        </div>
-        <div>
-          <span>성별</span><br />
-          <div class="signup-gender">
-            <p>남자</p>
+  <div>
+    <Modal @toggle="toggle">
+      <template #body>
+        <form @submit.prevent="submitForm" class="form">
+          <span>회원 정보</span><br />
+          <div>
             <input
-              type="radio"
-              value="man"
-              style="height: 1rem; width: 1rem"
-              v-model="gender"
-            />
-            <p>여자</p>
-            <input
-              type="radio"
-              value="girl"
-              style="height: 1rem; width: 1rem"
-              v-model="gender"
+              placeholder="이메일"
+              id="email"
+              type="text"
+              v-model="email"
             />
           </div>
-        </div>
-        <div>
-          <input
-            placeholder="주소"
-            id="address"
-            type="text"
-            v-model="address"
-            disabled="false"
-          />
-          <div class="address-buttons">
-            <input type="button" @click="findAddress" value="검색 하기" /><br />
+          <div>
+            <input
+              placeholder="비밀번호"
+              id="password"
+              type="text"
+              v-model="password"
+            />
           </div>
-        </div>
-        <div>
-          <input
-            placeholder="타수를 입력하세요"
-            id="hit"
-            type="text"
-            v-model="hit"
-          />
-        </div>
+          <div>
+            <input
+              placeholder="닉네임"
+              id="nickname"
+              type="text"
+              v-model="nickname"
+            />
+          </div>
+          <span>생년월일</span><br />
+          <div>
+            <input
+              type="date"
+              placeholder="생년월일을 입력하세요."
+              class="box"
+              v-model="birthday"
+            />
+          </div>
+          <span>전화번호</span><br />
+          <div class="signup-phone">
+            <input type="text" class="pbox" v-model="phoneNumber" />
+            <br />
+          </div>
+          <div>
+            <span>성별</span><br />
+            <div class="signup-gender">
+              <p>남자</p>
+              <input
+                type="radio"
+                value="man"
+                style="height: 1rem; width: 1rem"
+                v-model="gender"
+              />
+              <p>여자</p>
+              <input
+                type="radio"
+                value="girl"
+                style="height: 1rem; width: 1rem"
+                v-model="gender"
+              />
+            </div>
+          </div>
+          <div>
+            <span>주소</span><br />
+            <input
+              placeholder="주소를 검색하세요"
+              id="address"
+              type="text"
+              v-model="address"
+              disabled="false"
+            />
+            <div class="address-buttons">
+              <input
+                type="button"
+                @click="findAddress"
+                value="검색 하기"
+              /><br />
+            </div>
+          </div>
+          <div>
+            <span>타수</span><br />
+            <input
+              placeholder="타수를 입력하세요"
+              id="hit"
+              type="text"
+              v-model="hit"
+            />
+          </div>
 
-        <button
-          type="submit"
-          class="btn btn btn-primary auth-button"
-          :disabled="!isEmailValid"
-        >
-          회원 가입
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            class="btn btn btn-primary auth-button"
+            :disabled="!isEmailValid"
+          >
+            회원 가입
+          </button>
+        </form>
+      </template>
+    </Modal>
   </div>
 </template>
 <script>
@@ -91,9 +105,14 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { signupUser } from '@/api/auth';
 import { validateEmail } from '@/composable/validateEmail';
+import Modal from '@/components/common/Modal.vue';
 
 export default defineComponent({
-  setup() {
+  components: {
+    Modal,
+  },
+  emits: ['toggle'],
+  setup(props, { emit }) {
     const email = ref('');
     const password = ref('');
     const nickname = ref('');
@@ -104,6 +123,10 @@ export default defineComponent({
     const gender = ref('');
     const latitude = ref('');
     const longitude = ref('');
+
+    const toggle = () => {
+      emit('toggle');
+    };
 
     const router = useRouter();
 
@@ -155,20 +178,18 @@ export default defineComponent({
       isEmailValid,
       birthday,
       gender,
+      toggle,
     };
   },
 });
 </script>
 <style lang="scss" scoped>
+@include auth;
 .address-buttons {
   display: flex;
   input {
-    font-weight: 600;
     background-color: white;
     color: gray;
-  }
-  input:hover {
-    color: black;
   }
 }
 li {
