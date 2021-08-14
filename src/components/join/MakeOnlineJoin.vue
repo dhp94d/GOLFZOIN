@@ -127,6 +127,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@include auth;
 .make-join-header {
   text-align: center;
   font-size: 30px;

@@ -14,15 +14,34 @@
       </template>
       <template v-slot:body>
         <ul class="header-user-dropdown">
-          <div
-            v-for="(data, index) in authIsLoggedIn ? LOGGED : NOTLOGGED"
-            :key="`userTap${index}`"
-          >
-            <router-link :to="`${data.link}`"
-              ><li>{{ data.title }}</li></router-link
-            >
-          </div>
-          <li v-show="authIsLoggedIn" @click="logout">로그아웃</li>
+          <template v-if="authIsLoggedIn">
+            <div v-for="(data, index) in LOGGED" :key="`userTap${index}`">
+              <router-link :to="`${data.link}`"
+                ><li>{{ data.title }}</li></router-link
+              >
+            </div>
+            <li>
+              <div @click="userToggle">내 정보</div>
+              <div v-if="openUser">
+                <UserInfo @toggle="userToggle"></UserInfo>
+              </div>
+            </li>
+            <li @click="logout">로그아웃</li>
+          </template>
+          <template v-else>
+            <li>
+              <div @click="loginToggle">로그인</div>
+              <div v-if="openLogin">
+                <LoginForm @toggle="loginToggle"></LoginForm>
+              </div>
+            </li>
+            <li>
+              <div @click="signupToggle">회원가입</div>
+              <div v-if="openSignup">
+                <SignupForm @toggle="signupToggle"></SignupForm>
+              </div>
+            </li>
+          </template>
         </ul>
       </template>
     </DropDown>
@@ -34,23 +53,28 @@ import { defineComponent } from 'vue';
 import { useAuth } from '@/composable/auth';
 import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
+import LoginForm from '@/components/auth/LoginForm.vue';
+import SignupForm from '@/components/auth/SignupForm.vue';
+import UserInfo from '@/components/auth/UserInfo.vue';
+import { ref } from 'vue';
 
-const NOTLOGGED = [
-  { title: '로그인 하기', link: '/login' },
-  { title: '회원가입 하기', link: '/signup' },
-];
 const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
   { title: '일정관리', link: '/calendar' },
-  { title: '계정', link: '/info' },
 ];
 export default defineComponent({
   components: {
     DropDown,
+    LoginForm,
+    SignupForm,
+    UserInfo,
   },
   setup() {
     const router = useRouter();
+    const openLogin = ref(false);
+    const openSignup = ref(false);
+    const openUser = ref(false);
     const { authIsLoggedIn, authLogout }: any = useAuth();
     const logout = () => {
       authLogout();
@@ -58,11 +82,47 @@ export default defineComponent({
         name: 'Main',
       });
     };
+
+    const loginToggle = () => {
+      if (openLogin.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      openLogin.value = !openLogin.value;
+      openSignup.value = false;
+      openUser.value = false;
+    };
+    const signupToggle = () => {
+      if (openSignup.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      openSignup.value = !openSignup.value;
+      openLogin.value = false;
+      openUser.value = false;
+    };
+    const userToggle = () => {
+      if (openUser.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      openUser.value = !openUser.value;
+      openLogin.value = false;
+      openSignup.value = false;
+    };
     return {
       LOGGED,
-      NOTLOGGED,
       authIsLoggedIn,
       logout,
+      openLogin,
+      openSignup,
+      loginToggle,
+      signupToggle,
+      userToggle,
+      openUser,
     };
   },
 });

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="scrollPosition < 30 && screenWidth > 1000">
+    <div v-if="scrollPosition < 200 && screenWidth > 1000">
       <HeaderMain></HeaderMain>
     </div>
     <div v-else>

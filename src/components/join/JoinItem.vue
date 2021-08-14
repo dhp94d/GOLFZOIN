@@ -6,16 +6,18 @@
         <div class="thumbnail-title">
           <h5>{{ title }}</h5>
           <div class="thumbnail-time">
-            <div>모임시각: {{ date }}</div>
+            <div>{{ date }}</div>
             <div>{{ time }}</div>
           </div>
-          <p>
-            {{
-              detailText?.length > 40
-                ? detailText.slice(0, 40) + '...'
-                : detailText
-            }}
-          </p>
+          <div class="thumbnail-body">
+            <p>
+              {{
+                detailText?.length > 40
+                  ? detailText.slice(0, 40) + '...'
+                  : detailText
+              }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -25,7 +27,7 @@
         <div class="thumbnail-title">
           <h5>{{ title }}</h5>
           <div class="thumbnail-address">
-            주소:
+            위치:
             {{
               addressName?.length > 20
                 ? addressName.slice(0, 20) + '...'
@@ -33,11 +35,8 @@
             }}
           </div>
           <div class="thumbnail-time">
-            <div>모임시각: {{ date }}</div>
+            <div>{{ date }}</div>
             <div>{{ time }}</div>
-          </div>
-          <div class="thumbnail-participants">
-            <div>인원: {{ participants }}/{{ maximum }}</div>
           </div>
         </div>
       </div>
@@ -58,7 +57,7 @@ export default {
     simple: Boolean,
     participants: String,
     addressName: String,
-    id: String,
+    id: Number,
   },
   setup() {
     const router = useRouter();
@@ -87,15 +86,13 @@ export default {
 <style lang="scss" scoped>
 .thumbnail {
   padding: 0.3rem;
-  border: 1px solid #b8b8b8;
   border-radius: 1rem;
   object-fit: cover;
-  height: 26rem;
+  height: 24rem;
   &:hover {
     cursor: pointer;
-    box-shadow: 1px 1px 0 gray;
+    box-shadow: 2px 1px 10px 1px #000;
     position: relative;
-    top: 2px;
   }
 
   img {
@@ -121,13 +118,15 @@ export default {
   justify-content: flex-end;
 }
 
-.thumbnail-participants {
-  display: flex;
-  justify-content: flex-end;
-}
 .thumbnail-address {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   text-align: end;
+}
+.thumbnail-body {
+  display: flex;
+  justify-content: flex-start;
+  text-align: start;
+  color: #515151;
 }
 </style>
