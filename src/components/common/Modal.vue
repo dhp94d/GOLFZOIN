@@ -5,9 +5,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <slot name="header">
-              <button type="button" class="btn-close" @click="toggle"></button>
-            </slot>
+            <slot name="header"> </slot>
+            <button type="button" class="btn-close" @click="toggle"></button>
           </div>
           <div class="modal-body">
             <slot name="body"></slot>
@@ -35,15 +34,18 @@ export default {
 
 <style lang="scss" scoprd>
 .modal-wrapper {
+  overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
-  z-index: 1000;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 9;
+
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modal-dialog {
-  z-index: 1100;
+  z-index: 10;
 }
 </style>

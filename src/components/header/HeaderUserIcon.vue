@@ -20,6 +20,12 @@
                 ><li>{{ data.title }}</li></router-link
               >
             </div>
+            <li>
+              <div @click="userToggle">내 정보</div>
+              <div v-if="openUser">
+                <UserInfo @toggle="userToggle"></UserInfo>
+              </div>
+            </li>
             <li @click="logout">로그아웃</li>
           </template>
           <template v-else>
@@ -49,24 +55,26 @@ import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
+import UserInfo from '@/components/auth/UserInfo.vue';
 import { ref } from 'vue';
 
 const LOGGED = [
   { title: '채팅', link: '/user' },
   { title: '알림' },
   { title: '일정관리', link: '/calendar' },
-  { title: '계정', link: '/info' },
 ];
 export default defineComponent({
   components: {
     DropDown,
     LoginForm,
     SignupForm,
+    UserInfo,
   },
   setup() {
     const router = useRouter();
     const openLogin = ref(false);
     const openSignup = ref(false);
+    const openUser = ref(false);
     const { authIsLoggedIn, authLogout }: any = useAuth();
     const logout = () => {
       authLogout();
@@ -76,12 +84,34 @@ export default defineComponent({
     };
 
     const loginToggle = () => {
+      if (openLogin.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
       openLogin.value = !openLogin.value;
       openSignup.value = false;
+      openUser.value = false;
     };
     const signupToggle = () => {
+      if (openSignup.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
       openSignup.value = !openSignup.value;
       openLogin.value = false;
+      openUser.value = false;
+    };
+    const userToggle = () => {
+      if (openUser.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      openUser.value = !openUser.value;
+      openLogin.value = false;
+      openSignup.value = false;
     };
     return {
       LOGGED,
@@ -91,6 +121,8 @@ export default defineComponent({
       openSignup,
       loginToggle,
       signupToggle,
+      userToggle,
+      openUser,
     };
   },
 });

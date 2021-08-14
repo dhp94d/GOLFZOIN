@@ -95,7 +95,6 @@ export default {
   margin-right: 1rem;
   cursor: pointer;
   background-color: #ff385c;
-  z-index: 5;
 }
 
 .search-icon {
@@ -107,7 +106,6 @@ export default {
   display: block;
   border-radius: 2.3rem;
   padding: 0.4rem;
-  z-index: 3;
   flex: 1 0 0%;
   div {
     font-size: 1rem;

@@ -13,11 +13,13 @@
     "dayjs": "^1.10.6",
     "firebase": "^8.8.1",
     "moment": "^2.29.1",
+    "sockjs-client": "^1.5.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.10",
     "vue3-carousel": "^0.1.24",
     "vue3-datepicker": "^0.2.5",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",

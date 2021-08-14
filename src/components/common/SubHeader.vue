@@ -34,7 +34,6 @@ export default defineComponent({
   width: 100%;
   padding: 1rem 10rem;
   border-bottom: 1px solid black;
-  margin-bottom: 0.5rem;
   z-index: 10;
 }
 @media (max-width: 1400px) {

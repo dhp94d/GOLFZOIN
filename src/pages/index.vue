@@ -44,6 +44,7 @@ export default {
   height: 100%;
   background-image: url('../assets/background.jpg');
   background-size: cover;
+  object-fit: cover;
 }
 .Banner-contianer {
   display: block;

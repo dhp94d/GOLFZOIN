@@ -177,12 +177,15 @@ export default {
   padding-left: 1rem;
 }
 .join-page-offline-body {
+  display: flex;
+  flex-direction: column;
   padding-top: 3rem;
   padding-left: 2rem;
 }
 .offline-box {
   display: flex;
   cursor: pointer;
+  word-break: break-all;
   color: #717188;
   img {
     border: 1px solid black;
@@ -197,6 +200,8 @@ export default {
 .offline-box-detail {
   display: flex;
   flex-direction: column;
+  word-break: break-all;
+  white-space: pre-line;
   padding: 0 1rem;
 }
 .offline-box-body {
@@ -255,5 +260,21 @@ export default {
   padding: 10px 15px;
   font-size: 14px;
   font-weight: bold;
+}
+
+@media (max-width: 1500px) {
+  .offline-box {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1000px) {
+  #map {
+    display: inline-flex;
+    right: 1;
+    top: 1;
+    height: 50vh;
+    width: 100%;
+  }
 }
 </style>

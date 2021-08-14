@@ -176,7 +176,9 @@ export default {
         },
       };
       if (!!newImg.value) {
-        const url = await getOneThumbnail('join/강호동.jpg');
+        const url = await getOneThumbnail(
+          `join/${saveImg.value.name + saveImg.value.lastModified}_250x250`
+        );
         data.data.thumbnail = url;
       } else {
         data.data.thumbnail = DEFAULT_IMG;
@@ -206,6 +208,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@include auth;
 .make-join-header {
   text-align: center;
   font-size: 30px;

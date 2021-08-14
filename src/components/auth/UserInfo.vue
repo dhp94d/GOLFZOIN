@@ -1,69 +1,84 @@
 <template>
-  <div class="user-info">
-    <div class="user-img">
-      <img :src="newImg ? newImg : DEFAULT_IMG" />
-    </div>
-    <button class="user-profile" width="200px">
-      <label for="input-file">프로필 수정</label>
-      <input type="file" id="input-file" @change="getImgPath" />
-    </button>
-    <form @submit.prevent="submitForm" class="user-info-dataList">
-      <div class="user-email">
-        <span>이메일</span>
-        <input :placeholder="user.email" disabled="false" />
-      </div>
-      <div>
-        <spane>비밀번호</spane>
-        <input id="password" type="text" v-model="password" />
-      </div>
-      <div class="user-nickname">
-        <span>닉네임</span>
-        <input :placeholder="user.nickname" v-model="nickname" />
-      </div>
-      <div class="user-email">
-        <span>생년월일</span>
-        <input
-          type="date"
-          :value="user.birthday"
-          class="box"
-          disabled="false"
-        />
-      </div>
-      <div class="user-info-data">
-        <span>휴대폰 번호</span>
-        <input :placeholder="user.phoneNumber" v-model="phoneNumber" />
-      </div>
-      <div class="user-info-data">
-        <span>주소</span>
-        <div style="display: flex">
-          <input :placeholder="user.address?.name" v-model="address" />
-          <div class="address-buttons">
-            <input type="button" @click="findAddress" value="검색 하기" /><br />
-          </div>
+  <Modal>
+    <template #body>
+      <div class="user-info">
+        <h4>내 정보</h4>
+        <div class="user-img">
+          <img :src="newImg ? newImg : user.profile" />
         </div>
+        <button class="user-profile" width="200px">
+          <label for="input-file">프로필 수정</label>
+          <input type="file" id="input-file" @change="getImgPath" />
+        </button>
+        <form @submit.prevent="submitForm" class="user-info-data">
+          <div class="user-email">
+            <span>이메일</span>
+            <input :placeholder="user.email" disabled="false" />
+          </div>
+          <div>
+            <spane>비밀번호</spane>
+            <input id="password" type="text" v-model="password" />
+          </div>
+          <div class="user-nickname">
+            <span>닉네임</span>
+            <input :placeholder="user.nickname" v-model="nickname" />
+          </div>
+          <div class="user-email">
+            <span>생년월일</span>
+            <input
+              type="date"
+              :value="user.birthday"
+              class="box"
+              disabled="false"
+            />
+          </div>
+          <div class="user-info-data">
+            <span>휴대폰 번호</span>
+            <input :placeholder="user.phoneNumber" v-model="phoneNumber" />
+          </div>
+          <div class="user-info-data">
+            <span>주소</span>
+            <div>
+              <input :placeholder="user.address?.name" v-model="address" />
+              <div class="address-buttons">
+                <input
+                  type="button"
+                  @click="findAddress"
+                  value="검색 하기"
+                /><br />
+              </div>
+            </div>
+          </div>
+          <div class="user-info-data">
+            <span>타수</span>
+            <input :placeholder="user.hit" v-model="hit" />
+          </div>
+        </form>
+        <button
+          @click="submitForm"
+          type="submit"
+          class="btn btn btn-primary auth-button"
+        >
+          수정 하기
+        </button>
       </div>
-      <div class="user-info-data">
-        <span>타수</span>
-        <input :placeholder="user.hit" v-model="hit" />
-      </div>
-    </form>
-    <button
-      @click="submitForm"
-      type="submit"
-      class="btn btn btn-primary auth-button"
-    >
-      수정 하기
-    </button>
-  </div>
+    </template>
+  </Modal>
 </template>
 <script>
 import { ref } from 'vue';
 import { loginUser, patchUser } from '@/api/auth';
 import { useRouter } from 'vue-router';
 import { uploadFile, getOneThumbnail } from '@/firebaseinit';
+import { getUserFromCookie } from '@/composable/cookies';
+import Modal from '@/components/common/Modal.vue';
+
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default {
+  components: {
+    Modal,
+  },
   setup() {
     const user = ref({});
     const password = ref('');
@@ -77,9 +92,11 @@ export default {
     const newImg = ref('');
     const saveImg = ref();
 
-    const getImgPath = (event) => {
+    const getImgPath = async (event) => {
       var reader = new FileReader();
+
       saveImg.value = event.target.files[0];
+      await uploadFile('join', saveImg.value);
       reader.onload = function (event) {
         newImg.value = event.target.result;
       };
@@ -120,10 +137,16 @@ export default {
       if (!!hit.value) data.hit = hit.value;
       if (!!phoneNumber.value) data.phoneNumber = phoneNumber.value;
 
-      if (!!saveImg.value) {
-        await uploadFile(user.value.email, saveImg.value);
-        const url = await getOneThumbnail(user.value.email);
+      if (!!newImg.value) {
+        const url = await getOneThumbnail(
+          `${getUserFromCookie()}/${
+            saveImg.value.name + saveImg.value.lastModified
+          }_250x250`
+        );
+        console.log(url);
         data.profile = url;
+      } else {
+        data.profile = DEFAULT_IMG;
       }
       await patchUser(user.value.id, data);
       router.push({
@@ -149,27 +172,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@include auth;
 .user-info {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  padding: 1rem;
   img {
-    width: 300px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
   }
-}
-.user-info-dataList {
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  margin-bottom: 1rem;
-  :is(div, span) {
-    font-weight: bold;
-    width: 5rem;
+  h4 {
+    padding-bottom: 1rem;
   }
 }
+.user-info-data {
+  input {
+    position: relative;
+    width: 100%;
+    height: 46px;
+    padding: 0px 44px 0px 11px;
+    border: 1px solid rgb(235, 235, 235);
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+  }
+}
+
 .user-profile {
   background-color: white;
   border: 0;
@@ -203,6 +231,10 @@ export default {
 }
 
 .user-img {
+  margin: auto;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
   box-shadow: 1px 1px 2px 2px gray;
   margin-bottom: 0.5rem;
 }
