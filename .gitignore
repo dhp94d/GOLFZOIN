@@ -3,7 +3,8 @@ node_modules
 /dist
 db.json
 package-lock.json
-
+.env
+*.env
 # local env files
 .env
 .env.local

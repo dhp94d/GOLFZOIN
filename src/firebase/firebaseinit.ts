@@ -1,5 +1,7 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/storage';
+import 'firebase/firestore';
 
 const config = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -12,16 +14,18 @@ const config = {
 
 const app = firebase.initializeApp(config);
 
+export const auth = app.auth();
+
 export const db = app.firestore();
 
 export const storage = app.storage();
 
-export async function getThumbnail(dealiName) {
+export async function getThumbnail(dealiName: any) {
   const { items } = await firebase
     .storage()
     .ref(`thumbnail/${dealiName}`)
     .listAll();
-  let thumbnaills = [];
+  let thumbnaills: any = [];
   items.map((i) => {
     const { fullPath } = i;
     thumbnaills.push({
@@ -32,7 +36,7 @@ export async function getThumbnail(dealiName) {
   return thumbnaills;
 }
 
-export async function getOneThumbnail(dealiName) {
+export async function getOneThumbnail(dealiName: any) {
   const url = await firebase
     .storage()
     .ref(`thumbnail/${dealiName}`)
@@ -41,7 +45,7 @@ export async function getOneThumbnail(dealiName) {
   return url;
 }
 // 파일 넣기
-export const uploadFile = async (dealiName, file) => {
+export const uploadFile = async (dealiName: any, file: any) => {
   const ref = await firebase
     .storage()
     .ref(`thumbnail/${dealiName}/${file.name + file.lastModified}`)
@@ -62,6 +66,6 @@ export const uploadFile = async (dealiName, file) => {
   return;
 };
 // 파일 삭제
-export function deleteFile(fullPath) {
+export function deleteFile(fullPath: any) {
   return firebase.storage().ref(fullPath).delete();
 }

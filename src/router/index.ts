@@ -8,7 +8,6 @@ import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
 import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
-import UserPage from '@/pages/auth/UserPage.vue';
 import TestPage from '@/pages/user/TestPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
@@ -21,11 +20,7 @@ const router = createRouter({
       name: 'Main',
       component: MainPage,
     },
-    {
-      path: '/info',
-      name: 'UserPage',
-      component: UserPage,
-    },
+
     {
       path: '/user',
       name: 'ChatPage',
