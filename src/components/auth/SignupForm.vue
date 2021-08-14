@@ -5,28 +5,21 @@
         <form @submit.prevent="submitForm" class="form">
           <span>회원 정보</span><br />
           <div>
-            <input
-              placeholder="이메일"
-              id="email"
-              type="text"
-              v-model="email"
-            />
+            <input placeholder="이메일" type="text" v-model="email" />
+          </div>
+          <div>
+            <input placeholder="이름" type="text" v-model="name" />
           </div>
           <div>
             <input
-              placeholder="비밀번호"
-              id="password"
-              type="text"
-              v-model="password"
+              placeholder="비밀번호를 입력하세요"
+              type="password"
+              v-model="pw"
+              minlength="6"
             />
           </div>
           <div>
-            <input
-              placeholder="닉네임"
-              id="nickname"
-              type="text"
-              v-model="nickname"
-            />
+            <input placeholder="닉네임" type="text" v-model="nickname" />
           </div>
           <span>생년월일</span><br />
           <div>
@@ -39,7 +32,7 @@
           </div>
           <span>전화번호</span><br />
           <div class="signup-phone">
-            <input type="text" class="pbox" v-model="phoneNumber" />
+            <input type="text" class="pbox" v-model="p_number" />
             <br />
           </div>
           <div>
@@ -103,7 +96,7 @@
 <script>
 import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { signupUser } from '@/api/auth';
+import { createUser } from '@/middleware/auth';
 import { validateEmail } from '@/composable/validateEmail';
 import Modal from '@/components/common/Modal.vue';
 
@@ -113,11 +106,14 @@ export default defineComponent({
   },
   emits: ['toggle'],
   setup(props, { emit }) {
+    const router = useRouter();
+
     const email = ref('');
-    const password = ref('');
+    const pw = ref('');
+    const name = ref('');
     const nickname = ref('');
     const birthday = ref('');
-    const phoneNumber = ref('');
+    const p_number = ref('');
     const address = ref('');
     const hit = ref('');
     const gender = ref('');
@@ -127,8 +123,6 @@ export default defineComponent({
     const toggle = () => {
       emit('toggle');
     };
-
-    const router = useRouter();
 
     const isEmailValid = computed(() => validateEmail(email.value));
 
@@ -146,32 +140,34 @@ export default defineComponent({
         },
       }).open();
     };
+
     const submitForm = async () => {
       const data = {
         email: email.value,
-        password: password.value,
+        id: email.value,
+        pw: pw.value,
+        name: name.value,
         nickname: nickname.value,
         birthday: birthday.value,
-        phoneNumber: phoneNumber.value,
+        p_number: p_number.value,
         gender: gender.value,
-        address: {
-          name: address.value,
-          latitude: latitude.value,
-          longitude: longitude.value,
-        },
+        address: address.value,
+        lat: latitude.value,
+        lon: longitude.value,
         hit: hit.value,
+        profile: '',
       };
-      await signupUser(data);
-      router.push({
-        name: 'Main',
-      });
+      await createUser('serverless', data);
+
+      router.go();
     };
     return {
       submitForm,
       email,
-      password,
+      pw,
       nickname,
-      phoneNumber,
+      name,
+      p_number,
       address,
       hit,
       findAddress,

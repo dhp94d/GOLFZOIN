@@ -55,7 +55,7 @@ import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
-import UserInfo from '@/components/auth/UserInfo.vue';
+import UserInfo from '@/components/user/UserInfo.vue';
 import { ref } from 'vue';
 
 const LOGGED = [

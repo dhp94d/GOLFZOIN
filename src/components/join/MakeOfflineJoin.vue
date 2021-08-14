@@ -81,7 +81,8 @@
 import { ref } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import { createJoin } from '@/api/join';
-import { uploadFile, getOneThumbnail } from '@/firebaseinit';
+
+import { uploadFile, getOneThumbnail } from '@/firebase/firebaseinit';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 

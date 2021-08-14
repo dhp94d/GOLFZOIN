@@ -69,7 +69,7 @@
 import { ref } from 'vue';
 import { loginUser, patchUser } from '@/api/auth';
 import { useRouter } from 'vue-router';
-import { uploadFile, getOneThumbnail } from '@/firebaseinit';
+import { uploadFile, getOneThumbnail } from '@/firebase/firebaseinit';
 import { getUserFromCookie } from '@/composable/cookies';
 import Modal from '@/components/common/Modal.vue';
 
