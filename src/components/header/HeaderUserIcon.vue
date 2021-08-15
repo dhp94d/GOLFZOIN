@@ -26,7 +26,7 @@
                 <UserInfo @toggle="userToggle"></UserInfo>
               </div>
             </li>
-            <li @click="logout">로그아웃</li>
+            <li @click="logoutClick">로그아웃</li>
           </template>
           <template v-else>
             <li>
@@ -56,6 +56,7 @@ import DropDown from '@/components/common/DropDown.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
 import UserInfo from '@/components/user/UserInfo.vue';
+import { logout } from '@/middleware/auth';
 import { ref } from 'vue';
 
 const LOGGED = [
@@ -76,8 +77,10 @@ export default defineComponent({
     const openSignup = ref(false);
     const openUser = ref(false);
     const { authIsLoggedIn, authLogout }: any = useAuth();
-    const logout = () => {
-      authLogout();
+
+    const logoutClick = () => {
+      // authLogout();
+      logout('firebase');
       router.push({
         name: 'Main',
       });
@@ -93,6 +96,7 @@ export default defineComponent({
       openSignup.value = false;
       openUser.value = false;
     };
+
     const signupToggle = () => {
       if (openSignup.value) {
         document.querySelector('body')?.classList.remove('overflow-hidden');
@@ -103,6 +107,7 @@ export default defineComponent({
       openLogin.value = false;
       openUser.value = false;
     };
+
     const userToggle = () => {
       if (openUser.value) {
         document.querySelector('body')?.classList.remove('overflow-hidden');
@@ -116,7 +121,7 @@ export default defineComponent({
     return {
       LOGGED,
       authIsLoggedIn,
-      logout,
+      logoutClick,
       openLogin,
       openSignup,
       loginToggle,

@@ -1,5 +1,4 @@
 import { auth } from './index';
-
 // users
 function loginUser(data: any) {
   return auth.get(`users${data}`);

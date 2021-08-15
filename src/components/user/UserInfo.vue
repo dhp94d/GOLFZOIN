@@ -11,19 +11,15 @@
           <input type="file" id="input-file" @change="getImgPath" />
         </button>
         <form @submit.prevent="submitForm" class="user-info-data">
-          <div class="user-email">
-            <span>이메일</span>
-            <input :placeholder="user.email" disabled="false" />
+          <div>
+            <span>이름</span>
+            <input :placeholder="user.name" v-model="name" />
           </div>
           <div>
-            <spane>비밀번호</spane>
-            <input id="password" type="text" v-model="password" />
-          </div>
-          <div class="user-nickname">
             <span>닉네임</span>
             <input :placeholder="user.nickname" v-model="nickname" />
           </div>
-          <div class="user-email">
+          <div>
             <span>생년월일</span>
             <input
               type="date"
@@ -34,12 +30,12 @@
           </div>
           <div class="user-info-data">
             <span>휴대폰 번호</span>
-            <input :placeholder="user.phoneNumber" v-model="phoneNumber" />
+            <input :placeholder="user.p_number" v-model="phoneNumber" />
           </div>
           <div class="user-info-data">
             <span>주소</span>
             <div>
-              <input :placeholder="user.address?.name" v-model="address" />
+              <input :placeholder="user.address" v-model="address" />
               <div class="address-buttons">
                 <input
                   type="button"
@@ -67,9 +63,10 @@
 </template>
 <script>
 import { ref } from 'vue';
-import { loginUser, patchUser } from '@/api/auth';
+import { patchUser } from '@/api/auth';
+import { getUserInfo, updateInfo } from '@/middleware/auth';
 import { useRouter } from 'vue-router';
-import { uploadFile, getOneThumbnail } from '@/firebase/firebaseinit';
+import { uploadFile, getOneThumbnail } from '@/firebase/img';
 import { getUserFromCookie } from '@/composable/cookies';
 import Modal from '@/components/common/Modal.vue';
 
@@ -81,31 +78,28 @@ export default {
   },
   setup() {
     const user = ref({});
-    const password = ref('');
     const nickname = ref('');
+    const id = ref('');
+    const name = ref('');
     const phoneNumber = ref('');
     const address = ref('');
     const hit = ref('');
     const latitude = ref('');
     const longitude = ref('');
+
     const router = useRouter();
-    const newImg = ref('');
+    const newImg = ref();
     const saveImg = ref();
 
     const getImgPath = async (event) => {
       var reader = new FileReader();
 
       saveImg.value = event.target.files[0];
-      await uploadFile('join', saveImg.value);
+      await uploadFile('profiles', `${getUserFromCookie()}`, saveImg.value);
       reader.onload = function (event) {
         newImg.value = event.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
-    };
-
-    const getCookie = function (name) {
-      const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-      return value ? value[2] : null;
     };
 
     const findAddress = () => {
@@ -123,44 +117,43 @@ export default {
       }).open();
     };
     const getUser = async () => {
-      const response = await loginUser(`?email=${getCookie('til_user')}`);
-      user.value = response.data[0];
-      newImg.value = user.value.profile;
+      // const response = await loginUser(`?email=${getCookie('til_user')}`);
+      // user.value = response.data[0];
+      // newImg.value = user.value.profile;
+      const res = await getUserInfo('firebase');
+      user.value = res;
     };
     getUser();
-
     const submitForm = async () => {
       const data = {};
-      if (!!password.value) data.password = password.value;
       if (!!nickname.value) data.nickname = nickname.value;
       if (!!address.value) data.address = address.value;
       if (!!hit.value) data.hit = hit.value;
       if (!!phoneNumber.value) data.phoneNumber = phoneNumber.value;
+      if (!!name.value) data.name = name.value;
 
-      if (!!newImg.value) {
+      if (saveImg.value) {
         const url = await getOneThumbnail(
-          `${getUserFromCookie()}/${
-            saveImg.value.name + saveImg.value.lastModified
-          }_250x250`
+          'profiles',
+          `${getUserFromCookie()}`,
+          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
         );
-        console.log(url);
         data.profile = url;
-      } else {
-        data.profile = DEFAULT_IMG;
       }
-      await patchUser(user.value.id, data);
-      router.push({
-        name: 'Main',
-      });
+      console.log(data);
+      // await patchUser(user.value.id, data);
+      await updateInfo('firebase', data);
+      router.go();
     };
     return {
       user,
       findAddress,
-      password,
       nickname,
       phoneNumber,
       hit,
       address,
+      id,
+      name,
       submitForm,
       DEFAULT_IMG,
       getImgPath,

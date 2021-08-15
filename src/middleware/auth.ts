@@ -4,9 +4,10 @@ import {
   fbLoginUser,
   fbIsLoggedIn,
   fbLogout,
+  fbGetUserInfo,
+  fbUpdateInfo,
 } from '@/firebase/auth';
-import { getUserFromCookie } from '@/composable/cookies';
-import { useAuth } from '@/composable/auth';
+import { getUserFromCookie, deleteCookie } from '@/composable/cookies';
 
 interface userDTO {
   authType: string;
@@ -30,35 +31,61 @@ interface LoginDataDTO {
   pw: string;
 }
 
-export const createUser = (type: 'server' | 'firebase', data: userDTO) => {
+export const createUser = async (
+  type: 'server' | 'firebase',
+  data: userDTO
+) => {
   if (type === 'server') {
     signupUser(data);
     return true;
   } else {
-    fbCretaeUser(data);
+    await fbCretaeUser(data);
     return true;
   }
 };
 
-export const loginUser = (type: 'server' | 'firebase', data: LoginDataDTO) => {
+export const loginUser = async (
+  type: 'server' | 'firebase',
+  data: LoginDataDTO
+) => {
   if (type === 'server') {
     return true;
   } else {
-    fbLoginUser(data);
+    await fbLoginUser(data);
+
     return true;
   }
 };
 
-export const isLoggedin = (type: 'server' | 'firebase') => {
+export const isLoggedin = async (type: 'server' | 'firebase') => {
   if (type === 'server') {
-    const { authToken } = useAuth();
-    console.log(authToken.value);
     return !!getUserFromCookie();
   } else {
-    fbIsLoggedIn();
+    return await fbIsLoggedIn();
   }
 };
 
-export const logout = () => {
-  fbLogout();
+export const logout = async (type: 'server' | 'firebase') => {
+  if (type === 'server') {
+  } else {
+    const res = await fbLogout();
+    console.log(res);
+    deleteCookie('til_auth');
+    deleteCookie('til_user');
+  }
+};
+
+export const getUserInfo = async (type: 'server' | 'firebase') => {
+  if (type === 'server') {
+  } else {
+    const res = await fbGetUserInfo();
+    return res;
+  }
+};
+
+export const updateInfo = async (type: 'server' | 'firebase', data: object) => {
+  if (type === 'server') {
+  } else {
+    await fbUpdateInfo(data);
+  }
 };

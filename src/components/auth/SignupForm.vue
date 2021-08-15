@@ -100,6 +100,8 @@ import { createUser } from '@/middleware/auth';
 import { validateEmail } from '@/composable/validateEmail';
 import Modal from '@/components/common/Modal.vue';
 
+const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
+
 export default defineComponent({
   components: {
     Modal,
@@ -155,7 +157,7 @@ export default defineComponent({
         lat: latitude.value,
         lon: longitude.value,
         hit: hit.value,
-        profile: '',
+        profile: DEFAULT_IMG,
       };
       await createUser('firebase', data);
 

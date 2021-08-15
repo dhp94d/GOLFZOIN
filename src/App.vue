@@ -5,10 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import { isLoggedin } from '@/middleware/auth';
 export default defineComponent({
   name: 'App',
-  setup() {},
+  setup() {
+    onMounted(() => isLoggedin('firebase'));
+  },
 });
 </script>
 

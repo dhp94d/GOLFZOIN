@@ -27,17 +27,24 @@ export default {
   namespaced: true,
   state: {
     user: {},
+    email: '',
     token: '',
   },
   getters: {
     isLoggedIn(state: { token: string }) {
-      return !!state.token || isLoggedin('server') || !!getUserFromCookie();
+      return !!state?.token || !!getUserFromCookie();
     },
     userToken(state: { token: string }) {
       return state.token;
     },
+    getEmail(state: { email: string }) {
+      return state.email;
+    },
   },
   mutations: {
+    SET_EMAIL(state: { email: string }) {
+      state.email = getUserFromCookie();
+    },
     SET_USER(state: { user: userDTO }, payload: userDTO) {
       state.user = { ...payload };
     },
