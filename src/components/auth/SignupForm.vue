@@ -157,7 +157,7 @@ export default defineComponent({
         hit: hit.value,
         profile: '',
       };
-      await createUser('serverless', data);
+      await createUser('firebase', data);
 
       router.go();
     };

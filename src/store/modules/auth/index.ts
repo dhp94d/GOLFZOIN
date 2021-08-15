@@ -5,6 +5,7 @@ import {
   getUserFromCookie,
   deleteCookie,
 } from '@/composable/cookies';
+import { isLoggedin } from '@/middleware/auth';
 
 interface userDTO {
   email: string;
@@ -30,7 +31,7 @@ export default {
   },
   getters: {
     isLoggedIn(state: { token: string }) {
-      return !!state.token || !!getUserFromCookie();
+      return !!state.token || isLoggedin('server') || !!getUserFromCookie();
     },
     userToken(state: { token: string }) {
       return state.token;
@@ -51,12 +52,11 @@ export default {
     },
   },
   actions: {
-    async LOGIN({ commit }: any, data: { email: string; password: string }) {
+    async LOGIN({ commit }: any, data: { email: string; pw: string }) {
       const response = await loginUser(
-        `?email=${data.email}&password=${data.password}`
+        `?email=${data.email}&password=${data.pw}`
       );
       const auth = response.data[0];
-      console.log(auth);
       commit('SET_USER', auth);
       commit('SET_TOKEN', auth.email);
       saveUserToCookie(auth.email);
