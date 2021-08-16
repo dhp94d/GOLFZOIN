@@ -17,7 +17,6 @@
             <div>
               <input
                 placeholder="제목을 입력하세요"
-                id="title"
                 type="text"
                 v-model="title"
               />
@@ -35,9 +34,15 @@
             <div>
               <input
                 placeholder="희망 인원을 입력하세요"
-                id="time"
                 type="text"
-                v-model="maximum"
+                v-model="totalCount"
+              />
+            </div>
+            <div>
+              <input
+                placeholder="네트워크 플레이 키를 입력해주세요"
+                type="text"
+                v-model="pw"
               />
             </div>
             <div>
@@ -45,7 +50,7 @@
                 class="form-control"
                 placeholder="모임 상세 내용"
                 rows="3"
-                v-model="detailText"
+                v-model="body"
               ></textarea>
             </div>
           </form>
@@ -61,27 +66,29 @@
 <script>
 import { ref } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
-import { createJoin } from '@/api/join';
-
-import { uploadFile, getOneThumbnail } from '@/firebase/firebaseinit';
+import dayjs from 'dayjs';
+import { isLoggedin } from '@/middleware/auth';
+import { mwCreateJoin } from '@/middleware/join';
+import { uploadFile, getOneThumbnail } from '@/firebase/img';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default {
   setup() {
     const title = ref('');
-    const maximum = ref('');
+    const totalCount = ref(0);
     const time = ref('');
-    const detailText = ref('');
+    const body = ref('');
     const router = useRouter();
+    const pw = ref('');
     const newImg = ref('');
-    const picked = ref(new Date());
+    const picked = ref(dayjs().format('YYYY-MM-DD'));
     const saveImg = ref('');
     const getImgPath = async (event) => {
       var reader = new FileReader();
 
       saveImg.value = event.target.files[0];
-      await uploadFile('join', saveImg.value);
+      await uploadFile('join', '', saveImg.value);
       reader.onload = function (event) {
         newImg.value = event.target.result;
       };
@@ -90,24 +97,27 @@ export default {
     const submitForm = async () => {
       const data = {
         type: 'online',
-        data: {
-          title: title.value,
-          time: time.value,
-          date: picked.value,
-          maximum: maximum.value,
-          participants: 0,
-          detailText: detailText.value,
-        },
+        hostid: await isLoggedin('firebase'),
+        date: picked.value,
+        totalcount: totalCount.value,
+        title: title.value,
+        time: time.value,
+        pw: pw.value,
+        title: title.value,
+        body: body.value,
       };
       if (!!newImg.value) {
         const url = await getOneThumbnail(
-          `join/${saveImg.value.name + saveImg.value.lastModified}_250x250`
+          'join',
+          '',
+          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
         );
-        data.data.thumbnail = url;
+        data.thumbnail = url;
       } else {
-        data.data.thumbnail = DEFAULT_IMG;
+        data.thumbnail = DEFAULT_IMG;
       }
-      await createJoin(data);
+      // await createJoin(data);
+      await mwCreateJoin('firebase', data);
       router.push({
         name: 'Main',
       });
@@ -115,13 +125,14 @@ export default {
     return {
       title,
       time,
-      detailText,
+      body,
       submitForm,
       getImgPath,
       DEFAULT_IMG,
       newImg,
       picked,
-      maximum,
+      totalCount,
+      pw,
     };
   },
 };

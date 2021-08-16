@@ -56,7 +56,7 @@
                 placeholder="희망 인원을 입력하세요"
                 id="time"
                 type="text"
-                v-model="maximum"
+                v-model="totalCount"
               />
             </div>
             <div>
@@ -64,7 +64,7 @@
                 class="form-control"
                 placeholder="모임 상세 내용"
                 rows="3"
-                v-model="detailText"
+                v-model="body"
               ></textarea>
             </div>
           </form>
@@ -80,24 +80,25 @@
 <script>
 import { ref } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
-import { createJoin } from '@/api/join';
-
-import { uploadFile, getOneThumbnail } from '@/firebase/firebaseinit';
+import { isLoggedin } from '@/middleware/auth';
+import { mwCreateJoin } from '@/middleware/join';
+import { uploadFile, getOneThumbnail } from '@/firebase/img';
+import dayjs from 'dayjs';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default {
   setup() {
     const title = ref('');
-    const maximum = ref('');
+    const totalCount = ref(0);
     const time = ref('');
-    const detailText = ref('');
+    const body = ref('');
     const router = useRouter();
-    const latitude = ref('');
-    const longitude = ref('');
+    const latitude = ref(0);
+    const longitude = ref(0);
     const newImg = ref('');
     const addressName = ref('');
-    const picked = ref('');
+    const picked = ref(dayjs().format('YYYY-MM-DD'));
     const saveImg = ref('');
     const geocoder = new kakao.maps.services.Geocoder();
 
@@ -105,7 +106,7 @@ export default {
       var reader = new FileReader();
 
       saveImg.value = event.target.files[0];
-      await uploadFile('join', saveImg.value);
+      await uploadFile('join', '', saveImg.value);
       reader.onload = function (event) {
         newImg.value = event.target.result;
       };
@@ -151,7 +152,7 @@ export default {
           },
           {
             enableHighAccuracy: true,
-            maximumAge: 0,
+            totalCountAge: 0,
             timeout: Infinity,
           }
         );
@@ -162,29 +163,28 @@ export default {
     const submitForm = async () => {
       const data = {
         type: 'offline',
-        data: {
-          title: title.value,
-          time: time.value,
-          date: picked.value,
-          maximum: maximum.value,
-          participants: 0,
-          detailText: detailText.value,
-          address: {
-            addressName: addressName.value,
-            latitude: latitude.value,
-            longitude: longitude.value,
-          },
-        },
+        hostid: await isLoggedin(),
+        title: title.value,
+        time: time.value,
+        date: picked.value,
+        totalcount: totalCount.value,
+        body: body.value,
+        place: addressName.value,
+        latitude: latitude.value,
+        longitude: longitude.value,
       };
       if (!!newImg.value) {
         const url = await getOneThumbnail(
-          `join/${saveImg.value.name + saveImg.value.lastModified}_250x250`
+          'join',
+          '',
+          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
         );
-        data.data.thumbnail = url;
+        data.thumbnail = url;
       } else {
-        data.data.thumbnail = DEFAULT_IMG;
+        data.thumbnail = DEFAULT_IMG;
       }
-      await createJoin(data);
+
+      await mwCreateJoin('firebase', data);
       router.push({
         name: 'Main',
       });
@@ -192,13 +192,13 @@ export default {
     return {
       title,
       time,
-      detailText,
+      body,
       submitForm,
       getImgPath,
       DEFAULT_IMG,
       newImg,
       picked,
-      maximum,
+      totalCount,
       findAddress,
       addressName,
       getLocation,
