@@ -117,10 +117,10 @@ export default defineComponent({
     const birthday = ref('');
     const p_number = ref('');
     const address = ref('');
-    const hit = ref('');
+    const hit = ref(0);
     const gender = ref('');
-    const latitude = ref('');
-    const longitude = ref('');
+    const latitude = ref(0);
+    const longitude = ref(0);
 
     const toggle = () => {
       emit('toggle');

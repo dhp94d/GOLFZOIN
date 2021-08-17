@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
-import Calendar from '@/pages/calendar/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
 import MakeJoinPage from '@/pages/join/MakeJoinPage.vue';
@@ -8,7 +7,6 @@ import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
 import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
-import TestPage from '@/pages/user/TestPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -35,17 +33,6 @@ const router = createRouter({
       beforeEnter,
     },
     {
-      path: '/user/testpage',
-      name: 'TestPage',
-      component: TestPage,
-    },
-    {
-      path: '/calendar',
-      name: 'Calendar',
-      component: Calendar,
-      beforeEnter,
-    },
-    {
       path: '/join',
       name: 'Join',
       component: JoinPage,
@@ -65,12 +52,6 @@ const router = createRouter({
           path: '/join/offlineJoin',
           name: 'OfflineJoin',
           component: OfflineJoinPage,
-        },
-        {
-          path: '/join/makejoin',
-          name: 'MakeJoinPage',
-          component: MakeJoinPage,
-          beforeEnter,
         },
         {
           path: '/join/onlinedetailJoin',

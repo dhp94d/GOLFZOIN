@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { isLoggedin } from '@/middleware/auth';
+
 export default defineComponent({
   name: 'App',
   setup() {
@@ -20,9 +21,9 @@ export default defineComponent({
 
 /* 반응형 최대크기 */
 #app {
-  font-family: 'Roboto Condensed', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   margin: 0 auto;
   font-size: 14px;
   width: 100%;
@@ -42,6 +43,8 @@ body {
   -webkit-user-select: none;
   user-select: none;
   box-sizing: border-box;
+  color: var(--default-font-color);
+  letter-spacing: -0.02em;
 }
 @media (max-width: 1400px) {
   #app {
