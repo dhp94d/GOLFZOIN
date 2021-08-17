@@ -12,11 +12,11 @@
       <slide v-for="slide in 7" :key="slide">
         <JoinItem
           class="carousel__item"
-          :title="onlineJoinData[slide]?.data.title"
-          :thumbnail="onlineJoinData[slide]?.data.thumbnail"
-          :detailText="onlineJoinData[slide]?.data.detailText"
-          :date="onlineJoinData[slide]?.data.date"
-          :time="onlineJoinData[slide]?.data.time"
+          :title="onlineJoinData[slide]?.title"
+          :thumbnail="onlineJoinData[slide]?.thumbnail"
+          :detailText="onlineJoinData[slide]?.body"
+          :date="onlineJoinData[slide]?.date"
+          :time="onlineJoinData[slide]?.time"
           :id="onlineJoinData[slide]?.id"
           :simple="true"
         ></JoinItem>
@@ -29,11 +29,12 @@
   </div>
 </template>
 <script>
-import { getSelectJoin } from '@/api/join';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import JoinItem from '@/components/join/JoinItem.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { mwGetLimitJoin } from '@/middleware/join';
+
 export default {
   components: {
     Carousel,
@@ -43,11 +44,17 @@ export default {
     Navigation,
   },
   setup() {
-    const onlineJoinData = ref(['detailText']);
-    (async () => {
-      const res = await getSelectJoin('online');
-      onlineJoinData.value.push(...res.data);
-    })();
+    const onlineJoinData = ref(['sda']);
+
+    onMounted(() => {
+      const getOnlinJoin = async () => {
+        const res = await mwGetLimitJoin('firebase', 'online', 7);
+        console.log(res);
+        onlineJoinData.value.push(...res);
+      };
+      getOnlinJoin();
+    });
+
     const settings = {
       itemsToShow: 1,
       modelValue: 1,
@@ -70,8 +77,10 @@ export default {
       // 1024 and up
       1700: {
         itemsToShow: 4.8,
+        modelValue: 3,
       },
     };
+
     return {
       onlineJoinData,
       settings,

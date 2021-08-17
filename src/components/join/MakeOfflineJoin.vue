@@ -1,73 +1,75 @@
 <template>
   <div class="make-join-page">
     <div class="join-container">
-      <div class="make-join-header">오프라인 조인 만들기</div>
       <div class="make-join-body">
-        <div>
-          <div class="join-img">
-            <img :src="newImg ? newImg : DEFAULT_IMG" />
+        <div class="make-join-header">오프라인 조인 만들기</div>
+        <div class="body-detail">
+          <div>
+            <div class="join-img">
+              <img :src="newImg ? newImg : DEFAULT_IMG" />
+            </div>
+            <button class="join-profile">
+              <label for="input-file">썸네일 수정</label>
+              <input type="file" id="input-file" @change="getImgPath" />
+            </button>
           </div>
-          <button class="join-profile">
-            <label for="input-file">썸네일 수정</label>
-            <input type="file" id="input-file" @change="getImgPath" />
-          </button>
-        </div>
-        <div>
-          <form @submit.prevent="submitForm" class="form">
-            <div>
-              <input
-                placeholder="제목을 입력하세요"
-                id="title"
-                type="text"
-                v-model="title"
-                maxlength="25"
-              />
-            </div>
-            <div>
-              <input
-                :value="addressName ? addressName : '위치를 입력하시오'"
-                disabled="true"
-              /><br />
-              <div class="address-buttons">
+          <div>
+            <form @submit.prevent="submitForm" class="form">
+              <div>
                 <input
-                  type="button"
-                  @click="getLocation"
-                  value="내 위치"
-                /><br />
-                <input
-                  type="button"
-                  @click="findAddress"
-                  value="검색 하기"
-                /><br />
+                  placeholder="제목을 입력하세요"
+                  id="title"
+                  type="text"
+                  v-model="title"
+                  maxlength="10"
+                />
               </div>
-            </div>
-            <div>
-              <input type="date" class="box" v-model="picked" />
-            </div>
-            <div>
-              <input
-                placeholder="희망 시간을 입력하세요"
-                type="time"
-                v-model="time"
-              />
-            </div>
-            <div>
-              <input
-                placeholder="희망 인원을 입력하세요"
-                id="time"
-                type="text"
-                v-model="totalCount"
-              />
-            </div>
-            <div>
-              <textarea
-                class="form-control"
-                placeholder="모임 상세 내용"
-                rows="3"
-                v-model="body"
-              ></textarea>
-            </div>
-          </form>
+              <div>
+                <input
+                  :value="addressName ? addressName : '위치를 입력하시오'"
+                  disabled="true"
+                /><br />
+                <div class="address-buttons">
+                  <input
+                    type="button"
+                    @click="getLocation"
+                    value="내 위치"
+                  /><br />
+                  <input
+                    type="button"
+                    @click="findAddress"
+                    value="검색 하기"
+                  /><br />
+                </div>
+              </div>
+              <div>
+                <input type="date" class="box" v-model="picked" />
+              </div>
+              <div>
+                <input
+                  placeholder="희망 시간을 입력하세요"
+                  type="time"
+                  v-model="time"
+                />
+              </div>
+              <div>
+                <input
+                  placeholder="희망 인원을 입력하세요"
+                  id="time"
+                  type="text"
+                  v-model="totalCount"
+                />
+              </div>
+              <div>
+                <textarea
+                  class="form-control"
+                  placeholder="모임 상세 내용"
+                  rows="3"
+                  v-model="body"
+                ></textarea>
+              </div>
+            </form>
+          </div>
         </div>
         <button @click="submitForm" type="submit" class="btn btn btn-primary">
           만들기
@@ -210,68 +212,5 @@ export default {
 </script>
 <style lang="scss" scoped>
 @include auth;
-.make-join-header {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 600;
-  color: #456155;
-}
-.make-join-page {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  padding: auto;
-}
-.make-join-body {
-  display: flex;
-  border: 1px solid black;
-  justify-content: center;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-}
-.join-img {
-  display: flex;
-  padding: 1rem;
-  img {
-    border: 1px solid black;
-    object-fit: cover;
-    width: 300px;
-    height: 200px;
-    margin: auto;
-  }
-}
-.join-profile {
-  display: flex;
-  margin: auto;
-  background-color: white;
-  border: 0;
-  :hover {
-    color: black;
-  }
-  label {
-    display: inline-block;
-    padding: 0.5em 0.75em;
-    color: #999;
-    font-size: inherit;
-    font-weight: bold;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-    border: 1px solid #ebebeb;
-    border-bottom-color: #e2e2e2;
-    border-radius: 0.25em;
-  }
-  input[type='file'] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
-}
+@include makeJoin;
 </style>

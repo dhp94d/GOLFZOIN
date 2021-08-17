@@ -24,7 +24,7 @@ export default defineComponent({
   setup() {},
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .header-fixed-container {
   display: flex;
   position: sticky;
@@ -33,7 +33,7 @@ export default defineComponent({
   background-color: white;
   width: 100%;
   padding: 1rem 10rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid gray;
   z-index: 10;
 }
 @media (max-width: 1400px) {

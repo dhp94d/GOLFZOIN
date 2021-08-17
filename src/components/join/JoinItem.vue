@@ -11,11 +11,7 @@
           </div>
           <div class="thumbnail-body">
             <p>
-              {{
-                detailText?.length > 40
-                  ? detailText.slice(0, 40) + '...'
-                  : detailText
-              }}
+              {{ body?.length > 40 ? body.slice(0, 40) + '...' : body }}
             </p>
           </div>
         </div>
@@ -28,11 +24,7 @@
           <h5>{{ title }}</h5>
           <div class="thumbnail-address">
             위치:
-            {{
-              addressName?.length > 20
-                ? addressName.slice(0, 20) + '...'
-                : addressName
-            }}
+            {{ place?.length > 20 ? place.slice(0, 20) + '...' : place }}
           </div>
           <div class="thumbnail-time">
             <div>{{ date }}</div>
@@ -51,13 +43,12 @@ export default {
     title: String,
     time: String,
     date: String,
-    maximum: String,
-    detailText: String,
+    totalcount: Number,
+    body: String,
     thumbnail: String,
     simple: Boolean,
-    participants: String,
-    addressName: String,
-    id: Number,
+    place: String,
+    id: String,
   },
   setup() {
     const router = useRouter();
