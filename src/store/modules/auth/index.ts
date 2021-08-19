@@ -1,4 +1,3 @@
-import { loginUser } from '@/api/auth';
 import {
   saveAuthToCookie,
   saveUserToCookie,
@@ -59,16 +58,6 @@ export default {
     },
   },
   actions: {
-    async LOGIN({ commit }: any, data: { email: string; pw: string }) {
-      const response = await loginUser(
-        `?email=${data.email}&password=${data.pw}`
-      );
-      const auth = response.data[0];
-      commit('SET_USER', auth);
-      commit('SET_TOKEN', auth.email);
-      saveUserToCookie(auth.email);
-      saveAuthToCookie(auth.email);
-      return response;
-    },
+    async LOGIN({ commit }: any, data: { email: string; pw: string }) {},
   },
 };

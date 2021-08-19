@@ -1,5 +1,4 @@
 import { fbCretaeJoin } from '@/firebase/join';
-import { getJoin, createJoin, getSelectJoin, getJoinAll } from '@/api/join';
 import { fbGetLimitJoin } from '@/firebase/join';
 
 interface joinDTO {
@@ -21,7 +20,6 @@ export const mwCreateJoin = async (
   data: joinDTO
 ) => {
   if (type === 'server') {
-    await createJoin(data);
   } else {
     await fbCretaeJoin(data);
   }

@@ -1,4 +1,3 @@
-import { signupUser } from '@/api/auth';
 import {
   fbCretaeUser,
   fbLoginUser,
@@ -37,7 +36,6 @@ export const createUser = async (
   data: userDTO
 ) => {
   if (type === 'server') {
-    signupUser(data);
     return true;
   } else {
     await fbCretaeUser(data);

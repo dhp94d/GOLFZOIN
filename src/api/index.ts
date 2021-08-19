@@ -12,5 +12,5 @@ function createWithAuth(url: string, options?: any) {
   return instance;
 }
 
-export const auth = create(process.env.VUE_APP_API_URL);
+export const notLoggedAxios = create(process.env.VUE_APP_API_URL);
 export const loggedAxios = createWithAuth(process.env.VUE_APP_API_URL);

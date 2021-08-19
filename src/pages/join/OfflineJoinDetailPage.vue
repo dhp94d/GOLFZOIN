@@ -26,17 +26,13 @@
 
 <script>
 import { useJoin } from '@/composable/join';
-import { getJoin } from '@/api/join';
 import { onMounted, ref } from 'vue';
 export default {
   setup() {
     const JoinData = ref('');
     const { target } = useJoin();
 
-    const setJoinDetail = async () => {
-      const res = await getJoin(target.value);
-      JoinData.value = res.data.data;
-    };
+    const setJoinDetail = async () => {};
 
     onMounted(() => {
       setJoinDetail();
