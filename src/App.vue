@@ -17,8 +17,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
 /* 반응형 최대크기 */
 #app {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

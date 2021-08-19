@@ -131,18 +131,9 @@ export default {
         bounds.extend(positions.value[i]);
       }
     };
-
     onMounted(async () => {
       await getOfflineData();
-      if (window.kakao && window.kakao.maps) {
-        initMap();
-      } else {
-        const script = document.createElement('script');
-        script.onload = () => kakao.maps.load(this.initMap);
-        script.src =
-          'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=15ac0683efa77658fcfebb90ca8d1bc4';
-        document.head.appendChild(script);
-      }
+      initMap();
     });
     return {
       offlineJoinData,
