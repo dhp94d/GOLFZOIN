@@ -21,10 +21,8 @@ function getFollowing(userId: string) {
   return notLoggedAxios.get(`api/user/following?id=${userId}`);
 }
 
-function findUser(userId: string, nickname: string) {
-  return notLoggedAxios.get(
-    `/api/user/finduser?id=${userId}&nickname=${nickname}`
-  );
+function findUser(keyword: string) {
+  return notLoggedAxios.get(`/api/user/finduser?keyword=${keyword}`);
 }
 
 export { modifyUser, detailUser, addFollow, getFollow, getFollowing, findUser };
