@@ -10,10 +10,19 @@
       </div>
       <div class="chat-nav-room-body">
         <div class="preview-title-wrap">
-          <span class="nickname">박동현</span>
+          <span class="nickname">당근이</span>
+          <div class="sub-text">
+            <span>당근마켓</span><span> · </span><span>12월 18일</span>
+          </div>
         </div>
-        <div class="preview-description"></div></div
-    ></a>
+        <div class="preview-description">
+          <span
+            >박동현님, 반갑습니당! 동네 이웃과 거래하기 전, 첫 가이드를 꼭
+            읽어보세요:)</span
+          >
+        </div>
+      </div></a
+    >
   </li>
 </template>
 

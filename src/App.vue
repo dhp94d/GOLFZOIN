@@ -43,8 +43,16 @@ body {
   -webkit-user-select: none;
   user-select: none;
   box-sizing: border-box;
-  color: var(--default-font-color);
   letter-spacing: -0.02em;
+  color: #484848;
+  overflow: overlay;
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 42%, 0.49);
+    border-radius: 100px;
+  }
 }
 @media (max-width: 1400px) {
   #app {

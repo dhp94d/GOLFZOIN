@@ -7,6 +7,8 @@ import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
 import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
+import CalendarPage from '@/pages/user/CalendarPage.vue';
+import UserPage from '@/pages/user/UserPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -20,16 +22,22 @@ const router = createRouter({
     },
 
     {
-      path: '/user',
+      path: '/chat',
       name: 'ChatPage',
       component: ChatPage,
-      children: [
-        {
-          path: '/user/Chatpage',
-          name: 'ChatPage',
-          component: ChatPage,
-        },
-      ],
+      beforeEnter,
+    },
+    {
+      path: '/user',
+      name: 'UserPage',
+      component: UserPage,
+      beforeEnter,
+    },
+
+    {
+      path: '/calendar',
+      name: 'CalendarPage',
+      component: CalendarPage,
       beforeEnter,
     },
     {

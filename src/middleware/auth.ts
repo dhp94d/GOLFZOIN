@@ -6,6 +6,7 @@ import {
   fbLogout,
   fbGetUserInfo,
   fbUpdateInfo,
+  fbGetUserJoinList,
 } from '@/firebase/auth';
 import { getUserFromCookie, deleteCookie } from '@/composable/cookies';
 
@@ -54,6 +55,14 @@ export const loginUser = async (
     await fbLoginUser(data);
 
     return true;
+  }
+};
+
+export const getUserJoinList = async (type: 'server' | 'firebase') => {
+  if (type === 'server') {
+    return true;
+  } else {
+    return await fbGetUserJoinList();
   }
 };
 

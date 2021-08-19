@@ -5,7 +5,7 @@
         src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
         alt="당근이"
       />
-      <div class="main-title"><span>당근이</span></div>
+      <div class="main-title"><span>박동현</span></div>
     </div>
     <div class="css-6cujsz">
       <div class="more-button-wrapper pointer-cursor">

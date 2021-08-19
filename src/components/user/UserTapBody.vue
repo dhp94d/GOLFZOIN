@@ -31,6 +31,6 @@ export default {
   border-top: 1px solid rgba(33, 33, 36, 0.07);
   height: 56px;
   min-height: 56px;
-  width: 20%;
+  width: 30%;
 }
 </style>

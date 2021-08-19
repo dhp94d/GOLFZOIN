@@ -1,4 +1,5 @@
 import { db } from './firebaseinit';
+import { fbAddJoinName } from '@/firebase/auth';
 import dayjs from 'dayjs';
 interface joinDTO {
   type: string;
@@ -17,7 +18,31 @@ interface joinDTO {
 
 export const fbCretaeJoin = async (data: joinDTO) => {
   try {
-    await db.collection(data.type).add(data);
+    const res = await db
+      .collection('join')
+      .doc(data.type)
+      .collection('joinData')
+      .add(data);
+    await db
+      .collection('join')
+      .doc(data.type)
+      .collection('userList')
+      .doc(res.id)
+      .set({ hostid: data.hostid, userlist: [] });
+    await db
+      .collection('join')
+      .doc(data.type)
+      .collection('chatRoom')
+      .doc(res.id)
+      .set({});
+    await fbAddJoinName(res.id, {
+      type: data.type,
+      hostid: data.hostid,
+      title: data.title,
+      time: data.time,
+      date: data.date,
+      totalcount: data.totalcount,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -39,6 +64,7 @@ export const fbGetLimitJoin = async (
       const data = { ...join.data(), id: join.id };
       joinList.push(data);
     });
+    console.log(joinList);
     return joinList;
   } catch (error) {
     console.error(error);

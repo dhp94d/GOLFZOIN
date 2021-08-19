@@ -47,11 +47,12 @@ export default {
   setup() {
     const offlineJoinData = ref(['body']);
 
+    const getOfflineJoin = async () => {
+      const res = await mwGetLimitJoin('firebase', 'offline', 7);
+      offlineJoinData.value.push(...res);
+    };
+
     onMounted(() => {
-      const getOfflineJoin = async () => {
-        const res = await mwGetLimitJoin('firebase', 'offline', 7);
-        offlineJoinData.value.push(...res);
-      };
       getOfflineJoin();
     });
     const settings = {

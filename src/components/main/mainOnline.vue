@@ -46,12 +46,12 @@ export default {
   setup() {
     const onlineJoinData = ref(['sda']);
 
+    const getOnlinJoin = async () => {
+      const res = await mwGetLimitJoin('firebase', 'online', 7);
+      onlineJoinData.value.push(...res);
+    };
+
     onMounted(() => {
-      const getOnlinJoin = async () => {
-        const res = await mwGetLimitJoin('firebase', 'online', 7);
-        console.log(res);
-        onlineJoinData.value.push(...res);
-      };
       getOnlinJoin();
     });
 

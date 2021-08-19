@@ -1,11 +1,11 @@
 <template>
   <section class="chat-room-container">
+    <ChatRoomHeader></ChatRoomHeader>
     <div class="chat-room-wrap">
-      <ChatRoomHeader></ChatRoomHeader>
       <ChatRoombody></ChatRoombody>
-      <div class="chat-roomg-bottom">
-        <ChatRoomMessage></ChatRoomMessage>
-      </div>
+    </div>
+    <div class="chat-roomg-bottom">
+      <ChatRoomMessage></ChatRoomMessage>
     </div>
   </section>
 </template>
@@ -29,8 +29,8 @@ export default {
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(33, 33, 36, 0.14);
-  min-width: 812px;
-  max-width: 812px;
+  min-width: 50vw;
+  max-width: 50vw;
   background-color: rgb(255, 255, 255);
 }
 .chat-room-wrap {
@@ -38,7 +38,14 @@ export default {
   display: flex;
   flex: 1 1 0px;
   flex-direction: column;
-  overflow: hidden;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 42%, 0.49);
+    border-radius: 100px;
+  }
 }
 .chat-roomg-bottom {
   margin: auto 0 0 0;

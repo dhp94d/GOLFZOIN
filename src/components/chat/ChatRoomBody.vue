@@ -14,18 +14,81 @@
             />
           </div>
           <div>
+            <p>박동현</p>
             <div class="chat-room-message-data">
               <div class="temp-message-wrap">
                 <p class="pre-text">
                   박동현님, 반갑습니당! 동네 이웃과 거래하기 전, 첫 가이드를 꼭
                   읽어보세요:)
                 </p>
-                <div class="temp-button">모바일에서 확인해주세요.</div>
               </div>
             </div>
           </div>
           <div class="chat-room-message-time">
             <div class="message-date">오전 4:35</div>
+          </div>
+        </div>
+      </div>
+      <div id="for-scroll-1" class="left">
+        <div class="template-message message-form">
+          <div class="chat-room-profile">
+            <img
+              class="profile-image"
+              src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
+              alt="당근이"
+            />
+          </div>
+          <div>
+            <div class="chat-room-message-data">
+              <div class="temp-message-wrap">
+                <p class="pre-text">박동현님, 반갑습니당!</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-room-message-time">
+            <div class="message-date">오전 4:35</div>
+          </div>
+        </div>
+      </div>
+      <div id="for-scroll-1" class="right">
+        <div class="template-message message-form">
+          <div class="chat-room-message-time">
+            <div class="message-date">오전 4:35</div>
+          </div>
+          <div>
+            <div class="chat-room-message-data">
+              <div class="temp-message-wrap">
+                <p class="pre-text">박동현님, 반갑습니당!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="for-scroll-1" class="right">
+        <div class="template-message message-form">
+          <div class="chat-room-message-time">
+            <div class="message-date">오전 4:35</div>
+          </div>
+          <div>
+            <div class="chat-room-message-data">
+              <div class="temp-message-wrap">
+                <p class="pre-text">박동현님, 반갑습니당!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="for-scroll-1" class="right">
+        <div class="template-message message-form">
+          <div class="chat-room-message-time">
+            <div class="message-date">오전 4:35</div>
+          </div>
+          <div>
+            <div class="chat-room-message-data">
+              <div class="temp-message-wrap">
+                <p class="pre-text">박동현님, 반갑습니당!</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,7 +103,6 @@ export default {};
 <style lang="scss" scoped>
 .chat-room-container {
   display: block;
-  overflow: hidden auto;
   padding: 0px 20px;
 }
 .day-divider {
@@ -68,11 +130,6 @@ export default {};
 
 .message-form .template-message {
   margin-bottom: 16px;
-}
-.message-form {
-  display: flex;
-  justify-content: flex-start;
-  padding: 4px;
 }
 .chat-room-profile {
   margin-right: 8px;
@@ -103,11 +160,29 @@ export default {};
   -webkit-box-pack: end;
   justify-content: flex-end;
   padding: 0px 4px;
-  .css-12zo68g .message-date {
+  .message-date {
     font-size: 12px;
     line-height: 150%;
     letter-spacing: -0.02em;
     color: rgb(134, 139, 148);
+  }
+}
+.right {
+  .message-form {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px;
+  }
+  .chat-room-message-data {
+    background-color: blanchedalmond;
+  }
+}
+
+.left {
+  .message-form {
+    display: flex;
+    justify-content: flex-start;
+    padding: 4px;
   }
 }
 </style>

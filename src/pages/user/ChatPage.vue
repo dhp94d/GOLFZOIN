@@ -12,14 +12,11 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue';
-import axios from 'axios';
+import { defineComponent } from 'vue';
 import SubHeader from '@/components/common/SubHeader.vue';
 import ChatSidebar from '@/components/chat/ChatSidebar.vue';
 import Chatnav from '@/components/chat/ChatNav.vue';
 import ChatRoom from '@/components/chat/ChatRoom.vue';
-import { useChat } from '@/composable/chat';
-import { useStore } from 'vuex';
 
 export default defineComponent({
   components: {
@@ -28,28 +25,7 @@ export default defineComponent({
     Chatnav,
     ChatRoom,
   },
-  setup() {
-    const store = useStore();
-    const { ChatTarget } = useChat();
-    const chatType = ref(true);
-    const basicData = ref([]);
-    const getData = async () => {
-      const res = await axios.get(`http://localhost:3000/chat`);
-      basicData.value = res.data;
-    };
-    const chatRoomData = computed(
-      () =>
-        basicData.value.filter((v) => v.id === store.state.chat.target)[0]?.data
-    );
-    console.log(chatRoomData);
-    getData();
-    return {
-      chatType,
-      basicData,
-      ChatTarget,
-      chatRoomData,
-    };
-  },
+  setup() {},
 });
 </script>
 
@@ -65,6 +41,7 @@ export default defineComponent({
 }
 .chat-Frame {
   display: flex;
+  object-fit: cover;
   justify-content: space-between;
 }
 </style>

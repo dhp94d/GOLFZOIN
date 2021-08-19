@@ -32,6 +32,7 @@ export default defineComponent({
   justify-content: space-between;
   background-color: white;
   width: 100%;
+  height: 10vh;
   padding: 1rem 10rem;
   border-bottom: 1px solid gray;
   z-index: 10;

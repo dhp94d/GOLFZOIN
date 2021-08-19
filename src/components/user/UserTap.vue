@@ -1,27 +1,27 @@
 <template>
-  <div class="chat-nav-container">
-    <ChatNavHeader></ChatNavHeader>
-    <ChatNavBody></ChatNavBody>
+  <div class="user-nav-container">
+    <UserTapHeader></UserTapHeader>
+    <UserTapBody></UserTapBody>
   </div>
 </template>
 
 <script>
-import ChatNavHeader from '@/components/chat/ChatNavHeader.vue';
-import ChatNavBody from '@/components/chat/ChatNavbody.vue';
+import UserTapHeader from '@/components/user/UserTapHeader.vue';
+import UserTapBody from '@/components/user/UserTapBody.vue';
 export default {
   components: {
-    ChatNavHeader,
-    ChatNavBody,
+    UserTapHeader,
+    UserTapBody,
   },
 };
 </script>
 
 <style lang="scss" scpoed>
-.chat-nav-container {
+.user-nav-container {
+  height: 90vh;
+  width: 30vw;
   display: flex;
   border-right: 1px solid rgba(33, 33, 36, 0.07);
-  width: 16vw;
-  min-width: 16vw;
   flex-direction: column;
   -webkit-box-pack: justify;
   justify-content: space-between;

@@ -60,8 +60,8 @@ import { logout } from '@/middleware/auth';
 import { ref } from 'vue';
 
 const LOGGED = [
-  { title: '채팅', link: '/user' },
-  { title: '알림' },
+  { title: '채팅', link: '/chat' },
+  { title: '유저', link: '/user' },
   { title: '일정관리', link: '/calendar' },
 ];
 export default defineComponent({

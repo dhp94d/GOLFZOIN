@@ -6,6 +6,10 @@
         src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_256_disabled-97ac2510cb2860b9e37caf23beb1e8e0ca130152a119b65402c4673af18bf2a1.png"
         alt="my-account-profile"
     /></a>
+    <div>유저</div>
+    <div>팔로우</div>
+    <div>팔로워</div>
+    <div>알림</div>
   </nav>
 </template>
 
@@ -20,13 +24,12 @@ export default {};
   box-sizing: border-box;
   color: rgb(33, 33, 36);
   display: flex;
-  flex-direction: column;
-  height: 90vh;
-  width: 3.8vw;
+  height: 8vh;
+  width: 30vw;
+  justify-content: space-around;
+  align-items: center;
+
   letter-spacing: -0.32px;
-  line-height: 24px;
-  padding: 20px 13px;
-  row-gap: 20px;
   text-size-adjust: 100%;
   a {
     background-color: transparent;
