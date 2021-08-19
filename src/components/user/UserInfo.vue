@@ -63,9 +63,9 @@
 </template>
 <script>
 import { ref } from 'vue';
-import { getUserInfo, updateInfo } from '@/middleware/auth';
-import { useRouter } from 'vue-router';
-import { uploadFile, getOneThumbnail } from '@/firebase/img';
+// import { getUserInfo, updateInfo } from '@/middleware/auth';
+// import { useRouter } from 'vue-router';
+// import { uploadFile, getOneThumbnail } from '@/firebase/img';
 import { getUserFromCookie } from '@/composable/cookies';
 import Modal from '@/components/common/Modal.vue';
 

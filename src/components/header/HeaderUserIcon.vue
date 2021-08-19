@@ -56,7 +56,7 @@ import DropDown from '@/components/common/DropDown.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
 import UserInfo from '@/components/user/UserInfo.vue';
-import { logout } from '@/middleware/auth';
+// import { logout } from '@/middleware/auth';
 import { ref } from 'vue';
 
 const LOGGED = [
@@ -80,7 +80,7 @@ export default defineComponent({
 
     const logoutClick = () => {
       // authLogout();
-      logout('firebase');
+      // logout('firebase');
       router.push({
         name: 'Main',
       });

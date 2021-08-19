@@ -1,5 +1,5 @@
-import { notLoggedAxios } from '@/api/index';
-import { modifyUserDTO, addFollowDTO } from './types';
+import { notLoggedAxios } from '@/api/server/index';
+import { modifyUserDTO, addFollowDTO } from '@/api/dto/userTypes';
 
 function modifyUser(data: modifyUserDTO) {
   return notLoggedAxios.patch(`api/user/modifyuser`, data);

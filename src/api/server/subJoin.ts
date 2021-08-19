@@ -1,5 +1,5 @@
-import { notLoggedAxios } from '@/api/index';
-import { ApplyJoinDTO, joinIsOkDTO } from './types';
+import { notLoggedAxios } from '@/api/server/index';
+import { ApplyJoinDTO, joinIsOkDTO } from '@/api/dto/joinTypes';
 
 function applyJoin(data: ApplyJoinDTO) {
   return notLoggedAxios.post(`api/join/applyjoin`, data);

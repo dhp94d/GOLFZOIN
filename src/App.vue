@@ -6,13 +6,10 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
-import { isLoggedin } from '@/middleware/auth';
 
 export default defineComponent({
   name: 'App',
-  setup() {
-    onMounted(() => isLoggedin('firebase'));
-  },
+  setup() {},
 });
 </script>
 

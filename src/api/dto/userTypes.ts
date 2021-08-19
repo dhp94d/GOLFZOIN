@@ -1,5 +1,5 @@
 type modifyUserDTO = {
-  id?: string;
+  id: string;
   nickname?: string;
   pw?: string;
   address?: string;

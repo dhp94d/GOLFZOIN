@@ -38,7 +38,7 @@
 <script lang="ts">
 import { validateEmail } from '@/composable/validateEmail';
 import { useRouter } from 'vue-router';
-import { loginUser } from '@/middleware/auth';
+// import { loginUser } from '@/middleware/auth';
 import { computed, defineComponent, ref } from 'vue';
 import Modal from '@/components/common/Modal.vue';
 
@@ -66,13 +66,13 @@ export default defineComponent({
         pw: pw.value,
       };
       // const res = await store.dispatch('auth/LOGIN', data);
-      const res = await loginUser('firebase', data);
-      if (res) {
-        init();
-        router.push({
-          name: 'Main',
-        });
-      }
+      // const res = await loginUser('firebase', data);
+      // if (res) {
+      //   init();
+      //   router.push({
+      //     name: 'Main',
+      //   });
+      // }
     };
     const errorMessage = () => {
       let message = [];

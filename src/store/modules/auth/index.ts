@@ -4,7 +4,6 @@ import {
   getUserFromCookie,
   deleteCookie,
 } from '@/composable/cookies';
-import { isLoggedin } from '@/middleware/auth';
 
 interface userDTO {
   email: string;

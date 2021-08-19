@@ -81,10 +81,10 @@
 
 <script>
 import { ref } from '@vue/reactivity';
-import { useRouter } from 'vue-router';
-import { isLoggedin } from '@/middleware/auth';
-import { mwCreateJoin } from '@/middleware/join';
-import { uploadFile, getOneThumbnail } from '@/firebase/img';
+// import { useRouter } from 'vue-router';
+// import { isLoggedin } from '@/middleware/auth';
+// import { mwCreateJoin } from '@/middleware/join';
+// import { uploadFile, getOneThumbnail } from '@/firebase/img';
 import dayjs from 'dayjs';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
@@ -105,14 +105,13 @@ export default {
     const geocoder = new kakao.maps.services.Geocoder();
 
     const getImgPath = async (event) => {
-      var reader = new FileReader();
-
-      saveImg.value = event.target.files[0];
-      await uploadFile('join', '', saveImg.value);
-      reader.onload = function (event) {
-        newImg.value = event.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      // var reader = new FileReader();
+      // saveImg.value = event.target.files[0];
+      // await uploadFile('join', '', saveImg.value);
+      // reader.onload = function (event) {
+      //   newImg.value = event.target.result;
+      // };
+      // reader.readAsDataURL(event.target.files[0]);
     };
 
     const findAddress = () => {
@@ -165,7 +164,7 @@ export default {
     const submitForm = async () => {
       const data = {
         type: 'offline',
-        hostid: await isLoggedin(),
+        // hostid: await isLoggedin(),
         title: title.value,
         time: time.value,
         date: picked.value,
@@ -175,18 +174,18 @@ export default {
         latitude: latitude.value,
         longitude: longitude.value,
       };
-      if (!!newImg.value) {
-        const url = await getOneThumbnail(
-          'join',
-          '',
-          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
-        );
-        data.thumbnail = url;
-      } else {
-        data.thumbnail = DEFAULT_IMG;
-      }
+      // if (!!newImg.value) {
+      //   const url = await getOneThumbnail(
+      //     'join',
+      //     '',
+      //     `${saveImg.value.name + saveImg.value.lastModified}_250x250`
+      //   );
+      //   data.thumbnail = url;
+      // } else {
+      //   data.thumbnail = DEFAULT_IMG;
+      // }
 
-      await mwCreateJoin('firebase', data);
+      // await mwCreateJoin('firebase', data);
       router.push({
         name: 'Main',
       });

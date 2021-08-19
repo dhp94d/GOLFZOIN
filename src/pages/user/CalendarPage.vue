@@ -24,7 +24,7 @@ import SubHeader from '@/components/common/SubHeader.vue';
 import MatrixView from '@/components/calendar/MatrixView.vue';
 import SelectDate from '@/components/calendar/SelectDate.vue';
 import UserJoinList from '@/components/user/UserJoinList.vue';
-import { getUserJoinList } from '@/middleware/auth';
+// import { getUserJoinList } from '@/middleware/auth';
 import getDayMatrix from '@/composable/calendar';
 import dayjs from 'dayjs';
 
@@ -42,18 +42,18 @@ export default {
     const offlineLen = ref();
     const joinList: any = ref([]);
     const matrix = ref(getDayMatrix(dayjs().year(), dayjs().month()));
-    (async () => {
-      const res = await getUserJoinList('firebase');
-      const array = await [...res];
-      console.log(array);
-      joinList.value = array;
-      onlineLen.value = joinList.value.filter(
-        (v: any) => v.type === 'online'
-      ).length;
-      offlineLen.value = joinList.value.filter(
-        (v: any) => v.type === 'offline'
-      ).length;
-    })();
+    // (async () => {
+    //   const res = await getUserJoinList('firebase');
+    //   const array = await [...res];
+    //   console.log(array);
+    //   joinList.value = array;
+    //   onlineLen.value = joinList.value.filter(
+    //     (v: any) => v.type === 'online'
+    //   ).length;
+    //   offlineLen.value = joinList.value.filter(
+    //     (v: any) => v.type === 'offline'
+    //   ).length;
+    // })();
 
     return {
       matrix,

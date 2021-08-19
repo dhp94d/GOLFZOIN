@@ -1,5 +1,5 @@
-import { notLoggedAxios } from '@/api/index';
-import { onlineJoinListDTO, offlineJoinListDTO } from './types';
+import { notLoggedAxios } from '@/api/server/index';
+import { onlineJoinListDTO, offlineJoinListDTO } from '@/api/dto/joinTypes';
 
 function myJoinList(userid: string) {
   return notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
