@@ -24,3 +24,12 @@ function userGetAlarm(userid: string) {
 function userDelAlarm() {
   return notLoggedAxios.delete(`api/join/alarm/delete`);
 }
+
+export {
+  applyJoin,
+  joinAcceptUser,
+  joinRefuseUser,
+  joinTempUser,
+  userGetAlarm,
+  userDelAlarm,
+};
