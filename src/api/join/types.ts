@@ -14,4 +14,16 @@ type offlineJoinListDTO = {
   date?: string;
 };
 
-export { onlineJoinListDTO, offlineJoinListDTO };
+type ApplyJoinDTO = {
+  type: 'online' | 'offline';
+  roomNo: number;
+  userid: string;
+};
+
+type joinIsOkDTO = {
+  type: 'online' | 'offline';
+  roomNo: number;
+  nickname: string;
+  logtype: 'accept' | 'refuse';
+};
+export { onlineJoinListDTO, offlineJoinListDTO, ApplyJoinDTO, joinIsOkDTO };
