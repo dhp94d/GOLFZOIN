@@ -1,15 +1,16 @@
 import { notLoggedAxios } from '@/api/index';
+import { modifyUserDTO, addFollowDTO } from './types';
 
-function modifyUser(type: string) {
-  return notLoggedAxios.post(`api/user/modifyuser`);
+function modifyUser(data: modifyUserDTO) {
+  return notLoggedAxios.patch(`api/user/modifyuser`, data);
 }
 
 function detailUser(userId: string) {
-  return notLoggedAxios.post(`api/user/detail/${userId}`);
+  return notLoggedAxios.get(`api/user/detail/${userId}`);
 }
 
-function addFollow(type: string) {
-  return notLoggedAxios.get(`api/user/addfollow`);
+function addFollow(data: addFollowDTO) {
+  return notLoggedAxios.post(`api/user/addfollow`, data);
 }
 
 function getFollow(userId: string) {
