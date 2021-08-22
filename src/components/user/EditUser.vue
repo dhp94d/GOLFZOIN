@@ -92,7 +92,6 @@ export default {
     const newImg = ref();
     const saveImg = ref();
 
-    console.log(props.userid);
     const getImgPath = async (event) => {
       var reader = new FileReader();
 

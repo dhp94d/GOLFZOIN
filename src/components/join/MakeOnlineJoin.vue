@@ -70,9 +70,9 @@
 import { ref } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-// // import { isLoggedin } from '@/middleware/auth';
-// import { mwCreateJoin } from '@/middleware/join';
-// import { uploadFile, getOneThumbnail } from '@/firebase/img';
+import { uploadFile, getOneThumbnail } from '@/api/middleware/utils.ts';
+import { getAuthFromCookie } from '@/composable/cookies';
+import { mwRegistJoin } from '@/api/middleware/mainJoin';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
@@ -87,20 +87,22 @@ export default {
     const newImg = ref('');
     const picked = ref(dayjs().format('YYYY-MM-DD'));
     const saveImg = ref('');
+
     const getImgPath = async (event) => {
       var reader = new FileReader();
 
-      // saveImg.value = event.target.files[0];
-      // await uploadFile('join', '', saveImg.value);
-      // reader.onload = function (event) {
-      //   newImg.value = event.target.result;
-      // };
-      // reader.readAsDataURL(event.target.files[0]);
+      saveImg.value = event.target.files[0];
+      await uploadFile('join', `online`, saveImg.value);
+      reader.onload = function (event) {
+        newImg.value = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
     };
+
     const submitForm = async () => {
       const data = {
         type: 'online',
-        // hostid: await isLoggedin('firebase'),
+        hostid: getAuthFromCookie(),
         date: picked.value,
         totalcount: totalCount.value,
         title: title.value,
@@ -109,21 +111,18 @@ export default {
         title: title.value,
         body: body.value,
       };
-      // if (!!newImg.value) {
-      //   const url = await getOneThumbnail(
-      //     'join',
-      //     '',
-      //     `${saveImg.value.name + saveImg.value.lastModified}_250x250`
-      //   );
-      //   data.thumbnail = url;
-      // } else {
-      //   data.thumbnail = DEFAULT_IMG;
-      // }
-      // // await createJoin(data);
-      // await mwCreateJoin('firebase', data);
-      // router.push({
-      //   name: 'Main',
-      // });
+      if (!!newImg.value) {
+        const url = await getOneThumbnail(
+          'join',
+          'online',
+          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
+        );
+        data.thumbnail = url;
+      } else {
+        data.thumbnail = DEFAULT_IMG;
+      }
+
+      await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
     };
     return {
       title,

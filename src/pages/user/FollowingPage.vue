@@ -69,7 +69,6 @@ export default {
         process.env.VUE_APP_SERVER_TYPE,
         getAuthFromCookie()
       );
-      console.log(res);
       users.value = res;
     };
 

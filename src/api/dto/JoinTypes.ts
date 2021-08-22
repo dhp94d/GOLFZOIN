@@ -19,7 +19,7 @@ type registOnlineDTO = {
   hostid: string;
   date: string;
   time: string;
-  totalcount: '3453';
+  totalcount: number;
   place: string;
   lat: number;
   lon: number;
