@@ -1,9 +1,5 @@
 import { auth, db } from '@/api/serverless/firesbaseinit';
-import {
-  saveAuthToCookie,
-  saveUserToCookie,
-  getUserFromCookie,
-} from '@/composable/cookies';
+import { saveAuthToCookie, saveUserToCookie } from '@/composable/cookies';
 import { signupDTO, loginDTO } from '@/api/dto/authTypes';
 
 const fbSignup = async (data: signupDTO) => {
@@ -28,12 +24,15 @@ const fbSignup = async (data: signupDTO) => {
 
 const fbLogin = async (data: loginDTO) => {
   try {
-    const res = await auth.signInWithEmailAndPassword(data.id, data.pw);
-    if (res.user?.email) {
-      saveUserToCookie(res.user?.email);
-      saveAuthToCookie(res.user?.email);
+    const res = await db.collection('users').doc(data.id).get();
+    const userInfo = res.data();
+    if (userInfo) {
+      await auth.signInWithEmailAndPassword(data.id, data.pw);
+      saveAuthToCookie(data.id);
+      saveUserToCookie(JSON.stringify(userInfo));
+      return true;
     }
-    return true;
+    return false;
   } catch (error) {
     return false;
   }
@@ -41,7 +40,7 @@ const fbLogin = async (data: loginDTO) => {
 
 const fbLogout = async () => {
   try {
-    await auth.signOut();
+    return await auth.signOut();
   } catch (error) {
     return false;
   }

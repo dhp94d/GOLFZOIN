@@ -3,20 +3,19 @@ import { useStore } from 'vuex';
 
 export const useAuth = () => {
   const store = useStore();
-  const authUser = computed(() => store.state.auth.user);
-  const authToken = computed(() => store.state.auth.token);
-  const authEmail = computed(() => store.state.auth.email);
+  const authGetUserInfo = computed(() => store.state.auth.user);
+  const authGetUserId = computed(() => store.getters['auth/getUser']);
+  const authLogout = () => store.commit('auth/LOGOUT');
+  const authSetUser = (data: object) => store.commit('auth/SET_USER', data);
+  const authLoginAction = () => store.dispatch('auth/LOGIN');
   const authIsLoggedIn = computed(() => store.getters['auth/isLoggedIn']);
 
-  const authLogout = () => store.commit('auth/LOGOUT');
-  const authSetEmail = () => store.commit('auth/SET_EMAIL');
-
   return {
-    authUser,
-    authToken,
-    authIsLoggedIn,
+    authGetUserInfo,
+    authGetUserId,
     authLogout,
-    authSetEmail,
-    authEmail,
+    authSetUser,
+    authLoginAction,
+    authIsLoggedIn,
   };
 };

@@ -1,28 +1,35 @@
 import { notLoggedAxios } from '@/api/server/index';
 import { modifyUserDTO, addFollowDTO } from '@/api/dto/userTypes';
 
-function modifyUser(data: modifyUserDTO) {
+const modifyUser = async (data: modifyUserDTO) => {
   return notLoggedAxios.patch(`api/user/modifyuser`, data);
-}
+};
 
-function detailUser(userId: string) {
+const detailUser = async (userId: string) => {
   return notLoggedAxios.get(`api/user/detail/${userId}`);
-}
+};
 
-function addFollow(data: addFollowDTO) {
+const addFollow = async (data: addFollowDTO) => {
   return notLoggedAxios.post(`api/user/addfollow`, data);
-}
+};
 
-function getFollow(userId: string) {
-  return notLoggedAxios.get(`api/user/follower?id=${userId}`);
-}
-
-function getFollowing(userId: string) {
+const getFollowing = async (userId: string) => {
   return notLoggedAxios.get(`api/user/following?id=${userId}`);
-}
+};
 
-function findUser(keyword: string) {
+const getFollower = async (userId: string) => {
+  return notLoggedAxios.get(`api/user/follower?id=${userId}`);
+};
+
+const findUser = async (keyword: string) => {
   return notLoggedAxios.get(`/api/user/finduser?keyword=${keyword}`);
-}
+};
 
-export { modifyUser, detailUser, addFollow, getFollow, getFollowing, findUser };
+export {
+  modifyUser,
+  detailUser,
+  addFollow,
+  getFollower,
+  getFollowing,
+  findUser,
+};

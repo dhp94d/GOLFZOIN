@@ -38,8 +38,13 @@
 <script lang="ts">
 import { validateEmail } from '@/composable/validateEmail';
 import { useRouter } from 'vue-router';
-// import { loginUser } from '@/middleware/auth';
+import { mwLogin } from '@/api/middleware/auth';
 import { computed, defineComponent, ref } from 'vue';
+import {
+  saveAuthToCookie,
+  saveUserToCookie,
+  getUserFromCookie,
+} from '@/composable/cookies';
 import Modal from '@/components/common/Modal.vue';
 
 export default defineComponent({
@@ -62,17 +67,16 @@ export default defineComponent({
 
     const submitForm = async () => {
       const data = {
-        email: email.value,
+        authType: 'golfzoin',
+        id: email.value,
         pw: pw.value,
       };
-      // const res = await store.dispatch('auth/LOGIN', data);
-      // const res = await loginUser('firebase', data);
-      // if (res) {
-      //   init();
-      //   router.push({
-      //     name: 'Main',
-      //   });
-      // }
+      const res = await mwLogin(process.env.VUE_APP_SERVER_TYPE, data);
+      if (res) {
+        router.push({
+          name: 'Main',
+        });
+      }
     };
     const errorMessage = () => {
       let message = [];

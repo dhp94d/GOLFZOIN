@@ -2,28 +2,21 @@
   <div>
     <SubHeader></SubHeader>
     <div class="user-container">
-      <div class="user-Frame">
-        <UserSidebar></UserSidebar>
-        <UserTap></UserTap>
-      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import SubHeader from '@/components/common/SubHeader.vue';
-import UserSidebar from '@/components/user/UserSidevar.vue';
-import UserTap from '@/components/user/UserTap.vue';
 export default {
   components: {
-    UserTap,
     SubHeader,
-    UserSidebar,
   },
 };
 </script>
 
-<style scope>
+<style lang="scss" scoped>
 .user-container {
   display: flex;
   justify-content: center;
@@ -32,11 +25,6 @@ export default {
   color: var(--default-font-color);
   letter-spacing: -0.02em;
   background: rgb(242, 243, 246);
-}
-.user-Frame {
-  display: flex;
-  flex-direction: column;
-  object-fit: cover;
-  justify-content: space-between;
+  height: 90vh;
 }
 </style>

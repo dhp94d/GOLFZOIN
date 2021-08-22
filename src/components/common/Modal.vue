@@ -37,7 +37,7 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
-  top: 0;
+  top: 10vh;
   right: 0;
   bottom: 0;
   left: 0;

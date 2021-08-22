@@ -1,5 +1,5 @@
 <template>
-  <ul class="chat-body-header">
+  <ul class="chat-body">
     <ChatNavBodyList></ChatNavBodyList>
     <div class="footer"></div>
   </ul>
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoprd>
-.chat-body-header {
+.chat-body {
   position: relative;
   height: calc(100% - 56px);
   list-style: none;
@@ -24,13 +24,16 @@ export default {
   list-style: none;
   padding: 0px;
   list-style-type: disc;
+  width: 30vw;
 }
 .footer {
+  box-sizing: border-box;
   position: fixed;
   bottom: 0;
   border-top: 1px solid rgba(33, 33, 36, 0.07);
-  height: 56px;
+  background-color: white;
+  height: 7vh;
   min-height: 56px;
-  width: 30%;
+  width: 30vw;
 }
 </style>

@@ -19,8 +19,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useAuth } from '@/composable/auth';
-import { useStore } from 'vuex';
 import HeaderNavTap from '@/components/header/HeaderNavTap.vue';
 import HeaderSearchBar from '@/components/header/HeaderSearchBar.vue';
 import HeaderUserIcon from '@/components/header/HeaderUserIcon.vue';
@@ -34,15 +32,7 @@ export default defineComponent({
     HeaderLogo,
   },
   setup() {
-    const store = useStore();
-    const { AuthEmail }: any = useAuth();
-    const user = ref(localStorage.getItem('user'));
-    if (user) {
-      store.commit('auth/SET_TOKEN', user);
-    }
-    return {
-      AuthEmail,
-    };
+    return {};
   },
 });
 </script>

@@ -8,7 +8,11 @@ import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
 import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
 import CalendarPage from '@/pages/user/CalendarPage.vue';
-import UserPage from '@/pages/user/UserPage.vue';
+import FollowingPage from '@/pages/user/FollowingPage.vue';
+import FollowerPage from '@/pages/user/FollowerPage.vue';
+import AlarmPage from '@/pages/user/AlarmPage.vue';
+import UserPage from '@/pages/user/index.vue';
+import UserSearchPage from '@/pages/user/UserSearchPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -32,6 +36,32 @@ const router = createRouter({
       name: 'UserPage',
       component: UserPage,
       beforeEnter,
+      children: [
+        {
+          path: '/user/search',
+          name: 'UserSearchPage',
+          component: UserSearchPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/following',
+          name: 'FollowingPage',
+          component: FollowingPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/follower',
+          name: 'FollowerPage',
+          component: FollowerPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/alarm',
+          name: 'AlarmPage',
+          component: AlarmPage,
+          beforeEnter,
+        },
+      ],
     },
 
     {

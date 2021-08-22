@@ -23,7 +23,7 @@
             <li>
               <div @click="userToggle">내 정보</div>
               <div v-if="openUser">
-                <UserInfo @toggle="userToggle"></UserInfo>
+                <EditUser @toggle="userToggle"></EditUser>
               </div>
             </li>
             <li @click="logoutClick">로그아웃</li>
@@ -55,13 +55,13 @@ import { useRouter } from 'vue-router';
 import DropDown from '@/components/common/DropDown.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
-import UserInfo from '@/components/user/UserInfo.vue';
-// import { logout } from '@/middleware/auth';
+import EditUser from '@/components/user/EditUser.vue';
+import { mwLogout } from '@/api/middleware/auth';
 import { ref } from 'vue';
 
 const LOGGED = [
   { title: '채팅', link: '/chat' },
-  { title: '유저', link: '/user' },
+  { title: '유저', link: '/user/search' },
   { title: '일정관리', link: '/calendar' },
 ];
 export default defineComponent({
@@ -69,7 +69,7 @@ export default defineComponent({
     DropDown,
     LoginForm,
     SignupForm,
-    UserInfo,
+    EditUser,
   },
   setup() {
     const router = useRouter();
@@ -78,9 +78,9 @@ export default defineComponent({
     const openUser = ref(false);
     const { authIsLoggedIn, authLogout }: any = useAuth();
 
-    const logoutClick = () => {
-      // authLogout();
-      // logout('firebase');
+    const logoutClick = async () => {
+      authLogout();
+      await mwLogout(process.env.VUE_APP_SERVER_TYPE);
       router.push({
         name: 'Main',
       });

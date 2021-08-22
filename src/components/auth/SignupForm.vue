@@ -164,7 +164,7 @@ export default defineComponent({
         hit: hit.value,
         profile: DEFAULT_IMG,
       };
-      const res = await mwSignup('serverless', data);
+      const res = await mwSignup(process.env.VUE_APP_SERVER_TYPE, data);
 
       if (res === true) {
         router.go();

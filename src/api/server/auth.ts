@@ -1,5 +1,6 @@
 import { notLoggedAxios } from '@/api/server/index';
 import { signupDTO, loginDTO } from '@/api/dto/authTypes';
+import { saveAuthToCookie, saveUserToCookie } from '@/composable/cookies';
 
 const signup = async (data: signupDTO) => {
   const alreadyid = await isId(data.id);
@@ -11,7 +12,12 @@ const signup = async (data: signupDTO) => {
 };
 
 const login = async (data: loginDTO) => {
-  return await notLoggedAxios.post(`api/auth/signin`, data);
+  const res = await notLoggedAxios.post(`api/auth/signin`, data);
+  if (res) {
+    saveAuthToCookie(data.id);
+    saveUserToCookie(JSON.stringify(res));
+  }
+  return;
 };
 
 const logout = async () => {

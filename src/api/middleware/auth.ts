@@ -1,13 +1,6 @@
-import { signup, login, logout, isId, isNickname } from '@/api/server/auth';
-import {
-  fbSignup,
-  fbLogin,
-  fbLogout,
-  fbIsId,
-  fbIsNickname,
-} from '@/api/serverless/auth';
+import { signup, login, logout } from '@/api/server/auth';
+import { fbSignup, fbLogin, fbLogout } from '@/api/serverless/auth';
 import { signupDTO, loginDTO } from '@/api/dto/authTypes';
-import { apiCallDTO } from '@/api/dto/commonType';
 
 const mwSignup = (type: 'server' | 'serverless', data: signupDTO) => {
   if (type === 'server') {
@@ -17,9 +10,21 @@ const mwSignup = (type: 'server' | 'serverless', data: signupDTO) => {
   }
 };
 
-const mwLogin = async (type: 'server' | 'serverless', data: loginDTO) => {};
+const mwLogin = async (type: 'server' | 'serverless', data: loginDTO) => {
+  if (type === 'server') {
+    return login(data);
+  } else {
+    return fbLogin(data);
+  }
+};
 
-const mwLogout = async (type: 'server' | 'serverless') => {};
+const mwLogout = async (type: 'server' | 'serverless') => {
+  if (type === 'server') {
+    return logout();
+  } else {
+    return fbLogout();
+  }
+};
 
 const mwIsId = async (type: 'server' | 'serverless', id: string) => {};
 

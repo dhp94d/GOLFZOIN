@@ -1,62 +1,33 @@
-import {
-  saveAuthToCookie,
-  saveUserToCookie,
-  getUserFromCookie,
-  deleteCookie,
-} from '@/composable/cookies';
-
-interface userDTO {
-  email: string;
-  password: string;
-  nickname: string;
-  birthday: string;
-  gender: string;
-  profile: string;
-  phoneNumber: string;
-  address: string;
-  hit: string;
-}
-interface stateDTO {
-  user: Object;
-  token: string;
-}
+import { getUserFromCookie, deleteCookie } from '@/composable/cookies';
 
 export default {
   namespaced: true,
   state: {
     user: {},
-    email: '',
-    token: '',
+    eamil: '',
   },
   getters: {
-    isLoggedIn(state: { token: string }) {
-      return !!state?.token || !!getUserFromCookie();
+    isLoggedIn(state: { eamil: object }) {
+      return !!state?.eamil || !!getUserFromCookie();
     },
-    userToken(state: { token: string }) {
-      return state.token;
-    },
-    getEmail(state: { email: string }) {
+    getUser(state: { email: string }) {
       return state.email;
     },
   },
   mutations: {
-    SET_EMAIL(state: { email: string }) {
-      state.email = getUserFromCookie();
-    },
-    SET_USER(state: { user: userDTO }, payload: userDTO) {
+    SET_USER(state: { user: object }, payload: object) {
       state.user = { ...payload };
     },
-    SET_TOKEN(state: { token: string }, payload: string) {
-      state.token = payload;
-    },
-    LOGOUT(state: stateDTO) {
+    LOGOUT(state: { user: object }) {
       state.user = {};
-      state.token = '';
       deleteCookie('til_auth');
       deleteCookie('til_user');
     },
   },
   actions: {
-    async LOGIN({ commit }: any, data: { email: string; pw: string }) {},
+    LOGIN({ commit }: any) {
+      const userData = JSON.parse(getUserFromCookie());
+      commit('SET_USER', userData);
+    },
   },
 };
