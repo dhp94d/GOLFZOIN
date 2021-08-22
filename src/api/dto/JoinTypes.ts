@@ -14,7 +14,33 @@ type offlineJoinListDTO = {
   date?: string;
 };
 
-type ApplyJoinDTO = {
+type registOnlineDTO = {
+  type: string;
+  hostid: string;
+  date: string;
+  time: string;
+  totalcount: '3453';
+  place: string;
+  lat: number;
+  lon: number;
+  title: string;
+  body: string;
+  thumbnail: string;
+};
+
+type registOfflineDTO = {
+  type: string;
+  hostid: string;
+  date: string;
+  time: string;
+  totalcount: number;
+  pw: string;
+  title: string;
+  body: string;
+  thumbnail: string;
+};
+
+type applyJoinDTO = {
   type: 'online' | 'offline';
   roomNo: number;
   userid: string;
@@ -26,4 +52,11 @@ type joinIsOkDTO = {
   nickname: string;
   logtype: 'accept' | 'refuse';
 };
-export { onlineJoinListDTO, offlineJoinListDTO, ApplyJoinDTO, joinIsOkDTO };
+export {
+  onlineJoinListDTO,
+  offlineJoinListDTO,
+  applyJoinDTO,
+  joinIsOkDTO,
+  registOnlineDTO,
+  registOfflineDTO,
+};

@@ -1,37 +1,42 @@
 import { notLoggedAxios } from '@/api/server/index';
-import { onlineJoinListDTO, offlineJoinListDTO } from '@/api/dto/joinTypes';
+import {
+  onlineJoinListDTO,
+  offlineJoinListDTO,
+  registOnlineDTO,
+  registOfflineDTO,
+} from '@/api/dto/joinTypes';
 
-function myJoinList(userid: string) {
+const myJoinList = (userid: string) => {
   return notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
-}
+};
 
-function detailJoin(roomNo: string) {
+const detailJoin = (roomNo: string) => {
   return notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
-}
+};
 
-function registJoin() {
+const registJoin = (data: registOnlineDTO | registOfflineDTO) => {
   return notLoggedAxios.post(`api/join/registjoin`);
-}
+};
 
-function cancelJoin(roomNo: string) {
+const cancelJoin = (roomNo: string) => {
   return notLoggedAxios.delete(`api/join/canceljoin/${roomNo}`);
-}
+};
 
-function mainOfflineList() {
+const mainOfflineList = () => {
   return notLoggedAxios.get(`api/join/mainofflist`);
-}
+};
 
-function mainOnlineList() {
+const mainOnlineList = () => {
   return notLoggedAxios.get(`api/join/mainonlist`);
-}
+};
 
-function offlineJoinList(data: offlineJoinListDTO) {
+const offlineJoinList = (data: offlineJoinListDTO) => {
   return notLoggedAxios.post(`api/join/offlinejoinlist`, data);
-}
+};
 
-function onlineJoinList(data: onlineJoinListDTO) {
+const onlineJoinList = (data: onlineJoinListDTO) => {
   return notLoggedAxios.post(`api/join/onlinejoinlist`, data);
-}
+};
 
 export {
   myJoinList,

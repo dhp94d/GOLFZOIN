@@ -1,4 +1,9 @@
-import { onlineJoinListDTO, offlineJoinListDTO } from '@/api/dto/joinTypes';
+import {
+  onlineJoinListDTO,
+  offlineJoinListDTO,
+  registOnlineDTO,
+  registOfflineDTO,
+} from '@/api/dto/joinTypes';
 import {
   myJoinList,
   detailJoin,
@@ -9,68 +14,89 @@ import {
   offlineJoinList,
   onlineJoinList,
 } from '@/api/server/mainJoin';
+import {
+  fbMyJoinList,
+  fbDetailJoin,
+  fbRegistJoin,
+  fbCancelJoin,
+  fbMainOfflineList,
+  fbMainOnlineList,
+  fbOfflineJoinList,
+  fbOnlineJoinList,
+} from '@/api/serverless/mainjoin';
 
-function mwMyJoinList(type: 'server' | 'serverless', userid: string) {
+const mwMyJoinList = async (type: 'server' | 'serverless', userid: string) => {
   if (type === 'server') {
-    return myJoinList(userid);
+    return await myJoinList(userid);
   } else {
+    return await fbMyJoinList(userid);
   }
-}
+};
 
-function mwDetailJoin(type: 'server' | 'serverless', roomNo: string) {
+const mwDetailJoin = async (type: 'server' | 'serverless', roomNo: string) => {
   if (type === 'server') {
-    return detailJoin(roomNo);
+    return await detailJoin(roomNo);
   } else {
+    return await fbDetailJoin(roomNo);
   }
-}
+};
 
-function mwRegistJoin(type: 'server' | 'serverless') {
+const mwRegistJoin = async (
+  type: 'server' | 'serverless',
+  data: registOnlineDTO | registOfflineDTO
+) => {
   if (type === 'server') {
-    return registJoin();
+    return await registJoin(data);
   } else {
+    return await fbRegistJoin(data);
   }
-}
+};
 
-function mwCancelJoin(type: 'server' | 'serverless', roomNo: string) {
+const mwCancelJoin = async (type: 'server' | 'serverless', roomNo: string) => {
   if (type === 'server') {
-    return cancelJoin(roomNo);
+    return await cancelJoin(roomNo);
   } else {
+    return await fbCancelJoin(roomNo);
   }
-}
+};
 
-function mwMainOfflinList(type: 'server' | 'serverless') {
+const mwMainOfflinList = async (type: 'server' | 'serverless') => {
   if (type === 'server') {
-    return mainOfflineList();
+    return await mainOfflineList();
   } else {
+    return await fbMainOfflineList();
   }
-}
+};
 
-function mwMainOnlineList(type: 'server' | 'serverless') {
+const mwMainOnlineList = async (type: 'server' | 'serverless') => {
   if (type === 'server') {
-    return mainOnlineList();
+    return await mainOnlineList();
   } else {
+    return await fbMainOnlineList();
   }
-}
+};
 
-function mwOfflineJoinList(
+const mwOfflineJoinList = async (
   type: 'server' | 'serverless',
   data: offlineJoinListDTO
-) {
+) => {
   if (type === 'server') {
-    return offlineJoinList(data);
+    return await offlineJoinList(data);
   } else {
+    return await fbOfflineJoinList(data);
   }
-}
+};
 
-function mwOnlineJoinList(
+const mwOnlineJoinList = async (
   type: 'server' | 'serverless',
   data: onlineJoinListDTO
-) {
+) => {
   if (type === 'server') {
-    return onlineJoinList(data);
+    return await onlineJoinList(data);
   } else {
+    return await fbOnlineJoinList(data);
   }
-}
+};
 
 export {
   mwMyJoinList,
