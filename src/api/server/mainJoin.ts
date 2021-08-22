@@ -17,7 +17,7 @@ function cancelJoin(roomNo: string) {
   return notLoggedAxios.delete(`api/join/canceljoin/${roomNo}`);
 }
 
-function mainOfflinList() {
+function mainOfflineList() {
   return notLoggedAxios.get(`api/join/mainofflist`);
 }
 
@@ -38,7 +38,7 @@ export {
   detailJoin,
   registJoin,
   cancelJoin,
-  mainOfflinList,
+  mainOfflineList,
   mainOnlineList,
   offlineJoinList,
   onlineJoinList,

@@ -1,36 +1,75 @@
-import { notLoggedAxios } from '@/api/server/index';
 import { onlineJoinListDTO, offlineJoinListDTO } from '@/api/dto/joinTypes';
+import {
+  myJoinList,
+  detailJoin,
+  registJoin,
+  cancelJoin,
+  mainOfflineList,
+  mainOnlineList,
+  offlineJoinList,
+  onlineJoinList,
+} from '@/api/server/mainJoin';
 
-function mwMyJoinList(userid: string) {
-  return notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
+function mwMyJoinList(type: 'server' | 'serverless', userid: string) {
+  if (type === 'server') {
+    return myJoinList(userid);
+  } else {
+  }
 }
 
-function mwDetailJoin(roomNo: string) {
-  return notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
+function mwDetailJoin(type: 'server' | 'serverless', roomNo: string) {
+  if (type === 'server') {
+    return detailJoin(roomNo);
+  } else {
+  }
 }
 
-function mwRegistJoin() {
-  return notLoggedAxios.post(`api/join/registjoin`);
+function mwRegistJoin(type: 'server' | 'serverless') {
+  if (type === 'server') {
+    return registJoin();
+  } else {
+  }
 }
 
-function mwCancelJoin(roomNo: string) {
-  return notLoggedAxios.delete(`api/join/canceljoin/${roomNo}`);
+function mwCancelJoin(type: 'server' | 'serverless', roomNo: string) {
+  if (type === 'server') {
+    return cancelJoin(roomNo);
+  } else {
+  }
 }
 
-function mwMainOfflinList() {
-  return notLoggedAxios.get(`api/join/mainofflist`);
+function mwMainOfflinList(type: 'server' | 'serverless') {
+  if (type === 'server') {
+    return mainOfflineList();
+  } else {
+  }
 }
 
-function mwMainOnlineList() {
-  return notLoggedAxios.get(`api/join/mainonlist`);
+function mwMainOnlineList(type: 'server' | 'serverless') {
+  if (type === 'server') {
+    return mainOnlineList();
+  } else {
+  }
 }
 
-function mwOfflineJoinList(data: offlineJoinListDTO) {
-  return notLoggedAxios.post(`api/join/offlinejoinlist`, data);
+function mwOfflineJoinList(
+  type: 'server' | 'serverless',
+  data: offlineJoinListDTO
+) {
+  if (type === 'server') {
+    return offlineJoinList(data);
+  } else {
+  }
 }
 
-function mwOnlineJoinList(data: onlineJoinListDTO) {
-  return notLoggedAxios.post(`api/join/onlinejoinlist`, data);
+function mwOnlineJoinList(
+  type: 'server' | 'serverless',
+  data: onlineJoinListDTO
+) {
+  if (type === 'server') {
+    return onlineJoinList(data);
+  } else {
+  }
 }
 
 export {
