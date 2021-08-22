@@ -4,19 +4,15 @@
     <div class="join-page-title">온라인 조인</div>
     <JoinFilter class="join-page-filter"></JoinFilter>
     <div class="join-online-container">
-      <div
-        v-for="(onlinejoin, index) in onlineJoinData"
-        :key="`onlinejoin${index}`"
-      >
+      <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.id">
         <div>
           <JoinItem
-            :title="onlinejoin.data.title"
-            :time="onlinejoin.data.time"
-            :date="onlinejoin.data.date"
-            :maximum="onlinejoin.data.maximum"
-            :thumbnail="onlinejoin.data.thumbnail"
-            :detailText="onlinejoin.data.detailText"
-            :participants="onlinejoin.data.participants"
+            :title="onlinejoin.title"
+            :time="onlinejoin.time"
+            :date="onlinejoin.date"
+            :totalcount="onlinejoin.totalcount"
+            :thumbnail="onlinejoin.thumbnail"
+            :body="onlinejoin.body"
             :id="onlinejoin.id"
             :simple="true"
           ></JoinItem>
@@ -28,19 +24,24 @@
 <script>
 import JoinFilter from '@/components/join/JoinFilter.vue';
 import JoinItem from '@/components/join/JoinItem.vue';
-import { ref } from 'vue';
-import { getJoinAll } from '@/api/join';
+import { ref, onMounted } from 'vue';
+import { mwGetLimitJoin } from '@/middleware/join';
+
 export default {
   components: {
     JoinFilter,
     JoinItem,
   },
   setup() {
-    const onlineJoinData = ref();
-    (async () => {
-      const res = await getJoinAll('online');
-      onlineJoinData.value = res.data;
-    })();
+    const onlineJoinData = ref([]);
+    const page = ref(20);
+    onMounted(() => {
+      const getOnlinJoin = async () => {
+        const res = await mwGetLimitJoin('firebase', 'online', 20);
+        onlineJoinData.value.push(...res);
+      };
+      getOnlinJoin();
+    });
     return {
       onlineJoinData,
     };

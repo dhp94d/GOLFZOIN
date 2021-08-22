@@ -1,83 +1,47 @@
 <template>
   <div>
     <SubHeader></SubHeader>
-    <div class="chat-Frame">
-      <div class="chat-list">
-        <ChatHeader></ChatHeader>
-        <ChatList :chatData="basicData"></ChatList>
-      </div>
-      <div class="chat-room">
-        <ChatRoom :chatData="chatRoomData"></ChatRoom>
-      </div>
-      <div class="chat-tool">
-        <ChatTool></ChatTool>
-        <ChatToolList></ChatToolList>
+    <div class="chat-container">
+      <div class="chat-Frame">
+        <ChatSidebar></ChatSidebar>
+        <Chatnav></Chatnav>
+        <ChatRoom></ChatRoom>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue';
-import axios from 'axios';
+import { defineComponent } from 'vue';
 import SubHeader from '@/components/common/SubHeader.vue';
-import ChatList from '@/components/user/ChatList.vue';
-import ChatHeader from '@/components/user/ChatHeader.vue';
-import ChatRoom from '@/components/user/ChatRoom.vue';
-import ChatTool from '@/components/user/ChatTool.vue';
-import ChatToolList from '@/components/user/ChatToolList.vue';
-import { useChat } from '@/composable/chat';
-import { useStore } from 'vuex';
+import ChatSidebar from '@/components/chat/ChatSidebar.vue';
+import Chatnav from '@/components/chat/ChatNav.vue';
+import ChatRoom from '@/components/chat/ChatRoom.vue';
 
 export default defineComponent({
   components: {
     SubHeader,
-    ChatList,
-    ChatHeader,
+    ChatSidebar,
+    Chatnav,
     ChatRoom,
-    ChatTool,
-    ChatToolList,
   },
-  setup() {
-    const store = useStore();
-    const { ChatTarget } = useChat();
-    const chatType = ref(true);
-    const basicData = ref([]);
-    const getData = async () => {
-      const res = await axios.get(`http://localhost:3000/chat`);
-      basicData.value = res.data;
-    };
-    const chatRoomData = computed(
-      () =>
-        basicData.value.filter((v) => v.id === store.state.chat.target)[0]?.data
-    );
-    console.log(chatRoomData);
-    getData();
-    return {
-      chatType,
-      basicData,
-      ChatTarget,
-      chatRoomData,
-    };
-  },
+  setup() {},
 });
 </script>
 
 <style scope>
+.chat-container {
+  display: flex;
+  justify-content: center;
+  -webkit-box-pack: center;
+  margin: auto;
+  color: var(--default-font-color);
+  letter-spacing: -0.02em;
+  background: rgb(242, 243, 246);
+}
 .chat-Frame {
   display: flex;
+  object-fit: cover;
   justify-content: space-between;
-}
-.chat-list {
-  display: block;
-  width: 20%;
-}
-.chat-room {
-  display: block;
-  width: 60%;
-}
-.chat-tool {
-  display: block;
-  width: 20%;
 }
 </style>

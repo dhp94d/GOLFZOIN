@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
-import Calendar from '@/pages/calendar/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
 import MakeJoinPage from '@/pages/join/MakeJoinPage.vue';
@@ -8,7 +7,12 @@ import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
 import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
-import TestPage from '@/pages/user/TestPage.vue';
+import CalendarPage from '@/pages/user/CalendarPage.vue';
+import FollowingPage from '@/pages/user/FollowingPage.vue';
+import FollowerPage from '@/pages/user/FollowerPage.vue';
+import AlarmPage from '@/pages/user/AlarmPage.vue';
+import UserPage from '@/pages/user/index.vue';
+import UserSearchPage from '@/pages/user/UserSearchPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -22,27 +26,48 @@ const router = createRouter({
     },
 
     {
-      path: '/user',
+      path: '/chat',
       name: 'ChatPage',
       component: ChatPage,
-      children: [
-        {
-          path: '/user/Chatpage',
-          name: 'ChatPage',
-          component: ChatPage,
-        },
-      ],
       beforeEnter,
     },
     {
-      path: '/user/testpage',
-      name: 'TestPage',
-      component: TestPage,
+      path: '/user',
+      name: 'UserPage',
+      component: UserPage,
+      beforeEnter,
+      children: [
+        {
+          path: '/user/search',
+          name: 'UserSearchPage',
+          component: UserSearchPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/following',
+          name: 'FollowingPage',
+          component: FollowingPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/follower',
+          name: 'FollowerPage',
+          component: FollowerPage,
+          beforeEnter,
+        },
+        {
+          path: '/user/alarm',
+          name: 'AlarmPage',
+          component: AlarmPage,
+          beforeEnter,
+        },
+      ],
     },
+
     {
       path: '/calendar',
-      name: 'Calendar',
-      component: Calendar,
+      name: 'CalendarPage',
+      component: CalendarPage,
       beforeEnter,
     },
     {
@@ -65,12 +90,6 @@ const router = createRouter({
           path: '/join/offlineJoin',
           name: 'OfflineJoin',
           component: OfflineJoinPage,
-        },
-        {
-          path: '/join/makejoin',
-          name: 'MakeJoinPage',
-          component: MakeJoinPage,
-          beforeEnter,
         },
         {
           path: '/join/onlinedetailJoin',

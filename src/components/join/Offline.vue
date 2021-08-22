@@ -14,34 +14,30 @@
         >
           <hr />
           <div class="offline-box" @click="offlineJoinClick(offlinejoin)">
-            <img :src="offlinejoin.data.thumbnail" />
+            <img :src="offlinejoin.thumbnail" />
             <div class="offline-box-detail">
               <div class="offline-box-gray-color">
-                {{ offlinejoin.data.date }}&nbsp;
-                {{ offlinejoin.data.time }}
+                {{ offlinejoin.date }}&nbsp;
+                {{ offlinejoin.time }}
               </div>
               <h5>
                 {{
-                  offlinejoin.data.title.length > 22
-                    ? offlinejoin.data.title.slice(0, 22) + '...'
-                    : offlinejoin.data.title
+                  offlinejoin.title.length > 22
+                    ? offlinejoin.title.slice(0, 22) + '...'
+                    : offlinejoin.title
                 }}
               </h5>
               <div>
-                <div>{{ offlinejoin.data.address.addressName }}</div>
+                <div>{{ offlinejoin.place }}</div>
               </div>
               <div class="offline-box-body">
                 {{
-                  offlinejoin.data.detailText.length > 40
-                    ? offlinejoin.data.detailText.slice(0, 40) + '...'
-                    : offlinejoin.data.detailText
+                  offlinejoin.body.length > 40
+                    ? offlinejoin.body.slice(0, 40) + '...'
+                    : offlinejoin.body
                 }}
               </div>
-              <div>
-                남은인원&nbsp;:&nbsp;{{ offlinejoin.data.participants }}/{{
-                  offlinejoin.data.maximum
-                }}
-              </div>
+              <div>최대인원&nbsp;:{{ offlinejoin.totalcount }}</div>
             </div>
           </div>
         </div>
@@ -53,9 +49,9 @@
 <script>
 import JoinFilter from '@/components/join/JoinFilter.vue';
 import { ref, onMounted } from 'vue';
-import { getJoinAll } from '@/api/join';
 import { useJoin } from '@/composable/join';
 import { useRouter } from 'vue-router';
+import { mwGetLimitJoin } from '@/middleware/join';
 
 export default {
   components: {
@@ -64,24 +60,22 @@ export default {
   setup() {
     const { updateTarget } = useJoin();
     updateTarget(3);
-    const offlineJoinData = ref();
+    const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
     const bounds = new kakao.maps.LatLngBounds();
     const positions = ref([]);
     const title = ref([]);
     const router = useRouter();
+
     const getOfflineData = async () => {
-      const res = await getJoinAll('offline');
-      offlineJoinData.value = res.data;
-      offlineJoinData.value.map((v, i) => {
-        title.value.push(v.data.title);
+      const res = await mwGetLimitJoin('firebase', 'offline', 20);
+      offlineJoinData.value.push(...res);
+      offlineJoinData.value.map((join, i) => {
+        title.value.push(join.title);
 
         positions.value.push(
-          new kakao.maps.LatLng(
-            v.data.address.latitude,
-            v.data.address.longitude
-          )
+          new kakao.maps.LatLng(join.latitude, join.longitude)
         );
       });
     };
@@ -137,18 +131,9 @@ export default {
         bounds.extend(positions.value[i]);
       }
     };
-
     onMounted(async () => {
       await getOfflineData();
-      if (window.kakao && window.kakao.maps) {
-        initMap();
-      } else {
-        const script = document.createElement('script');
-        script.onload = () => kakao.maps.load(this.initMap);
-        script.src =
-          'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=15ac0683efa77658fcfebb90ca8d1bc4';
-        document.head.appendChild(script);
-      }
+      initMap();
     });
     return {
       offlineJoinData,

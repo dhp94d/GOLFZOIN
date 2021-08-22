@@ -5,21 +5,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, watch } from 'vue';
+import { useAuth } from '@/composable/auth';
+
 export default defineComponent({
   name: 'App',
-  setup() {},
+  setup() {
+    const { authLoginAction } = useAuth();
+
+    onMounted(() => authLoginAction());
+  },
 });
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
 /* 반응형 최대크기 */
 #app {
-  font-family: 'Roboto Condensed', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans KR', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   margin: 0 auto;
   font-size: 14px;
   width: 100%;
@@ -39,6 +43,16 @@ body {
   -webkit-user-select: none;
   user-select: none;
   box-sizing: border-box;
+  letter-spacing: -0.02em;
+  color: #484848;
+  overflow: overlay;
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 42%, 0.49);
+    border-radius: 100px;
+  }
 }
 @media (max-width: 1400px) {
   #app {

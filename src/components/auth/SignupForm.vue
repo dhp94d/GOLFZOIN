@@ -32,7 +32,12 @@
           </div>
           <span>전화번호</span><br />
           <div class="signup-phone">
-            <input type="text" class="pbox" v-model="p_number" />
+            <input
+              placeholder="010-xxxx-xxxx"
+              type="text"
+              class="pbox"
+              v-model="p_number"
+            />
             <br />
           </div>
           <div>
@@ -84,7 +89,7 @@
           <button
             type="submit"
             class="btn btn btn-primary auth-button"
-            :disabled="!isEmailValid"
+            :disabled="!isEmailValid || !nickname"
           >
             회원 가입
           </button>
@@ -96,9 +101,11 @@
 <script>
 import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { createUser } from '@/middleware/auth';
+import { mwSignup } from '@/api/middleware/auth';
 import { validateEmail } from '@/composable/validateEmail';
 import Modal from '@/components/common/Modal.vue';
+
+const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default defineComponent({
   components: {
@@ -115,10 +122,10 @@ export default defineComponent({
     const birthday = ref('');
     const p_number = ref('');
     const address = ref('');
-    const hit = ref('');
+    const hit = ref(0);
     const gender = ref('');
-    const latitude = ref('');
-    const longitude = ref('');
+    const latitude = ref(0);
+    const longitude = ref(0);
 
     const toggle = () => {
       emit('toggle');
@@ -155,11 +162,17 @@ export default defineComponent({
         lat: latitude.value,
         lon: longitude.value,
         hit: hit.value,
-        profile: '',
+        profile: DEFAULT_IMG,
       };
-      await createUser('serverless', data);
+      const res = await mwSignup(process.env.VUE_APP_SERVER_TYPE, data);
 
-      router.go();
+      if (res === true) {
+        router.go();
+      } else if (res[0] === true) {
+        alert('이미 존재하는 email입니다.');
+      } else if (res[1] === true) {
+        alert('이미 존재하는 nickname 입니다.');
+      }
     };
     return {
       submitForm,
@@ -199,12 +212,12 @@ li {
   display: flex;
   font-size: 1rem;
   p {
+    margin: auto 0;
     padding-right: 0.2rem;
   }
   input {
     align-items: center;
-    text-align: center;
-    justify-content: center;
+    margin: auto 0;
   }
 }
 </style>

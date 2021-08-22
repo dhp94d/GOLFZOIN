@@ -12,15 +12,14 @@
       <slide v-for="slide in 7" :key="slide">
         <JoinItem
           class="carousel__item"
-          :title="offlineJoinData[slide]?.data.title"
-          :thumbnail="offlineJoinData[slide]?.data.thumbnail"
-          :detailText="offlineJoinData[slide]?.data.detailText"
-          :date="offlineJoinData[slide]?.data.date"
-          :time="offlineJoinData[slide]?.data.time"
-          :participants="offlineJoinData[slide]?.data.participants"
-          :maximum="offlineJoinData[slide]?.data.maximum"
+          :title="offlineJoinData[slide]?.title"
+          :thumbnail="offlineJoinData[slide]?.thumbnail"
+          :body="offlineJoinData[slide]?.body"
+          :date="offlineJoinData[slide]?.date"
+          :time="offlineJoinData[slide]?.time"
+          :totalcount="offlineJoinData[slide]?.totalcount"
           :simple="false"
-          :addressName="offlineJoinData[slide]?.data.address.addressName"
+          :place="offlineJoinData[slide]?.place"
           :id="offlineJoinData[slide]?.id"
         ></JoinItem>
       </slide>
@@ -32,11 +31,11 @@
   </div>
 </template>
 <script>
-import { getSelectJoin } from '@/api/join';
+import { mwGetLimitJoin } from '@/middleware/join';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import JoinItem from '@/components/join/JoinItem.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 export default {
   components: {
     Carousel,
@@ -46,11 +45,16 @@ export default {
     Navigation,
   },
   setup() {
-    const offlineJoinData = ref(['detailText']);
-    (async () => {
-      const res = await getSelectJoin('offline');
-      offlineJoinData.value.push(...res.data);
-    })();
+    const offlineJoinData = ref(['body']);
+
+    const getOfflineJoin = async () => {
+      const res = await mwGetLimitJoin('firebase', 'offline', 7);
+      offlineJoinData.value.push(...res);
+    };
+
+    onMounted(() => {
+      getOfflineJoin();
+    });
     const settings = {
       itemsToShow: 1,
       modelValue: 1,

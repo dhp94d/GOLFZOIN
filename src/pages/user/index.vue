@@ -1,25 +1,30 @@
 <template>
   <div>
-    <router-view></router-view>
+    <SubHeader></SubHeader>
+    <div class="user-container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-
-const TAPS = [
-  { title: '팔로우', link: '/user/follow' },
-  { title: '대화', link: '/user/chatpage' },
-  { title: '알림', link: '/user/notification' },
-];
-export default defineComponent({
-  components: {},
-  setup() {
-    return {
-      TAPS,
-    };
+import SubHeader from '@/components/common/SubHeader.vue';
+export default {
+  components: {
+    SubHeader,
   },
-});
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.user-container {
+  display: flex;
+  justify-content: center;
+  -webkit-box-pack: center;
+  margin: auto;
+  color: var(--default-font-color);
+  letter-spacing: -0.02em;
+  background: rgb(242, 243, 246);
+  height: 90vh;
+}
+</style>

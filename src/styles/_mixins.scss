@@ -30,3 +30,92 @@
         }
       }
 }
+
+@mixin makeJoin {
+  .make-join-header {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    color: #456155;
+  }
+  .make-join-page {
+    display: flex;
+
+    align-content: center;
+    justify-content: center;
+    padding: auto;
+  }
+  .make-join-body {
+    display: flex;
+    border: 1px solid black;
+    width: 50vw;
+    height: 30vw;
+    border-radius: 1rem;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  .join-img {
+    display: flex;
+    padding: 1rem;
+    overflow: hidden;
+    img {
+      border: 1px solid black;
+      object-fit: cover;
+      width: 290px;
+      height: 250px;
+      margin: auto;
+    }
+  }
+  .join-profile {
+    display: flex;
+    margin: auto;
+    background-color: white;
+    border: 0;
+    :hover {
+      color: black;
+    }
+    label {
+      display: inline-block;
+      padding: 0.5em 0.75em;
+      color: #999;
+      font-size: inherit;
+      font-weight: bold;
+      line-height: normal;
+      vertical-align: middle;
+      background-color: #fdfdfd;
+      cursor: pointer;
+      border: 1px solid #ebebeb;
+      border-bottom-color: #e2e2e2;
+      border-radius: 0.25em;
+    }
+    input[type='file'] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  }
+  .profile-img {
+    object-fit: cover;
+    margin: auto;
+  }
+  .body-detail {
+    display: flex;
+  }
+  @media (max-width: 1000px) {
+    .body-detail {
+      width: 100%;
+      flex-direction: column;
+    }
+    .make-join-body {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+} 
