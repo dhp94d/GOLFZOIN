@@ -35,6 +35,7 @@ import { mwGetLimitJoin } from '@/middleware/join';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import JoinItem from '@/components/join/JoinItem.vue';
+import { mwMainOfflinList } from '@/api/middleware/mainJoin.ts';
 import { ref, onMounted } from 'vue';
 export default {
   components: {
@@ -48,7 +49,7 @@ export default {
     const offlineJoinData = ref(['body']);
 
     const getOfflineJoin = async () => {
-      const res = await mwGetLimitJoin('firebase', 'offline', 7);
+      const res = await mwMainOfflinList(process.env.VUE_APP_SERVER_TYPE);
       offlineJoinData.value.push(...res);
     };
 

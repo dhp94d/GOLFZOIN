@@ -1,5 +1,4 @@
-import { auth, db } from '@/firebase/firebaseinit.ts';
-import { fbCretaeJoin } from '@/firebase/join.ts';
+import { fbRegistJoin } from '@/api/serverless/mainjoin';
 
 const ONLINEJOINIMG = [
   'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Fdefault_profile.png1629109231428_250x250?alt=media&token=2a788b78-2f3b-457a-a48b-6681337d9119',
@@ -107,16 +106,16 @@ export const makeOnlinJoin = async () => {
     let minutes = ['10', '20', '30', '40', '50'];
     let data = {
       body: BODYLIST[Math.floor(Math.random() * 4)],
-      date: `2021-08-${day}`,
-      hostid: EMAILLIST[Math.floor(Math.random() * 7)],
+      date: `2021-09-${day}`,
+      hostid: 'dw1156@naver.com',
       pw: '1234',
-      thumbnail: ONLINEJOINIMG[Math.floor(Math.random() * 13)],
+      thumbnail: '',
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
       title: '온라인 조인 같이해요',
       totalcount: 10,
       type: 'online',
     };
-    await fbCretaeJoin(data);
+    await fbRegistJoin(data);
   }
 };
 
@@ -132,13 +131,13 @@ export const makeOfflinJoin = async () => {
       latitude: address.latitude,
       longitude: address.longitude,
       place: address.addressName,
-      hostid: EMAILLIST[Math.floor(Math.random() * 7)],
-      thumbnail: OFFLINEJOINIMG[Math.floor(Math.random() * 13)],
+      hostid: 'dw1156@naver.com',
+      thumbnail: '',
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
       title: OFFLINETITLE[Math.floor(Math.random() * 7)],
       totalcount: 10,
       type: 'offline',
     };
-    await fbCretaeJoin(data);
+    await fbRegistJoin(data);
   }
 };

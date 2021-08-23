@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
-import MakeJoinPage from '@/pages/join/MakeJoinPage.vue';
 import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
@@ -75,12 +74,6 @@ const router = createRouter({
       name: 'Join',
       component: JoinPage,
       children: [
-        {
-          path: '/join/makejoin',
-          name: 'MakeJoinPage',
-          component: MakeJoinPage,
-          beforeEnter,
-        },
         {
           path: '/join/onlineJoin',
           name: 'OnlineJoin',

@@ -1,5 +1,6 @@
 import { db } from '@/api/serverless/firesbaseinit';
-import { saveAuthToCookie } from '@/composable/cookies';
+import { fbDetailUser } from '@/api/serverless/user';
+import { getAuthFromCookie } from '@/composable/cookies';
 import {
   onlineJoinListDTO,
   offlineJoinListDTO,
@@ -9,6 +10,16 @@ import {
 
 const fbMyJoinList = async (userid: string) => {
   try {
+    const joinList: any = [];
+    const res = await db
+      .collection('users')
+      .doc(userid)
+      .collection('joinlist')
+      .get();
+    res.forEach((join) => {
+      joinList.push({ ...join.data(), roomNo: join.id });
+    });
+    return joinList;
   } catch (e) {
     console.error(e);
   }
@@ -16,6 +27,8 @@ const fbMyJoinList = async (userid: string) => {
 
 const fbDetailJoin = async (roomNo: string) => {
   try {
+    const joinData = await db.collection('join').doc(roomNo).get();
+    return joinData.data();
   } catch (e) {
     console.error(e);
   }
@@ -23,17 +36,18 @@ const fbDetailJoin = async (roomNo: string) => {
 
 const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
   try {
-    const res = await db.collection(data.type).add(data);
+    const res = await db.collection('join').add(data);
+    const userData = await fbDetailUser(getAuthFromCookie());
     await db
-      .collection('chat')
+      .collection('join')
       .doc(res.id)
-      .collection('data')
-      .doc('roominfo')
-      .set({
-        title: data.title,
-        hostid: data.hostid,
-        participants: [data.hostid],
-      });
+      .update({ members: [userData], rommNo: res.id });
+    await db
+      .collection('users')
+      .doc(data.hostid)
+      .collection('joinlist')
+      .doc(res.id)
+      .set(data);
   } catch (e) {
     console.error(e);
   }
@@ -41,6 +55,8 @@ const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
 
 const fbCancelJoin = async (roomNo: string) => {
   try {
+    const res = await db.collection('join').doc(roomNo).delete();
+    return res;
   } catch (e) {
     console.error(e);
   }
@@ -48,6 +64,14 @@ const fbCancelJoin = async (roomNo: string) => {
 
 const fbMainOfflineList = async () => {
   try {
+    const joinList: any = [];
+    const res = await db
+      .collection('join')
+      .where('type', '==', 'offline')
+      .limit(7)
+      .get();
+    res.forEach((join) => joinList.push(join.data()));
+    return joinList;
   } catch (e) {
     console.error(e);
   }
@@ -55,6 +79,15 @@ const fbMainOfflineList = async () => {
 
 const fbMainOnlineList = async () => {
   try {
+    const joinList: any = [];
+    const res = await db
+      .collection('join')
+      .where('type', '==', 'online')
+      .limit(7)
+      .get();
+
+    res.forEach((join) => joinList.push(join.data()));
+    return joinList;
   } catch (e) {
     console.error(e);
   }
@@ -62,6 +95,13 @@ const fbMainOnlineList = async () => {
 
 const fbOfflineJoinList = async (data: offlineJoinListDTO) => {
   try {
+    const joinList: any = [];
+    const res = await db
+      .collection('join')
+      .where('type', '==', 'offline')
+      .get();
+    res.forEach((join) => joinList.push(join.data()));
+    return joinList;
   } catch (e) {
     console.error(e);
   }
@@ -69,6 +109,10 @@ const fbOfflineJoinList = async (data: offlineJoinListDTO) => {
 
 const fbOnlineJoinList = async (data: onlineJoinListDTO) => {
   try {
+    const joinList: any = [];
+    const res = await db.collection('join').where('type', '==', 'online').get();
+    res.forEach((join) => joinList.push(join.data()));
+    return joinList;
   } catch (e) {
     console.error(e);
   }

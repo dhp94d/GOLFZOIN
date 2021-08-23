@@ -24,7 +24,6 @@ import SubHeader from '@/components/common/SubHeader.vue';
 import MatrixView from '@/components/calendar/MatrixView.vue';
 import SelectDate from '@/components/calendar/SelectDate.vue';
 import UserJoinList from '@/components/user/UserJoinList.vue';
-// import { getUserJoinList } from '@/middleware/auth';
 import getDayMatrix from '@/composable/calendar';
 import dayjs from 'dayjs';
 

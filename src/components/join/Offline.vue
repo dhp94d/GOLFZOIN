@@ -51,7 +51,7 @@ import JoinFilter from '@/components/join/JoinFilter.vue';
 import { ref, onMounted } from 'vue';
 import { useJoin } from '@/composable/join';
 import { useRouter } from 'vue-router';
-import { mwGetLimitJoin } from '@/middleware/join';
+import { mwOfflineJoinList } from '@/api/middleware/mainJoin.ts';
 
 export default {
   components: {
@@ -69,7 +69,7 @@ export default {
     const router = useRouter();
 
     const getOfflineData = async () => {
-      const res = await mwGetLimitJoin('firebase', 'offline', 20);
+      const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE);
       offlineJoinData.value.push(...res);
       offlineJoinData.value.map((join, i) => {
         title.value.push(join.title);

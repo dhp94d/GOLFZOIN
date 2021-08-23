@@ -87,10 +87,8 @@ const mwOfflineJoinList = async (
   }
 };
 
-const mwOnlineJoinList = async (
-  type: 'server' | 'serverless',
-  data: onlineJoinListDTO
-) => {
+const mwOnlineJoinList = async (type: 'server' | 'serverless', data: any) => {
+  console.log(type, data);
   if (type === 'server') {
     return await onlineJoinList(data);
   } else {

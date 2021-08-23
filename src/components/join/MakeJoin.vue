@@ -1,29 +1,32 @@
 <template>
-  <Modal>
-    <template #body>
-      <div class="make-join-container">
+  <div>
+    <Modal @toggle="toggle">
+      <template #header> </template>
+      <template #body>
         <div class="make-join-change-type">
-          <div @click="joinType = true">온라인 조인</div>
-          <div @click="joinType = false">오프라인 조인</div>
-        </div>
-        <div>
-          <div v-if="joinType">
-            <MakeOnlineJoin></MakeOnlineJoin>
+          <div @click="joinType = true" :class="joinType ? 'bold' : ''">
+            온라인 조인
           </div>
-          <div v-else>
-            <MakeOfflineJoin></MakeOfflineJoin>
+          <div @click="joinType = false" :class="joinType ? '' : 'bold'">
+            오프라인 조인
           </div>
         </div>
-      </div>
-    </template>
-  </Modal>
+        <div v-if="joinType">
+          <MakeOnlineJoin></MakeOnlineJoin>
+        </div>
+        <div v-else>
+          <MakeOfflineJoin></MakeOfflineJoin>
+        </div>
+      </template>
+    </Modal>
+  </div>
 </template>
 
 <script>
 import MakeOfflineJoin from '@/components/join/MakeOfflineJoin.vue';
 import MakeOnlineJoin from '@/components/join/MakeOnlineJoin.vue';
-import { ref } from '@vue/reactivity';
 import Modal from '@/components/common/Modal.vue';
+import { ref } from '@vue/reactivity';
 
 export default {
   components: {
@@ -31,32 +34,33 @@ export default {
     MakeOnlineJoin,
     Modal,
   },
-  setup() {
+  emits: ['toggle'],
+  setup(props, { emit }) {
     const joinType = ref(true);
-
+    const toggle = () => {
+      emit('toggle');
+    };
     return {
       joinType,
+      toggle,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.make-join-container {
-  margin: auto;
-}
 .make-join-change-type {
   display: flex;
   justify-content: space-around;
   font-size: 1.5rem;
   font-weight: bold;
   color: gray;
+  padding-bottom: 2rem;
   :hover {
     cursor: pointer;
-    color: black;
   }
-  div {
-    box-shadow: 0 4px 4px -4px black;
-  }
+}
+.bold {
+  color: #333333;
 }
 </style>

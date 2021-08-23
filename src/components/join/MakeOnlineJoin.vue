@@ -2,7 +2,6 @@
   <div class="make-join-page">
     <div class="join-container">
       <div class="make-join-body">
-        <div class="make-join-header">온라인 조인 만들기</div>
         <div class="body-detail">
           <div>
             <div class="join-img">
@@ -123,6 +122,7 @@ export default {
       }
 
       await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
+      router.go();
     };
     return {
       title,
@@ -142,5 +142,53 @@ export default {
 
 <style lang="scss" scoped>
 @include auth;
-@include makeJoin;
+.join-img {
+  display: flex;
+  padding: 1rem;
+  overflow: hidden;
+  img {
+    border: 1px solid black;
+    object-fit: cover;
+    width: 290px;
+    height: 250px;
+    margin: auto;
+  }
+}
+.join-profile {
+  display: flex;
+  margin: auto;
+  background-color: white;
+  border: 0;
+  :hover {
+    color: black;
+  }
+  label {
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    color: #999;
+    font-size: inherit;
+    font-weight: bold;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;
+  }
+  input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
+.profile-img {
+  object-fit: cover;
+  margin: auto;
+}
 </style>

@@ -5,9 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, watch } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useAuth } from '@/composable/auth';
-
 export default defineComponent({
   name: 'App',
   setup() {

@@ -8,12 +8,9 @@
           <div>모임시각: {{ JoinData.date }}</div>
           <div>{{ JoinData.time }}</div>
         </div>
-        <div class="thumbnail-participants">
-          <div>인원: {{ JoinData.participants }}/{{ JoinData.maximum }}</div>
-        </div>
         <div>
           <p>
-            {{ JoinData.detailText }}
+            {{ JoinData.body }}
           </p>
         </div>
       </div>
