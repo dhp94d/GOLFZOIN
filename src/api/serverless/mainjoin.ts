@@ -15,6 +15,7 @@ const fbMyJoinList = async (userid: string) => {
       .collection('users')
       .doc(userid)
       .collection('joinlist')
+      .orderBy('date')
       .get();
     res.forEach((join) => {
       joinList.push({ ...join.data(), roomNo: join.id });

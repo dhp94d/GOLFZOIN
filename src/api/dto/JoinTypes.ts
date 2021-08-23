@@ -14,7 +14,7 @@ type offlineJoinListDTO = {
   date?: string;
 };
 
-type registOnlineDTO = {
+type registOfflineDTO = {
   type: string;
   hostid: string;
   date: string;
@@ -28,7 +28,7 @@ type registOnlineDTO = {
   thumbnail: string;
 };
 
-type registOfflineDTO = {
+type registOnlineDTO = {
   type: string;
   hostid: string;
   date: string;

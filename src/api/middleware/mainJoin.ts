@@ -1,5 +1,4 @@
 import {
-  onlineJoinListDTO,
   offlineJoinListDTO,
   registOnlineDTO,
   registOfflineDTO,

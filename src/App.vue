@@ -11,7 +11,6 @@ export default defineComponent({
   name: 'App',
   setup() {
     const { authLoginAction } = useAuth();
-
     onMounted(() => authLoginAction());
   },
 });

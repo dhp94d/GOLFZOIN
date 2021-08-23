@@ -1,4 +1,37 @@
 import dayjs from 'dayjs';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+export const useCalendar = () => {
+  const store = useStore();
+  const calendarDay = computed(() => store.state.calendar.day);
+  const calendarMonth = computed(() => store.state.calendar.month);
+  const calendarYear = computed(() => store.state.calendar.year);
+  const calendarMonthJoinList = computed(
+    () => store.state.calendar.monthJoinList
+  );
+  const calendarMonthAllJoinList = computed(
+    () => store.state.calendar.monthAllJoinList
+  );
+  const incrementMonth = () => store.commit('calendar/INCREMENT_MONTH');
+  const decrementMonth = () => store.commit('calendar/DECREMENT_MONTH');
+  const updateDay = (day: number) => store.commit('calendar/UPDATE_DAY', day);
+  const updateJoinList = (joinList: object[]) => {
+    store.commit('calendar/UPDATE_CURRENT_JOINLIST', joinList);
+  };
+
+  return {
+    calendarDay,
+    calendarMonth,
+    calendarYear,
+    incrementMonth,
+    decrementMonth,
+    updateDay,
+    updateJoinList,
+    calendarMonthJoinList,
+    calendarMonthAllJoinList,
+  };
+};
 
 const getDayMatrix = (year: number, month: number): string[][] => {
   let setMonth: number = month - 1;
@@ -33,4 +66,4 @@ const getDayMatrix = (year: number, month: number): string[][] => {
   return resultMatrix();
 };
 
-export default getDayMatrix;
+export { getDayMatrix };

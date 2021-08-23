@@ -100,7 +100,7 @@ const ADDRESSLIST = [
 ];
 
 export const makeOnlinJoin = async () => {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
     let day = String(Math.ceil(Math.random() * 31)).padStart(2, '0');
     let time = String(Math.ceil(Math.random() * 24)).padStart(2, '0');
     let minutes = ['10', '20', '30', '40', '50'];
@@ -115,12 +115,12 @@ export const makeOnlinJoin = async () => {
       totalcount: 10,
       type: 'online',
     };
-    await fbRegistJoin(data);
   }
+  await fbRegistJoin(data);
 };
 
 export const makeOfflinJoin = async () => {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     let address = ADDRESSLIST[Math.floor(Math.random() * 7)];
     let day = String(Math.ceil(Math.random() * 31)).padStart(2, '0');
     let time = String(Math.ceil(Math.random() * 24)).padStart(2, '0');
@@ -138,6 +138,6 @@ export const makeOfflinJoin = async () => {
       totalcount: 10,
       type: 'offline',
     };
-    await fbRegistJoin(data);
   }
+  await fbRegistJoin(data);
 };

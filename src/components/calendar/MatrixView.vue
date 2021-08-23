@@ -18,9 +18,44 @@
             class="calendar-table-cell"
             v-for="(day, index) in days"
             :key="`day${index}`"
+            @click="updateDayButton(day)"
           >
             <div calss="calendar-table-day">
               {{ day }}
+            </div>
+            <div class="calendar-join-length">
+              <div v-if="calendarMonthJoinList[day]">
+                <div
+                  class="online-length"
+                  v-if="
+                    calendarMonthJoinList[day]?.filter(
+                      (v) => v.type === 'online'
+                    ).length !== 0
+                  "
+                >
+                  온라인:
+                  {{
+                    calendarMonthJoinList[day]?.filter(
+                      (v) => v.type === 'online'
+                    ).length
+                  }}
+                </div>
+                <div
+                  class="offline-length"
+                  v-if="
+                    calendarMonthJoinList[day]?.filter(
+                      (v) => v.type === 'offline'
+                    ).length !== 0
+                  "
+                >
+                  오프라인:
+                  {{
+                    calendarMonthJoinList[day]?.filter(
+                      (v) => v.type === 'offline'
+                    ).length
+                  }}
+                </div>
+              </div>
             </div>
           </td>
         </tr>
@@ -30,10 +65,23 @@
 </template>
 
 <script>
+import { useCalendar } from '@/composable/calendar';
 export default {
   props: {
     matrix: Array,
     headers: Array,
+  },
+  setup() {
+    const { calendarMonthJoinList, updateDay } = useCalendar();
+
+    const updateDayButton = (day) => {
+      updateDay(parseInt(day));
+    };
+
+    return {
+      calendarMonthJoinList,
+      updateDayButton,
+    };
   },
 };
 </script>
@@ -64,5 +112,24 @@ export default {
 .calendar-table-cell {
   text-align: center;
   vertical-align: top;
+}
+.calendar-join-length {
+  text-align: center;
+  font-size: 0.7rem;
+}
+
+.online-length {
+  font-weight: bold;
+  color: #ff6541;
+}
+
+.offline-length {
+  font-weight: bold;
+  color: #0f95ff;
+}
+.calendar-table-cell {
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

@@ -48,7 +48,6 @@ export default {
 
     const getOnlinJoin = async () => {
       const res = await mwMainOnlineList(process.env.VUE_APP_SEVER_TYPE);
-      console.log(res);
       onlineJoinData.value.push(...res);
     };
 
