@@ -42,15 +42,22 @@ type registOnlineDTO = {
 
 type applyJoinDTO = {
   type: 'online' | 'offline';
-  roomNo: number;
+  hostid: string;
+  roomNo: string;
   userid: string;
 };
 
 type joinIsOkDTO = {
   type: 'online' | 'offline';
-  roomNo: number;
-  nickname: string;
+  roomNo: string;
+  hostid: string;
   logtype: 'accept' | 'refuse';
+};
+
+type delAlarmDTO = {
+  alarmType: string;
+  alarmNo: string;
+  userid: string;
 };
 export {
   onlineJoinListDTO,
@@ -59,4 +66,5 @@ export {
   joinIsOkDTO,
   registOnlineDTO,
   registOfflineDTO,
+  delAlarmDTO,
 };

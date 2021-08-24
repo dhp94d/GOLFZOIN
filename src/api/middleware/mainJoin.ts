@@ -22,7 +22,7 @@ import {
   fbMainOnlineList,
   fbOfflineJoinList,
   fbOnlineJoinList,
-} from '@/api/serverless/mainjoin';
+} from '@/api/serverless/mainJoin';
 
 const mwMyJoinList = async (type: 'server' | 'serverless', userid: string) => {
   if (type === 'server') {

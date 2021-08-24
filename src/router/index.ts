@@ -4,8 +4,6 @@ import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
 import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
 import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
-import OnlineJoinDetailPage from '@/pages/join/OnlineJoinDetailPage.vue';
-import OfflineJoinDetailPage from '@/pages/join/OfflineJoinDetailPage.vue';
 import CalendarPage from '@/pages/user/CalendarPage.vue';
 import FollowingPage from '@/pages/user/FollowingPage.vue';
 import FollowerPage from '@/pages/user/FollowerPage.vue';
@@ -83,16 +81,6 @@ const router = createRouter({
           path: '/join/offlineJoin',
           name: 'OfflineJoin',
           component: OfflineJoinPage,
-        },
-        {
-          path: '/join/onlinedetailJoin',
-          name: 'OnlineDetailJoin',
-          component: OnlineJoinDetailPage,
-        },
-        {
-          path: '/join/offlinedetailJoin',
-          name: 'OfflineDetailJoin',
-          component: OfflineJoinDetailPage,
         },
       ],
     },

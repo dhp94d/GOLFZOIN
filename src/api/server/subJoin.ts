@@ -1,35 +1,37 @@
 import { notLoggedAxios } from '@/api/server/index';
-import { applyJoinDTO, joinIsOkDTO } from '@/api/dto/joinTypes';
+import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/joinTypes';
 
-function applyJoin(data: applyJoinDTO) {
-  return notLoggedAxios.post(`api/join/applyjoin`, data);
-}
+const applyJoin = async (data: applyJoinDTO) => {
+  return await notLoggedAxios.post(`api/join/applyjoin`, data);
+};
 
-function joinAcceptUser(data: joinIsOkDTO) {
-  return notLoggedAxios.post(`api/join/acceptuser`, data);
-}
+const joinAcceptUser = async (data: joinIsOkDTO) => {
+  return await notLoggedAxios.post(`api/join/acceptuser`, data);
+};
 
-function joinRefuseUser(data: joinIsOkDTO) {
-  return notLoggedAxios.post(`api/join/refuseuser`, data);
-}
+const joinRefuseUser = async (data: joinIsOkDTO) => {
+  return await notLoggedAxios.post(`api/join/refuseuser`, data);
+};
 
-function joinTempUser(userid: string) {
-  return notLoggedAxios.get(`api/join/jointempuser/${userid}`);
-}
+const getHostAlarm = async (userid: string) => {
+  return await notLoggedAxios.get(`api/join/jointempuser/${userid}`);
+};
 
-function userGetAlarm(userid: string) {
-  return notLoggedAxios.get(`api/join/alarm/${userid}`);
-}
+const getApplyAlarm = async (userid: string) => {
+  return await notLoggedAxios.get(`api/join/alarm/${userid}`);
+};
 
-function userDelAlarm() {
-  return notLoggedAxios.delete(`api/join/alarm/delete`);
-}
+const userDelAlarm = async (data: delAlarmDTO) => {
+  return await notLoggedAxios.delete(
+    `api/join/alarm/delete?user=${data.userid}&alarmNo=${data.alarmNo}`
+  );
+};
 
 export {
   applyJoin,
   joinAcceptUser,
   joinRefuseUser,
-  joinTempUser,
-  userGetAlarm,
+  getHostAlarm,
+  getApplyAlarm,
   userDelAlarm,
 };
