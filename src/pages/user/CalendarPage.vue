@@ -6,12 +6,18 @@
         <div>
           <SelectDate></SelectDate>
         </div>
-        <div calendar-body>
+        <div>
+          <div class="calendar-join-length">
+            <div class="online-len">온라인 조인: {{ onlineJoin?.length }}</div>
+            <div class="offline-len">
+              오프라인 조인: {{ offlineJoin?.length }}
+            </div>
+          </div>
           <MatrixView :headers="WEEK_DAYS" :matrix="matrix" />
         </div>
         <div>12월</div>
         <div class="scrollc">
-          <UserJoinList></UserJoinList>
+          <CalendarJoinList></CalendarJoinList>
         </div>
       </div>
     </div>
@@ -19,14 +25,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import SubHeader from '@/components/common/SubHeader.vue';
 import MatrixView from '@/components/calendar/MatrixView.vue';
 import SelectDate from '@/components/calendar/SelectDate.vue';
-import UserJoinList from '@/components/user/UserJoinList.vue';
-// import { getUserJoinList } from '@/middleware/auth';
-import getDayMatrix from '@/composable/calendar';
-import dayjs from 'dayjs';
+import CalendarJoinList from '@/components/calendar/CalendarJoinList.vue';
+import { getAuthFromCookie } from '@/composable/cookies';
+import { mwMyJoinList } from '@/api/middleware/mainJoin';
+import { getDayMatrix } from '@/composable/calendar';
+import { useCalendar } from '@/composable/calendar';
 
 const WEEK_DAYS: string[] = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -35,32 +42,62 @@ export default {
     SubHeader,
     MatrixView,
     SelectDate,
-    UserJoinList,
+    CalendarJoinList,
   },
   setup() {
-    const onlineLen = ref();
-    const offlineLen = ref();
-    const joinList: any = ref([]);
-    const matrix = ref(getDayMatrix(dayjs().year(), dayjs().month()));
-    // (async () => {
-    //   const res = await getUserJoinList('firebase');
-    //   const array = await [...res];
-    //   console.log(array);
-    //   joinList.value = array;
-    //   onlineLen.value = joinList.value.filter(
-    //     (v: any) => v.type === 'online'
-    //   ).length;
-    //   offlineLen.value = joinList.value.filter(
-    //     (v: any) => v.type === 'offline'
-    //   ).length;
-    // })();
+    const onlineJoin = ref();
+    const offlineJoin = ref();
+    const joinList = ref([]);
+    const currentMonthJoinList = ref([]);
+    const { calendarMonth, calendarYear, updateDay, updateJoinList } =
+      useCalendar();
+    const matrix = ref(getDayMatrix(calendarYear.value, calendarMonth.value));
 
+    const setCurrentJoinList = () => {
+      currentMonthJoinList.value = joinList.value.filter(
+        (join: any) =>
+          join.date >
+            `${String(calendarYear.value)}-${String(
+              calendarMonth.value
+            ).padStart(2, '0')}-00` &&
+          join.date <
+            `${String(calendarYear.value)}-${String(
+              calendarMonth.value + 1
+            ).padStart(2, '0')}-00`
+      );
+      updateJoinList(currentMonthJoinList.value);
+      onlineJoin.value = currentMonthJoinList.value.filter(
+        (join: any) => join.type === 'online'
+      );
+      offlineJoin.value = [
+        ...currentMonthJoinList.value.filter(
+          (join: any) => join.type === 'offline'
+        ),
+      ];
+    };
+    const setData = async () => {
+      joinList.value = await mwMyJoinList(
+        process.env.VUE_APP_SERVER_TYPE,
+        getAuthFromCookie()
+      );
+      setCurrentJoinList();
+    };
+
+    watch([calendarMonth, calendarYear], () => {
+      matrix.value = getDayMatrix(calendarYear.value, calendarMonth.value);
+      setCurrentJoinList();
+    });
+
+    onMounted(async () => {
+      await setData();
+    });
     return {
       matrix,
       WEEK_DAYS,
       joinList,
-      onlineLen,
-      offlineLen,
+      onlineJoin,
+      offlineJoin,
+      currentMonthJoinList,
     };
   },
 };
@@ -91,6 +128,21 @@ export default {
   &::-webkit-scrollbar-thumb {
     background-color: hsla(0, 0%, 42%, 0.49);
     border-radius: 100px;
+  }
+}
+.calendar-join-length {
+  width: 80%;
+  text-align: end;
+  justify-content: end;
+  justify-content: flex-end;
+
+  .online-len {
+    font-weight: bold;
+    color: #ff6541;
+  }
+  .offline-len {
+    font-weight: bold;
+    color: #0f95ff;
   }
 }
 </style>

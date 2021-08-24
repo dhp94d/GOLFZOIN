@@ -3,7 +3,6 @@
     <UserSidebar :type="'alarm'"></UserSidebar>
     <div class="user-body">
       <UserTapHeader :title="'알림'"></UserTapHeader>
-      <UserTapBody></UserTapBody>
     </div>
   </div>
 </template>
@@ -11,13 +10,11 @@
 <script>
 import UserSidebar from '@/components/user/UserSidevar.vue';
 import UserTapHeader from '@/components/user/UserTapHeader.vue';
-import UserTapBody from '@/components/user/UserTapBody.vue';
 
 export default {
   components: {
     UserSidebar,
     UserTapHeader,
-    UserTapBody,
   },
 };
 </script>

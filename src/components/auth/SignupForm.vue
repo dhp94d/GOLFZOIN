@@ -167,7 +167,7 @@ export default defineComponent({
       const res = await mwSignup(process.env.VUE_APP_SERVER_TYPE, data);
 
       if (res === true) {
-        router.go();
+        history.go();
       } else if (res[0] === true) {
         alert('이미 존재하는 email입니다.');
       } else if (res[1] === true) {

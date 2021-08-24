@@ -1,44 +1,49 @@
 import { notLoggedAxios } from '@/api/server/index';
-import { onlineJoinListDTO, offlineJoinListDTO } from '@/api/dto/joinTypes';
+import {
+  onlineJoinListDTO,
+  offlineJoinListDTO,
+  registOnlineDTO,
+  registOfflineDTO,
+} from '@/api/dto/joinTypes';
 
-function myJoinList(userid: string) {
-  return notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
-}
+const myJoinList = async (userid: string) => {
+  return await notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
+};
 
-function detailJoin(roomNo: string) {
-  return notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
-}
+const detailJoin = async (roomNo: string) => {
+  return await notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
+};
 
-function registJoin() {
-  return notLoggedAxios.post(`api/join/registjoin`);
-}
+const registJoin = async (data: registOnlineDTO | registOfflineDTO) => {
+  return await notLoggedAxios.post(`api/join/registjoin`);
+};
 
-function cancelJoin(roomNo: string) {
-  return notLoggedAxios.delete(`api/join/canceljoin/${roomNo}`);
-}
+const cancelJoin = async (roomNo: string) => {
+  return await notLoggedAxios.delete(`api/join/canceljoin/${roomNo}`);
+};
 
-function mainOfflinList() {
-  return notLoggedAxios.get(`api/join/mainofflist`);
-}
+const mainOfflineList = async () => {
+  return await notLoggedAxios.get(`api/join/mainofflist`);
+};
 
-function mainOnlineList() {
-  return notLoggedAxios.get(`api/join/mainonlist`);
-}
+const mainOnlineList = async () => {
+  return await notLoggedAxios.get(`api/join/mainonlist`);
+};
 
-function offlineJoinList(data: offlineJoinListDTO) {
-  return notLoggedAxios.post(`api/join/offlinejoinlist`, data);
-}
+const offlineJoinList = async (data: offlineJoinListDTO) => {
+  return await notLoggedAxios.post(`api/join/offlinejoinlist`, data);
+};
 
-function onlineJoinList(data: onlineJoinListDTO) {
-  return notLoggedAxios.post(`api/join/onlinejoinlist`, data);
-}
+const onlineJoinList = async (data: onlineJoinListDTO) => {
+  return await notLoggedAxios.post(`api/join/onlinejoinlist`, data);
+};
 
 export {
   myJoinList,
   detailJoin,
   registJoin,
   cancelJoin,
-  mainOfflinList,
+  mainOfflineList,
   mainOnlineList,
   offlineJoinList,
   onlineJoinList,

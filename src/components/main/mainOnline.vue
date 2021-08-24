@@ -33,7 +33,7 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import JoinItem from '@/components/join/JoinItem.vue';
 import { ref, onMounted } from 'vue';
-import { mwGetLimitJoin } from '@/middleware/join';
+import { mwMainOnlineList } from '@/api/middleware/mainJoin.ts';
 
 export default {
   components: {
@@ -47,7 +47,7 @@ export default {
     const onlineJoinData = ref(['sda']);
 
     const getOnlinJoin = async () => {
-      const res = await mwGetLimitJoin('firebase', 'online', 7);
+      const res = await mwMainOnlineList(process.env.VUE_APP_SEVER_TYPE);
       onlineJoinData.value.push(...res);
     };
 

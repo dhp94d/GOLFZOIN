@@ -1,13 +1,26 @@
 <template>
   <div class="calendar-date-container">
-    <button>&lt;</button>
-    <div>&nbsp;2021-12&nbsp;</div>
-    <button>&gt;</button>
+    <button @click="decrementMonth">&lt;</button>
+    <div>&nbsp;{{ calendarYear }}-{{ calendarMonth }}&nbsp;</div>
+    <button @click="incrementMonth">&gt;</button>
   </div>
 </template>
 
 <script>
-export default {};
+import { useCalendar } from '@/composable/calendar';
+import dayjs from 'dayjs';
+export default {
+  setup() {
+    const { calendarMonth, calendarYear, incrementMonth, decrementMonth } =
+      useCalendar();
+    return {
+      calendarMonth,
+      calendarYear,
+      incrementMonth,
+      decrementMonth,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

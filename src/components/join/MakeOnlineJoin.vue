@@ -2,7 +2,6 @@
   <div class="make-join-page">
     <div class="join-container">
       <div class="make-join-body">
-        <div class="make-join-header">온라인 조인 만들기</div>
         <div class="body-detail">
           <div>
             <div class="join-img">
@@ -70,9 +69,9 @@
 import { ref } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-// // import { isLoggedin } from '@/middleware/auth';
-// import { mwCreateJoin } from '@/middleware/join';
-// import { uploadFile, getOneThumbnail } from '@/firebase/img';
+import { uploadFile, getOneThumbnail } from '@/api/middleware/utils.ts';
+import { getAuthFromCookie } from '@/composable/cookies';
+import { mwRegistJoin } from '@/api/middleware/mainJoin';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
@@ -87,20 +86,22 @@ export default {
     const newImg = ref('');
     const picked = ref(dayjs().format('YYYY-MM-DD'));
     const saveImg = ref('');
+
     const getImgPath = async (event) => {
       var reader = new FileReader();
 
-      // saveImg.value = event.target.files[0];
-      // await uploadFile('join', '', saveImg.value);
-      // reader.onload = function (event) {
-      //   newImg.value = event.target.result;
-      // };
-      // reader.readAsDataURL(event.target.files[0]);
+      saveImg.value = event.target.files[0];
+      await uploadFile('join', `online`, saveImg.value);
+      reader.onload = function (event) {
+        newImg.value = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
     };
+
     const submitForm = async () => {
       const data = {
         type: 'online',
-        // hostid: await isLoggedin('firebase'),
+        hostid: getAuthFromCookie(),
         date: picked.value,
         totalcount: totalCount.value,
         title: title.value,
@@ -109,21 +110,19 @@ export default {
         title: title.value,
         body: body.value,
       };
-      // if (!!newImg.value) {
-      //   const url = await getOneThumbnail(
-      //     'join',
-      //     '',
-      //     `${saveImg.value.name + saveImg.value.lastModified}_250x250`
-      //   );
-      //   data.thumbnail = url;
-      // } else {
-      //   data.thumbnail = DEFAULT_IMG;
-      // }
-      // // await createJoin(data);
-      // await mwCreateJoin('firebase', data);
-      // router.push({
-      //   name: 'Main',
-      // });
+      if (!!newImg.value) {
+        const url = await getOneThumbnail(
+          'join',
+          'online',
+          `${saveImg.value.name + saveImg.value.lastModified}_250x250`
+        );
+        data.thumbnail = url;
+      } else {
+        data.thumbnail = DEFAULT_IMG;
+      }
+
+      await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
+      router.go();
     };
     return {
       title,
@@ -143,5 +142,53 @@ export default {
 
 <style lang="scss" scoped>
 @include auth;
-@include makeJoin;
+.join-img {
+  display: flex;
+  padding: 1rem;
+  overflow: hidden;
+  img {
+    border: 1px solid black;
+    object-fit: cover;
+    width: 290px;
+    height: 250px;
+    margin: auto;
+  }
+}
+.join-profile {
+  display: flex;
+  margin: auto;
+  background-color: white;
+  border: 0;
+  :hover {
+    color: black;
+  }
+  label {
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    color: #999;
+    font-size: inherit;
+    font-weight: bold;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: 0.25em;
+  }
+  input[type='file'] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
+.profile-img {
+  object-fit: cover;
+  margin: auto;
+}
 </style>

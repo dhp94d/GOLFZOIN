@@ -81,9 +81,8 @@ export default defineComponent({
     const logoutClick = async () => {
       authLogout();
       await mwLogout(process.env.VUE_APP_SERVER_TYPE);
-      router.push({
-        name: 'Main',
-      });
+
+      history.go();
     };
 
     const loginToggle = () => {

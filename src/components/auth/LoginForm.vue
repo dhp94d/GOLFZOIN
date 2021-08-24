@@ -73,9 +73,7 @@ export default defineComponent({
       };
       const res = await mwLogin(process.env.VUE_APP_SERVER_TYPE, data);
       if (res) {
-        router.push({
-          name: 'Main',
-        });
+        history.go();
       }
     };
     const errorMessage = () => {

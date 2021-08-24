@@ -25,7 +25,7 @@
 import JoinFilter from '@/components/join/JoinFilter.vue';
 import JoinItem from '@/components/join/JoinItem.vue';
 import { ref, onMounted } from 'vue';
-import { mwGetLimitJoin } from '@/middleware/join';
+import { mwOnlineJoinList } from '@/api/middleware/mainJoin.ts';
 
 export default {
   components: {
@@ -35,11 +35,11 @@ export default {
   setup() {
     const onlineJoinData = ref([]);
     const page = ref(20);
+    const getOnlinJoin = async () => {
+      const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE);
+      onlineJoinData.value.push(...res);
+    };
     onMounted(() => {
-      const getOnlinJoin = async () => {
-        const res = await mwGetLimitJoin('firebase', 'online', 20);
-        onlineJoinData.value.push(...res);
-      };
       getOnlinJoin();
     });
     return {

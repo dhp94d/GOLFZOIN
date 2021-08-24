@@ -2,14 +2,18 @@
   <div>
     <form class="chat-message-form">
       <textarea
+        @keyup.enter.prevent="addMessage"
         placeholder="메시지를 입력해주세요"
         class="chat-message-input"
+        v-model="message"
       ></textarea>
       <div class="chatform-option-area">
-        <div class="chatform-submenu">
-          <input type="file" multiple="" />
-        </div>
-        <button class="btn btn btn-primary auth-button">전송</button>
+        <button
+          class="btn btn btn-primary auth-button"
+          @click.prevent="addMessage"
+        >
+          전송
+        </button>
       </div>
       <span class="text-length">0/1000</span>
     </form>
@@ -17,7 +21,39 @@
 </template>
 
 <script>
-export default {};
+import { ref } from 'vue';
+import { mwAddMessage } from '@/api/middleware/chat';
+import { useChat } from '@/composable/chat';
+import { useAuth } from '@/composable/auth';
+import dayjs from 'dayjs';
+export default {
+  setup() {
+    const message = ref('');
+    const { chatTarget } = useChat();
+    const { authGetUserInfo } = useAuth();
+    const addMessage = async () => {
+      if (message.value === '') return;
+      const messagedata = {
+        roomNo: chatTarget.value,
+        author: authGetUserInfo.value.nickname,
+        data: message.value,
+        date: dayjs(dayjs()).format('HH:mm'),
+        profile: authGetUserInfo.value.profile,
+      };
+      await mwAddMessage(
+        process.env.VUE_APP_SERVER_TYPE,
+        chatTarget.value,
+        messagedata
+      );
+      message.value = '';
+    };
+
+    return {
+      addMessage,
+      message,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -54,7 +90,7 @@ textarea {
 .chatform-option-area {
   display: flex;
   -webkit-box-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 8px 10px;
   box-sizing: border-box;
 }

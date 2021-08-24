@@ -2,91 +2,31 @@
   <div>
     <div class="chat-room-container">
       <div class="day-divider">
-        <div class="date-text">2020년 12월17일</div>
+        <div class="date-text">2021년 08월25일</div>
       </div>
-      <div id="for-scroll-1" class="left">
-        <div class="template-message message-form">
-          <div class="chat-room-profile">
-            <img
-              class="profile-image"
-              src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
-              alt="당근이"
-            />
-          </div>
-          <div>
-            <p>박동현</p>
-            <div class="chat-room-message-data">
-              <div class="temp-message-wrap">
-                <p class="pre-text">
-                  박동현님, 반갑습니당! 동네 이웃과 거래하기 전, 첫 가이드를 꼭
-                  읽어보세요:)
-                </p>
+      <div v-for="message in chatData" :key="message.id">
+        <div
+          id="for-scroll-1"
+          :class="message.author === nickname ? 'right' : 'left'"
+        >
+          <div class="template-message message-form">
+            <div class="chat-room-profile">
+              <img class="profile-image" :src="message.profile" />
+            </div>
+            <div>
+              <div>{{ message.author }}</div>
+              <div class="chat-room-message-data">
+                <div class="temp-message-wrap">
+                  <div>
+                    {{ message.data }}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="chat-room-message-time">
-            <div class="message-date">오전 4:35</div>
-          </div>
-        </div>
-      </div>
-      <div id="for-scroll-1" class="left">
-        <div class="template-message message-form">
-          <div class="chat-room-profile">
-            <img
-              class="profile-image"
-              src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
-              alt="당근이"
-            />
-          </div>
-          <div>
-            <div class="chat-room-message-data">
-              <div class="temp-message-wrap">
-                <p class="pre-text">박동현님, 반갑습니당!</p>
-              </div>
-            </div>
-          </div>
-          <div class="chat-room-message-time">
-            <div class="message-date">오전 4:35</div>
-          </div>
-        </div>
-      </div>
-      <div id="for-scroll-1" class="right">
-        <div class="template-message message-form">
-          <div class="chat-room-message-time">
-            <div class="message-date">오전 4:35</div>
-          </div>
-          <div>
-            <div class="chat-room-message-data">
-              <div class="temp-message-wrap">
-                <p class="pre-text">박동현님, 반갑습니당!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="for-scroll-1" class="right">
-        <div class="template-message message-form">
-          <div class="chat-room-message-time">
-            <div class="message-date">오전 4:35</div>
-          </div>
-          <div>
-            <div class="chat-room-message-data">
-              <div class="temp-message-wrap">
-                <p class="pre-text">박동현님, 반갑습니당!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="for-scroll-1" class="right">
-        <div class="template-message message-form">
-          <div class="chat-room-message-time">
-            <div class="message-date">오전 4:35</div>
-          </div>
-          <div>
-            <div class="chat-room-message-data">
-              <div class="temp-message-wrap">
-                <p class="pre-text">박동현님, 반갑습니당!</p>
+            <div class="chat-room-message-time">
+              <div class="message-date">
+                {{ makeTime(message.date) }}
+                {{ message.date }}
               </div>
             </div>
           </div>
@@ -97,7 +37,26 @@
 </template>
 
 <script>
-export default {};
+import { getUserFromCookie } from '@/composable/cookies';
+import { onMounted, ref } from 'vue';
+export default {
+  props: { chatData: Array },
+  setup() {
+    const nickname = ref('');
+
+    onMounted(() => {
+      nickname.value = JSON.parse(getUserFromCookie()).nickname;
+    });
+    const makeTime = (time) => {
+      if (parseInt(time.slice(0, 2)) < 12) return '오전';
+      return '오후';
+    };
+    return {
+      nickname,
+      makeTime,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

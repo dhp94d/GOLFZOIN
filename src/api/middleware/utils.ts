@@ -1,38 +1,15 @@
 import { storage } from '@/api/serverless/firesbaseinit';
 
-export async function getThumbnail(dealiName: any) {
-  const { items } = await storage.ref(`thumbnail/${dealiName}`).listAll();
-  let thumbnaills: any = [];
-  items.map((i) => {
-    const { fullPath } = i;
-    thumbnaills.push({
-      url: storage.ref(fullPath).getDownloadURL(),
-      fullPath,
-    });
-  });
-  return thumbnaills;
-}
-
-export async function getOneThumbnail(
-  path: string,
-  dealiName: string,
-  file: any
-) {
-  const url = await storage
-    .ref(`${path}/${dealiName}/${file}`)
-    .getDownloadURL();
+export async function getOneThumbnail(path: string, name: string, file: any) {
+  const url = await storage.ref(`${path}/${name}/${file}`).getDownloadURL();
 
   return url;
 }
 
 // 파일 넣기
-export const uploadFile = async (
-  path: string,
-  dealiName: string,
-  file: any
-) => {
+export const uploadFile = async (path: string, name: string, file: any) => {
   const ref = await storage
-    .ref(`${path}/${dealiName}/${file.name + file.lastModified}`)
+    .ref(`${path}/${name}/${file.name + file.lastModified}`)
     .put(file)
     .on(
       'state_changed',

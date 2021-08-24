@@ -26,13 +26,13 @@ const fbAddFollow = async (data: addFollowDTO) => {
     const targetInfo: any = await fbDetailUser(targetid);
     const userInfo: any = await fbDetailUser(userid);
     await db
-      .collection('social')
+      .collection('users')
       .doc(userid)
       .collection('following')
       .doc(targetid)
       .set(targetInfo);
     await db
-      .collection('social')
+      .collection('users')
       .doc(targetid)
       .collection('follower')
       .doc(userid)
@@ -48,7 +48,7 @@ const fbGetFollowing = async (userId: string) => {
   try {
     const userList: Array<object> = [];
     const users = await db
-      .collection('social')
+      .collection('users')
       .doc(userId)
       .collection('following')
       .get();
@@ -65,7 +65,7 @@ const fbGetFollower = async (userId: string) => {
   try {
     const userList: Array<object> = [];
     const users = await db
-      .collection('social')
+      .collection('users')
       .doc(userId)
       .collection('follower')
       .get();

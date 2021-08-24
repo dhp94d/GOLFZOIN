@@ -11,13 +11,15 @@
           <th scope="col">자세히 보기</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-for="(join, index) in joinList" :key="`joinList${index}`">
         <tr class="user-join-list-tbody-tr">
-          <td>온라인</td>
-          <td>아이유랑 함께 쳐요</td>
-          <td class="tour_date">날짜 : 2021-02-25 14:20<br /></td>
-          <td>박동현</td>
-          <td>8/10</td>
+          <td>{{ join.type == 'online' ? '온라인' : '오프라인' }}</td>
+          <td>{{ join.title }}</td>
+          <td class="tour_date">
+            날짜 : {{ join.date }} {{ join.time }}<br />
+          </td>
+          <td>{{ join.hostid }}</td>
+          <td>{{ join.members?.length }}/{{ join.totalcount }}</td>
           <td>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +42,34 @@
 </template>
 
 <script>
-export default {};
+import { useCalendar } from '@/composable/calendar';
+import { ref, onMounted, watch } from 'vue';
+export default {
+  setup() {
+    const joinList = ref([]);
+    const {
+      calendarMonthJoinList,
+      calendarDay,
+      calendarMonth,
+      calendarMonthAllJoinList,
+    } = useCalendar();
+    onMounted(() => {
+      joinList.value = calendarMonthAllJoinList.value;
+    });
+
+    watch((calendarDay, calendarMonth), () => {
+      if (calendarDay.value === 0) {
+        joinList.value = calendarMonthAllJoinList.value;
+        return;
+      }
+      joinList.value = calendarMonthJoinList.value[calendarDay.value];
+    });
+    return {
+      calendarMonthJoinList,
+      joinList,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
