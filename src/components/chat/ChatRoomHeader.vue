@@ -1,11 +1,10 @@
 <template>
   <div class="chat-room-header">
     <div class="chat-header-profile">
-      <img
-        src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
-        alt="당근이"
-      />
-      <div class="main-title"><span>박동현</span></div>
+      <img :src="chatTitleData.thumbnail" alt="당근이" />
+      <div class="main-title">
+        <span>{{ chatTitleData.title }}</span>
+      </div>
     </div>
     <div class="css-6cujsz">
       <div class="more-button-wrapper pointer-cursor">
@@ -41,7 +40,16 @@
 </template>
 
 <script>
-export default {};
+import { useChat } from '@/composable/chat';
+
+export default {
+  setup() {
+    const { chatTitleData } = useChat();
+    return {
+      chatTitleData,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -71,6 +79,8 @@ export default {};
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
   }
 }
 .more-button-wrapper {

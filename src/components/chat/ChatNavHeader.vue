@@ -1,11 +1,25 @@
 <template>
   <div class="chat-sidebar-header">
-    <div>박동현</div>
+    <div>{{ name }}</div>
   </div>
 </template>
 
 <script>
-export default {};
+import { getUserFromCookie } from '@/composable/cookies';
+import { ref, onMounted } from 'vue';
+
+export default {
+  setup() {
+    const name = ref('');
+
+    onMounted(() => {
+      name.value = JSON.parse(getUserFromCookie()).name;
+    });
+    return {
+      name,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoprd>

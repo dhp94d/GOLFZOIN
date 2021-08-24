@@ -26,7 +26,7 @@ export default {
   },
   actions: {
     LOGIN({ commit }: any) {
-      const userData = getUserFromCookie();
+      const userData = JSON.parse(getUserFromCookie());
       commit('SET_USER', userData);
     },
   },

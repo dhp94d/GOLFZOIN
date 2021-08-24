@@ -2,7 +2,7 @@
   <section class="chat-room-container">
     <ChatRoomHeader></ChatRoomHeader>
     <div class="chat-room-wrap">
-      <ChatRoombody></ChatRoombody>
+      <ChatRoombody :chatData="chatData"></ChatRoombody>
     </div>
     <div class="chat-roomg-bottom">
       <ChatRoomMessage></ChatRoomMessage>
@@ -14,11 +14,48 @@
 import ChatRoomHeader from '@/components/chat/ChatRoomHeader.vue';
 import ChatRoombody from '@/components/chat/ChatRoomBody.vue';
 import ChatRoomMessage from '@/components/chat/ChatRoomMessage.vue';
+import { mwEnterChatRoom } from '@/api/middleware/chat';
+import { useChat } from '@/composable/chat';
+import { watch, ref } from 'vue';
 export default {
   components: {
     ChatRoomHeader,
     ChatRoombody,
     ChatRoomMessage,
+  },
+  setup() {
+    const chatData = ref([]);
+    const { chatTarget } = useChat();
+
+    const getChatData = async () => {
+      chatData.value = [];
+      const res = await mwEnterChatRoom(
+        process.env.VUE_APP_SERVER_TYPE,
+        chatTarget.value
+      );
+      res.onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type == 'added') {
+            let doc = change.doc;
+            const data = {
+              id: doc.id,
+              author: doc.data().author,
+              data: doc.data().data,
+              date: doc.data().date,
+              profile: doc.data().profile,
+              roomNo: doc.data().roomNo,
+            };
+            chatData.value.push(data);
+          }
+        });
+      });
+    };
+
+    watch(chatTarget, () => getChatData());
+
+    return {
+      chatData,
+    };
   },
 };
 </script>

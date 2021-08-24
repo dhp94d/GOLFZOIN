@@ -1,31 +1,80 @@
 <template>
-  <li>
-    <a class="chat-nav-room"
-      ><div class="chat-nav-room-profile">
-        <img
-          class="profile-image"
-          src="https://dnvefa72aowie.cloudfront.net/origin/profile/202009/64EB49B6691492AED2A17158BEA208404BCEA5E274518F5FE3DB300CF688DADC.jpg?q=82&amp;s=80x80&amp;t=crop"
-          alt="profile"
-        />
-      </div>
-      <div class="chat-nav-room-body">
-        <div class="preview-title-wrap">
-          <span class="nickname">박동현</span>
+  <div class="chat-nav-container">
+    <div v-for="join in joinList" :key="join.roomNo">
+      <li>
+        <div
+          class="chat-nav-room"
+          @click="
+            enterChatRoom(join.roomNo, {
+              title: join.title,
+              thumbnail: join.thumbnail,
+            })
+          "
+        >
+          <div class="chat-nav-room-profile">
+            <img class="profile-image" :src="join.thumbnail" alt="profile" />
+          </div>
+          <div class="chat-nav-room-body">
+            <div class="preview-title-wrap">
+              <span class="nickname">{{ join.title }}</span>
+            </div>
+            <div class="preview-description"></div>
+          </div>
         </div>
-        <div class="preview-description"></div></div
-    ></a>
-  </li>
+      </li>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
+import { getAuthFromCookie } from '@/composable/cookies';
+import { mwMyJoinList } from '@/api/middleware/mainJoin';
+import { useChat } from '@/composable/chat';
+import { ref, onMounted } from 'vue';
+
+export default {
+  setup() {
+    const joinList = ref([]);
+    const { updateChatTarget, updateChatTitleData } = useChat();
+
+    const getJoinList = async () => {
+      joinList.value = await mwMyJoinList(
+        process.env.VUE_APP_SERVER_TYPE,
+        getAuthFromCookie()
+      );
+    };
+    const enterChatRoom = (roomNo, titleData) => {
+      updateChatTarget(roomNo);
+      updateChatTitleData(titleData);
+    };
+    onMounted(() => {
+      getJoinList();
+    });
+
+    return {
+      joinList,
+      enterChatRoom,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+.chat-nav-container {
+  height: 78vh;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0.5vw;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 42%, 0.49);
+    border-radius: 100px;
+  }
+}
 li {
   display: list-item;
   text-align: -webkit-match-parent;
-  a {
+  div {
     background-color: transparent;
     color: inherit;
     text-decoration: none;
