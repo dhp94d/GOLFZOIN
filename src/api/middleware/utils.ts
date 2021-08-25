@@ -13,17 +13,10 @@ export const uploadFile = async (path: string, name: string, file: any) => {
     .put(file)
     .on(
       'state_changed',
-      (snapshot) => {
-        console.log(snapshot);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        console.log('성공');
-      }
+      (snapshot) => {},
+      (error) => {},
+      () => {}
     );
-  console.log(ref);
   return;
 };
 

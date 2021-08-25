@@ -50,7 +50,8 @@ type applyJoinDTO = {
 type joinIsOkDTO = {
   type: 'online' | 'offline';
   roomNo: string;
-  hostid: string;
+  userid: string;
+  alarmid: string;
   logtype: 'accept' | 'refuse';
 };
 

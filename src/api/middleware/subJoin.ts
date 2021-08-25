@@ -11,8 +11,7 @@ import {
   fbApplyJoin,
   fbJoinAcceptUser,
   fbJoinRefuseUser,
-  fbGetHostAlarm,
-  fbGetApplyAlarm,
+  fbGetAlarm,
   fbUserDelAlarm,
 } from '@/api/serverless/subJoin';
 
@@ -49,25 +48,11 @@ const mwJoinRefuseUser = async (
   }
 };
 
-const mwGetHostAlarm = async (
-  type: 'server' | 'serverless',
-  userid: string
-) => {
+const mwGetAlarm = async (type: 'server' | 'serverless', userid: string) => {
   if (type === 'server') {
     return getHostAlarm(userid);
   } else {
-    return fbGetHostAlarm(userid);
-  }
-};
-
-const mwGetApplyAlarm = async (
-  type: 'server' | 'serverless',
-  userid: string
-) => {
-  if (type === 'server') {
-    return getApplyAlarm(userid);
-  } else {
-    return fbGetApplyAlarm(userid);
+    return fbGetAlarm(userid);
   }
 };
 
@@ -86,7 +71,6 @@ export {
   mwApplyJoin,
   mwJoinAcceptUser,
   mwJoinRefuseUser,
-  mwGetHostAlarm,
-  mwGetApplyAlarm,
+  mwGetAlarm,
   mwUserDelAlarm,
 };

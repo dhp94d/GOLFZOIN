@@ -4,7 +4,7 @@
     <div class="join-page-title">온라인 조인</div>
     <JoinFilter class="join-page-filter"></JoinFilter>
     <div class="join-online-container">
-      <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.id">
+      <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.roomNo">
         <div>
           <JoinItem
             :title="onlinejoin.title"
@@ -13,7 +13,7 @@
             :totalcount="onlinejoin.totalcount"
             :thumbnail="onlinejoin.thumbnail"
             :body="onlinejoin.body"
-            :id="onlinejoin.id"
+            :roomNo="onlinejoin.roomNo"
             :simple="true"
           ></JoinItem>
         </div>
@@ -34,7 +34,6 @@ export default {
   },
   setup() {
     const onlineJoinData = ref([]);
-    const page = ref(20);
     const getOnlinJoin = async () => {
       const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE);
       onlineJoinData.value.push(...res);

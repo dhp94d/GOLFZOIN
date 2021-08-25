@@ -148,6 +148,7 @@ li {
   transition: color 0.5s ease 0s;
   &:hover {
     cursor: pointer;
+    background-color: rgba(33, 33, 36, 0.07);
   }
 }
 .chat-nav-room-profile {

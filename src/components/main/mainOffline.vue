@@ -17,10 +17,7 @@
           :body="offlineJoinData[slide]?.body"
           :date="offlineJoinData[slide]?.date"
           :time="offlineJoinData[slide]?.time"
-          :totalcount="offlineJoinData[slide]?.totalcount"
-          :simple="false"
-          :place="offlineJoinData[slide]?.place"
-          :id="offlineJoinData[slide]?.id"
+          :roomNo="offlineJoinData[slide]?.roomNo"
         ></JoinItem>
       </slide>
       <template #addons>
@@ -31,7 +28,6 @@
   </div>
 </template>
 <script>
-import { mwGetLimitJoin } from '@/middleware/join';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import JoinItem from '@/components/join/JoinItem.vue';

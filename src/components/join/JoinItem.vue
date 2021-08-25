@@ -1,43 +1,29 @@
 <template>
   <div>
-    <div v-if="simple">
-      <div class="thumbnail" @click="moveOnlineDetail(id)">
-        <img :src="thumbnail" />
-        <div class="thumbnail-title">
-          <h5>{{ title }}</h5>
-          <div class="thumbnail-time">
-            <div>{{ date }}</div>
-            <div>{{ time }}</div>
-          </div>
-          <div class="thumbnail-body">
-            <p>
-              {{ body?.length > 40 ? body.slice(0, 40) + '...' : body }}
-            </p>
-          </div>
-        </div>
-      </div>
+    <div v-if="showDetailJoin">
+      <OnlineJoinDetail @toggle="detailJoinToggle"></OnlineJoinDetail>
     </div>
-    <div v-else>
-      <div class="thumbnail" @click="moveOfflineDetail(id)">
-        <img :src="thumbnail" />
-        <div class="thumbnail-title">
-          <h5>{{ title }}</h5>
-          <div class="thumbnail-address">
-            위치:
-            {{ place?.length > 20 ? place.slice(0, 20) + '...' : place }}
-          </div>
-          <div class="thumbnail-time">
-            <div>{{ date }}</div>
-            <div>{{ time }}</div>
-          </div>
+    <div class="thumbnail" @click="updateRoomNo(roomNo)">
+      <img :src="thumbnail" />
+      <div class="thumbnail-title">
+        <h5>{{ title }}</h5>
+        <div class="thumbnail-time">
+          <div>{{ date }}</div>
+          <div>{{ time }}</div>
+        </div>
+        <div class="thumbnail-body">
+          <p>
+            {{ body?.length > 40 ? body.slice(0, 40) + '...' : body }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { useRouter } from 'vue-router';
+import OnlineJoinDetail from '@/components/join/OnlineJoinDetail.vue';
 import { useJoin } from '@/composable/join';
+import { ref } from 'vue';
 export default {
   props: {
     title: String,
@@ -48,28 +34,26 @@ export default {
     thumbnail: String,
     simple: Boolean,
     place: String,
-    id: String,
+    roomNo: String,
+  },
+  components: {
+    OnlineJoinDetail,
   },
   setup() {
-    const router = useRouter();
+    const showDetailJoin = ref(false);
     const { updateTarget } = useJoin();
 
-    const moveOnlineDetail = (id) => {
-      updateTarget(id);
-      router.push({
-        name: 'OnlineDetailJoin',
-      });
+    const detailJoinToggle = () => {
+      showDetailJoin.value = !showDetailJoin.value;
     };
-
-    const moveOfflineDetail = (id) => {
-      updateTarget(id);
-      router.push({
-        name: 'OfflineDetailJoin',
-      });
+    const updateRoomNo = (roomNo) => {
+      updateTarget(roomNo);
+      detailJoinToggle();
     };
     return {
-      moveOnlineDetail,
-      moveOfflineDetail,
+      updateRoomNo,
+      showDetailJoin,
+      detailJoinToggle,
     };
   },
 };
@@ -83,6 +67,7 @@ export default {
   &:hover {
     cursor: pointer;
     box-shadow: 2px 1px 10px 1px #000;
+    background-color: rgba(33, 33, 36, 0.07);
     position: relative;
   }
 

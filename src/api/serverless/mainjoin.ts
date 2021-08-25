@@ -42,7 +42,7 @@ const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
     await db
       .collection('join')
       .doc(res.id)
-      .update({ members: [userData], rommNo: res.id });
+      .update({ members: [userData], roomNo: res.id });
     await db
       .collection('users')
       .doc(data.hostid)

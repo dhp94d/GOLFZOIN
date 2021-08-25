@@ -50,7 +50,6 @@
 import JoinFilter from '@/components/join/JoinFilter.vue';
 import { ref, onMounted } from 'vue';
 import { useJoin } from '@/composable/join';
-import { useRouter } from 'vue-router';
 import { mwOfflineJoinList } from '@/api/middleware/mainJoin.ts';
 
 export default {
@@ -59,14 +58,12 @@ export default {
   },
   setup() {
     const { updateTarget } = useJoin();
-    updateTarget(3);
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
     const bounds = new kakao.maps.LatLngBounds();
     const positions = ref([]);
     const title = ref([]);
-    const router = useRouter();
 
     const getOfflineData = async () => {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE);
@@ -81,10 +78,7 @@ export default {
     };
 
     const offlineJoinClick = (offlinejoin) => {
-      updateTarget(offlinejoin.id);
-      router.push({
-        name: 'OfflineDetailJoin',
-      });
+      updateTarget(offlinejoin.roomNo);
     };
 
     const initMap = () => {
@@ -123,9 +117,7 @@ export default {
 
         (function (customOverlay) {
           // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-          kakao.maps.event.addListener(customOverlay, 'click', function () {
-            console.log('zz');
-          });
+          kakao.maps.event.addListener(customOverlay, 'click', function () {});
         })(customOverlay);
 
         bounds.extend(positions.value[i]);
