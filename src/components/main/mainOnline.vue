@@ -14,11 +14,10 @@
           class="carousel__item"
           :title="onlineJoinData[slide]?.title"
           :thumbnail="onlineJoinData[slide]?.thumbnail"
-          :detailText="onlineJoinData[slide]?.body"
+          :body="onlineJoinData[slide]?.body"
           :date="onlineJoinData[slide]?.date"
           :time="onlineJoinData[slide]?.time"
-          :id="onlineJoinData[slide]?.id"
-          :simple="true"
+          :roomNo="onlineJoinData[slide]?.roomNo"
         ></JoinItem>
       </slide>
       <template #addons>

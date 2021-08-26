@@ -175,8 +175,6 @@ export default {
         longitude: longitude.value,
       };
       if (!!newImg.value) {
-        console.log('왜 안돼');
-        console.log(saveImg.value.name);
         const url = await getOneThumbnail(
           'join',
           'offline',

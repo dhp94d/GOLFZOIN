@@ -29,7 +29,7 @@ export default defineComponent({
 });
 </script>
 
-<style scope>
+<style lang="scss" scoped>
 .chat-container {
   display: flex;
   justify-content: center;

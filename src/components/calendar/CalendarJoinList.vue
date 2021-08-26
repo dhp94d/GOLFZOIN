@@ -57,7 +57,7 @@ export default {
       joinList.value = calendarMonthAllJoinList.value;
     });
 
-    watch((calendarDay, calendarMonth), () => {
+    watch([calendarDay, calendarMonth], () => {
       if (calendarDay.value === 0) {
         joinList.value = calendarMonthAllJoinList.value;
         return;
