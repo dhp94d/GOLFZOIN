@@ -2,39 +2,44 @@
   <div>
     <Modal @toggle="toggle">
       <template #header>
-        <div>{{ JoinInfo.type }}</div>
+        <div class="join-type">
+          {{ JoinInfo.type === 'online' ? '온라인 조인' : '오프라인 조인' }}
+        </div>
       </template>
       <template #body>
         <div class="join-container">
-          <div class="user-info">
-            <div class="user-img">
+          <div class="join-info">
+            <div class="join-img">
               <img :src="JoinInfo.thumbnail" />
             </div>
 
-            <div class="user-data">
-              <div>
+            <div class="join-data">
+              <div class="join-title">
                 <span>{{ JoinInfo.title }}</span>
               </div>
-              <div>
+              <div class="join-time">
                 <span>{{ JoinInfo.date }} {{ JoinInfo.time }}</span>
               </div>
-              <div>
+              <div class="join-body">
                 <span>{{ JoinInfo.body }}</span>
               </div>
             </div>
           </div>
-          <div>
-            <div>참여인원</div>
-            <div
-              v-for="member in JoinInfo.members"
-              :key="`index${member.nickname}`"
-            >
-              <div>{{ member.nickname }}</div>
-              <div>{{ member.gender === 'man' ? '남' : '여' }}</div>
-              <div>{{ member.hit }}</div>
+          <div class="join-member">
+            <div class="join-member-title">참여인원</div>
+            <div>
+              <div
+                v-for="member in JoinInfo.members"
+                :key="`index${member.nickname}`"
+                class="member-data"
+              >
+                <div class="memeber-profile">
+                  <img :src="member.profile" />
+                </div>
+              </div>
             </div>
           </div>
-          <div class="follow-button">
+          <div class="join-button">
             <button
               type="submit"
               class="btn btn-primary auth-button"
@@ -96,28 +101,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-info {
-  display: flex;
+.join-container {
+  padding: 0 1rem;
+}
+.join-type {
+  font-weight: bold;
+}
+.join-title {
+  text-align: center;
+  font-weight: bold;
+}
+.join-time {
+  text-align: end;
+  font-size: 0.8rem;
+  font-weight: 0;
+}
+.join-body {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.join-img {
+  text-align: center;
+  margin-bottom: 2rem;
   img {
-    margin: auto;
-    width: 200px;
-    height: 200px;
     object-fit: cover;
     box-shadow: 1px 1px 2px 2px gray;
-    margin-bottom: 0.5rem;
-  }
-  h4 {
-    padding-bottom: 1rem;
   }
 }
-.user-data {
-  padding-left: 1rem;
-
-  div {
-    display: flex;
-    gap: 0.5rem;
-    font-weight: bold;
-    line-height: 1.5rem;
+.join-member {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: rgba(33, 33, 36, 0.07);
+}
+.memeber-profile {
+  img {
+    object-fit: cover;
+    border-radius: 1rem;
+    width: 50px;
+    height: 50px;
   }
+}
+.join-member-title {
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+.join-button {
+  display: flex;
+  padding-top: 1rem;
+  justify-content: space-around;
 }
 </style>
