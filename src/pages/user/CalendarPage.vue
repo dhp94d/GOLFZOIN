@@ -76,11 +76,15 @@ export default {
       ];
     };
     const setData = async () => {
-      joinList.value = await mwMyJoinList(
+      const res = await mwMyJoinList(
         process.env.VUE_APP_SERVER_TYPE,
         getAuthFromCookie()
       );
-      setCurrentJoinList();
+      console.log(res);
+      if (res) {
+        joinList.value = res;
+        setCurrentJoinList();
+      }
     };
 
     watch([calendarMonth, calendarYear], () => {

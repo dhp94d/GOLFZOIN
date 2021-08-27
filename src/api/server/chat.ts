@@ -9,7 +9,6 @@ const enterChatRoom = async (roomNo: string) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.get(`/api/chat/enterchatroom/${roomNo}`);
 };
 
 const addMessage = async (roomNo: string, data: object) => {
@@ -25,7 +24,6 @@ const addMessage = async (roomNo: string, data: object) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.get(`/api/chat/enterchatroom/${roomNo}`, data);
 };
 
 export { enterChatRoom, addMessage };

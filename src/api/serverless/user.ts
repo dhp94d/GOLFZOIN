@@ -78,7 +78,7 @@ const fbGetFollower = async (userId: string) => {
   }
 };
 
-const fbFindUser = async (keyword: string) => {
+const fbFindUser = async (keyword: string, userid: string) => {
   try {
     const userList: Array<object> = [];
     const users = await db.collection('users').get();

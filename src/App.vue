@@ -10,6 +10,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     const { authLoginAction } = useAuth();
+
     const init = () => {
       let stripeScript = document.createElement('script');
       stripeScript.setAttribute('type', 'text/javascript');

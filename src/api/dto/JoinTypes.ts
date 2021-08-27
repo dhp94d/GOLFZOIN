@@ -19,7 +19,7 @@ type registOfflineDTO = {
   hostid: string;
   date: string;
   time: string;
-  totalcount: number;
+  totalcount: string;
   place: string;
   lat: number;
   lon: number;
@@ -33,7 +33,7 @@ type registOnlineDTO = {
   hostid: string;
   date: string;
   time: string;
-  totalcount: number;
+  totalcount: string;
   pw: string;
   title: string;
   body: string;

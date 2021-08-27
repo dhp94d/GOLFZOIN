@@ -5,7 +5,7 @@
         <form @submit.prevent="submitForm" class="form">
           <span>회원 정보</span><br />
           <div>
-            <input placeholder="이메일" type="text" v-model="email" />
+            <input placeholder="아이디" type="text" v-model="email" />
           </div>
           <div>
             <input placeholder="이름" type="text" v-model="name" />
@@ -93,16 +93,15 @@
           >
             회원 가입
           </button>
-        </form>
-      </template>
+        </form> </template
+      >process.env.VUE_APP_SEVER_TYPE
     </Modal>
   </div>
 </template>
 <script>
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { mwSignup } from '@/api/middleware/auth';
-import { validateEmail } from '@/composable/validateEmail';
 import Modal from '@/components/common/Modal.vue';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
@@ -130,8 +129,6 @@ export default defineComponent({
     const toggle = () => {
       emit('toggle');
     };
-
-    const isEmailValid = computed(() => validateEmail(email.value));
 
     const findAddress = () => {
       new daum.Postcode({
@@ -184,7 +181,6 @@ export default defineComponent({
       address,
       hit,
       findAddress,
-      isEmailValid,
       birthday,
       gender,
       toggle,

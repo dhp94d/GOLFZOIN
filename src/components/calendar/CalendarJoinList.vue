@@ -53,6 +53,7 @@ export default {
       calendarMonth,
       calendarMonthAllJoinList,
     } = useCalendar();
+
     onMounted(() => {
       joinList.value = calendarMonthAllJoinList.value;
     });

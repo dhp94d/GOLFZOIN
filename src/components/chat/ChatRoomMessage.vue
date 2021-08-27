@@ -21,33 +21,78 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { watch, ref } from 'vue';
 import { mwAddMessage } from '@/api/middleware/chat';
-import { useChat } from '@/composable/chat';
 import { useAuth } from '@/composable/auth';
+import { useChat } from '@/composable/chat';
+import { getAuthFromCookie } from '@/composable/cookies';
+import Stomp from 'webstomp-client';
+import SockJS from 'sockjs-client';
 import dayjs from 'dayjs';
 export default {
-  setup() {
+  emits: ['addChat'],
+  setup(props, { emit }) {
     const message = ref('');
     const { chatTarget } = useChat();
     const { authGetUserInfo } = useAuth();
+
+    let stompClient = null;
+    const connect = async () => {
+      const socket = new SockJS('http://localhost:8080/ws-stomp');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe(
+          `/sub/chat/${chatTarget.value}`,
+          function (roomMessage) {
+            emit('addChat', roomMessage.body);
+          }
+        );
+      });
+    };
+    function disconnect() {
+      if (stompClient !== null) {
+        stompClient.disconnect();
+      }
+      console.log('Disconnected');
+    }
+
+    function sendName(data) {
+      stompClient.send('/pub/api/chat/message', JSON.stringify(data), {});
+    }
+
     const addMessage = async () => {
       if (message.value === '') return;
-      const messagedata = {
-        roomNo: chatTarget.value,
-        author: authGetUserInfo.value.nickname,
-        data: message.value,
-        date: dayjs(dayjs()).format('HH:mm'),
-        profile: authGetUserInfo.value.profile,
-      };
-      await mwAddMessage(
-        process.env.VUE_APP_SERVER_TYPE,
-        chatTarget.value,
-        messagedata
-      );
+      if (process.env.VUE_APP_SERVER_TYPE === 'serverless') {
+        const messagedata = {
+          roomNo: chatTarget.value,
+          author: authGetUserInfo.value.nickname,
+          data: message.value,
+          date: dayjs(dayjs()).format('HH:mm'),
+          profile: authGetUserInfo.value.profile,
+        };
+        await mwAddMessage(
+          process.env.VUE_APP_SERVER_TYPE,
+          chatTarget.value,
+          messagedata
+        );
+      } else {
+        const messageData = {
+          author: authGetUserInfo.value.nickname,
+          data: message.value,
+          roomNo: chatTarget.value,
+          date: dayjs(dayjs()).format('HH:mm'),
+          profile: authGetUserInfo.value.profile,
+        };
+        sendName(messageData);
+      }
+
       message.value = '';
     };
 
+    watch(chatTarget, () => {
+      disconnect(), connect();
+    });
     return {
       addMessage,
       message,

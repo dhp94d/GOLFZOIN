@@ -11,7 +11,6 @@ const applyJoin = async (data: applyJoinDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.post(`api/join/applyjoin`, data);
 };
 
 const joinAcceptUser = async (data: joinIsOkDTO) => {
@@ -24,7 +23,6 @@ const joinAcceptUser = async (data: joinIsOkDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.post(`api/join/acceptuser`, data);
 };
 
 const joinRefuseUser = async (data: joinIsOkDTO) => {
@@ -37,7 +35,6 @@ const joinRefuseUser = async (data: joinIsOkDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.post(`api/join/refuseuser`, data);
 };
 
 const getHostAlarm = async (userid: string) => {
@@ -50,7 +47,6 @@ const getHostAlarm = async (userid: string) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.get(`api/join/jointempuser/${userid}`);
 };
 
 const getApplyAlarm = async (userid: string) => {
@@ -63,7 +59,6 @@ const getApplyAlarm = async (userid: string) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.get(`api/join/alarm/${userid}`);
 };
 
 const userDelAlarm = async (data: delAlarmDTO) => {
@@ -78,9 +73,6 @@ const userDelAlarm = async (data: delAlarmDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.delete(
-  //   `api/join/alarm/delete?user=${data.userid}&alarmNo=${data.alarmNo}`
-  // );
 };
 
 export {

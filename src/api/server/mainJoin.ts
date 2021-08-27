@@ -67,7 +67,6 @@ const mainOnlineList = async () => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.get(`api/join/mainonlist`);
 };
 
 const offlineJoinList = async (data: offlineJoinListDTO) => {
@@ -79,7 +78,6 @@ const offlineJoinList = async (data: offlineJoinListDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.post(`api/join/offlinejoinlist`, data);
 };
 
 const onlineJoinList = async (data: onlineJoinListDTO) => {
@@ -92,7 +90,6 @@ const onlineJoinList = async (data: onlineJoinListDTO) => {
   } catch (e) {
     console.error(e);
   }
-  // return await notLoggedAxios.post(`api/join/onlinejoinlist`, data);
 };
 
 export {

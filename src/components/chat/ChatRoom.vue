@@ -5,7 +5,7 @@
       <ChatRoombody :chatData="chatData"></ChatRoombody>
     </div>
     <div class="chat-roomg-bottom">
-      <ChatRoomMessage></ChatRoomMessage>
+      <ChatRoomMessage @addChat="addChatData"></ChatRoomMessage>
     </div>
   </section>
 </template>
@@ -17,6 +17,7 @@ import ChatRoomMessage from '@/components/chat/ChatRoomMessage.vue';
 import { mwEnterChatRoom } from '@/api/middleware/chat';
 import { useChat } from '@/composable/chat';
 import { watch, ref } from 'vue';
+
 export default {
   components: {
     ChatRoomHeader,
@@ -33,28 +34,35 @@ export default {
         process.env.VUE_APP_SERVER_TYPE,
         chatTarget.value
       );
-      res.onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type == 'added') {
-            let doc = change.doc;
-            const data = {
-              id: doc.id,
-              author: doc.data().author,
-              data: doc.data().data,
-              date: doc.data().date,
-              profile: doc.data().profile,
-              roomNo: doc.data().roomNo,
-            };
-            chatData.value.push(data);
-          }
+      if (process.env.VUE_APP_SERVER_TYPE === 'serverless') {
+        res.onSnapshot((snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            if (change.type == 'added') {
+              let doc = change.doc;
+              const data = {
+                id: doc.id,
+                author: doc.data().author,
+                data: doc.data().data,
+                date: doc.data().date,
+                profile: doc.data().profile,
+                roomNo: doc.data().roomNo,
+              };
+              chatData.value.push(data);
+            }
+          });
         });
-      });
+      } else {
+        chatData.value = res;
+      }
     };
-
+    const addChatData = (message) => {
+      chatData.value.push(JSON.parse(message));
+    };
     watch(chatTarget, () => getChatData());
 
     return {
       chatData,
+      addChatData,
     };
   },
 };

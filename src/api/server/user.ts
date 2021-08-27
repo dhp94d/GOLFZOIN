@@ -10,7 +10,6 @@ const modifyUser = async (data: modifyUserDTO) => {
   } catch (e) {
     console.log(e);
   }
-  // return await notLoggedAxios.patch(`api/user/modifyuser`, data);
 };
 
 const detailUser = async (userId: string) => {
@@ -34,7 +33,6 @@ const addFollow = async (data: addFollowDTO) => {
   } catch (e) {
     console.log(e);
   }
-  // return await notLoggedAxios.post(`api/user/addfollow`, data);
 };
 
 const getFollowing = async (userId: string) => {
@@ -46,7 +44,6 @@ const getFollowing = async (userId: string) => {
   } catch (e) {
     console.log(e);
   }
-  // return await notLoggedAxios.get(`api/user/following?id=${userId}`);
 };
 
 const getFollower = async (userId: string) => {
@@ -58,7 +55,6 @@ const getFollower = async (userId: string) => {
   } catch (e) {
     console.log(e);
   }
-  // return await notLoggedAxios.get(`api/user/follower?id=${userId}`);
 };
 
 const findUser = async (keyword: string, userid: string) => {
@@ -72,7 +68,6 @@ const findUser = async (keyword: string, userid: string) => {
   } catch (e) {
     console.log(e);
   }
-  // return await notLoggedAxios.get(`/api/user/finduser?keyword=${keyword}`);
 };
 
 export {
