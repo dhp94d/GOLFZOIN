@@ -17,13 +17,13 @@
               v-model="pw"
             />
           </div>
-          <div style="color: red" v-if="!isUsernameValid || !pw">
+          <div style="color: red" v-if="!email || !pw">
             {{ errorMessage() }}
           </div>
           <div else>{{ '    ' }}</div>
           <div class="auth-button">
             <button
-              :disabled="!isUsernameValid || !pw"
+              :disabled="!email || !pw"
               type="submit"
               class="btn btn btn-primary"
             >
@@ -36,15 +36,9 @@
   </div>
 </template>
 <script lang="ts">
-import { validateEmail } from '@/composable/validateEmail';
 import { useRouter } from 'vue-router';
 import { mwLogin } from '@/api/middleware/auth';
-import { computed, defineComponent, ref } from 'vue';
-import {
-  saveAuthToCookie,
-  saveUserToCookie,
-  getUserFromCookie,
-} from '@/composable/cookies';
+import { defineComponent, ref } from 'vue';
 import Modal from '@/components/common/Modal.vue';
 
 export default defineComponent({
@@ -79,20 +73,15 @@ export default defineComponent({
     const errorMessage = () => {
       let message = [];
       if (!email.value) message.push('1) 이메일을 입력하세요. ');
-      if (email.value && !isUsernameValid.value) {
-        message.push('1) 이메일 형식이 맞지않습니다. ex) a@a.com ');
-      }
+
       if (!pw.value) message.push('비밀번호를 입력하세요. ');
       return message.join('2) ');
     };
-
-    const isUsernameValid = computed(() => validateEmail(email.value));
 
     return {
       email,
       pw,
       submitForm,
-      isUsernameValid,
       errorMessage,
       toggle,
     };

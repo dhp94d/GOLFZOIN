@@ -46,7 +46,7 @@ export default {
     const onlineJoinData = ref(['sda']);
 
     const getOnlinJoin = async () => {
-      const res = await mwMainOnlineList(process.env.VUE_APP_SEVER_TYPE);
+      const res = await mwMainOnlineList(process.env.VUE_APP_SERVER_TYPE);
       onlineJoinData.value.push(...res);
     };
 

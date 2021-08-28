@@ -7,7 +7,7 @@ module.exports = {
     proxy: {
       '/api': {
         target,
-        crossOrigin: true,
+        changeOrigin: true,
         logLevel: 'debug',
       },
     },

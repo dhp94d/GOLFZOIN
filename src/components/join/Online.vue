@@ -35,7 +35,9 @@ export default {
   setup() {
     const onlineJoinData = ref([]);
     const getOnlinJoin = async () => {
-      const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE);
+      const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE, {
+        start: 1,
+      });
       onlineJoinData.value.push(...res);
     };
     onMounted(() => {

@@ -3,7 +3,6 @@
     <router-view />
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { useAuth } from '@/composable/auth';
@@ -11,7 +10,22 @@ export default defineComponent({
   name: 'App',
   setup() {
     const { authLoginAction } = useAuth();
-    onMounted(() => authLoginAction());
+
+    const init = () => {
+      let stripeScript = document.createElement('script');
+      stripeScript.setAttribute('type', 'text/javascript');
+      stripeScript.setAttribute(
+        'src',
+        '//dapi.kakao.com/v2/maps/sdk.js?appkey=15ac0683efa77658fcfebb90ca8d1bc4&libraries=services'
+      );
+      console.log(document.head);
+
+      document.head.appendChild(stripeScript);
+    };
+    init();
+    onMounted(() => {
+      authLoginAction();
+    });
   },
 });
 </script>

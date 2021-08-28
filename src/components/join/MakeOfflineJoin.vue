@@ -91,12 +91,12 @@ const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 export default {
   setup() {
     const title = ref('');
-    const totalCount = ref(0);
+    const totalCount = ref('0');
     const time = ref('');
     const body = ref('');
     const router = useRouter();
-    const latitude = ref(0);
-    const longitude = ref(0);
+    const latitude = ref('0');
+    const longitude = ref('0');
     const newImg = ref('');
     const addressName = ref('');
     const picked = ref(dayjs().format('YYYY-MM-DD'));
@@ -171,8 +171,8 @@ export default {
         totalcount: totalCount.value,
         body: body.value,
         place: addressName.value,
-        latitude: latitude.value,
-        longitude: longitude.value,
+        lat: String(latitude.value),
+        lon: String(longitude.value),
       };
       if (!!newImg.value) {
         const url = await getOneThumbnail(
@@ -186,7 +186,6 @@ export default {
       }
 
       await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
-      router.go();
     };
     return {
       title,

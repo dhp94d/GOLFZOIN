@@ -8,8 +8,9 @@
         </div>
         <button class="user-profile" width="200px">
           <label for="input-file">프로필 수정</label>
-          <input type="file" id="input-file" @change="getImgPath" />
-        </button>
+          <input type="file" id="input-file" @change="getImgPath" /></button
+        >\
+        {{ user }}
         <form @submit.prevent="submitForm" class="user-info-data">
           <div>
             <span>이름</span>
@@ -23,7 +24,7 @@
             <span>생년월일</span>
             <input
               type="date"
-              :value="user.birthday"
+              :value="user.birthday ? user.birthday : user.birth"
               class="box"
               disabled="false"
             />
@@ -128,6 +129,7 @@ export default {
 
     const submitForm = async () => {
       const data = {};
+      data.id = user.value.userid;
       if (!!nickname.value) data.nickname = nickname.value;
       if (!!address.value) data.address = address.value;
       if (!!hit.value) data.hit = hit.value;
@@ -141,6 +143,10 @@ export default {
           `${saveImg.value.name + saveImg.value.lastModified}_250x250`
         );
         data.profile = url;
+      }
+      if (Object.keys(data).length < 2) {
+        router.go();
+        return;
       }
       await mwModifyUser(process.env.VUE_APP_SERVER_TYPE, data);
 

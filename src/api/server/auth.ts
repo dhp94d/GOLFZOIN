@@ -12,12 +12,15 @@ const signup = async (data: signupDTO) => {
 };
 
 const login = async (data: loginDTO) => {
+  console.log(data);
   const res = await notLoggedAxios.post(`api/auth/signin`, data);
-  if (res) {
+  console.log(res);
+  if (res.status === 200) {
     saveAuthToCookie(data.id);
-    saveUserToCookie(JSON.stringify(res));
+    saveUserToCookie(JSON.stringify(res.data));
+    return true;
   }
-  return;
+  return false;
 };
 
 const logout = async () => {

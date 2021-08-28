@@ -1,7 +1,7 @@
 <template>
   <div class="chat-room-header">
     <div class="chat-header-profile">
-      <img :src="chatTitleData.thumbnail" alt="당근이" />
+      <img :src="chatTitleData.thumbnail" />
       <div class="main-title">
         <span>{{ chatTitleData.title }}</span>
       </div>

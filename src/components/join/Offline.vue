@@ -66,14 +66,17 @@ export default {
     const title = ref([]);
 
     const getOfflineData = async () => {
-      const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE);
+      const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
+        lat: '37.5230059400269',
+        lon: '127.054788716295',
+        size: '3',
+      });
+      console.log(res);
       offlineJoinData.value.push(...res);
       offlineJoinData.value.map((join, i) => {
         title.value.push(join.title);
-
-        positions.value.push(
-          new kakao.maps.LatLng(join.latitude, join.longitude)
-        );
+        console.log(join.lat, join.lon);
+        positions.value.push(new kakao.maps.LatLng(join.lat, join.lon));
       });
     };
 

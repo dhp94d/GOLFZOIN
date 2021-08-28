@@ -78,7 +78,7 @@ const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 export default {
   setup() {
     const title = ref('');
-    const totalCount = ref(0);
+    const totalCount = ref('0');
     const time = ref('');
     const body = ref('');
     const router = useRouter();
@@ -122,7 +122,6 @@ export default {
       }
 
       await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
-      router.go();
     };
     return {
       title,

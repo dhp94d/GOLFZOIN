@@ -65,11 +65,15 @@ const mwGetFollower = async (type: 'server' | 'serverless', userId: string) => {
   }
 };
 
-const mwFindUser = async (type: 'server' | 'serverless', keyword: string) => {
+const mwFindUser = async (
+  type: 'server' | 'serverless',
+  keyword: string,
+  userid: string
+) => {
   if (type === 'server') {
-    return await findUser(keyword);
+    return await findUser(keyword, userid);
   } else {
-    return await fbFindUser(keyword);
+    return await fbFindUser(keyword, userid);
   }
 };
 

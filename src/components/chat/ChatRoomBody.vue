@@ -25,7 +25,6 @@
             </div>
             <div class="chat-room-message-time">
               <div class="message-date">
-                {{ makeTime(message.date) }}
                 {{ message.date }}
               </div>
             </div>
@@ -47,13 +46,8 @@ export default {
     onMounted(() => {
       nickname.value = JSON.parse(getUserFromCookie()).nickname;
     });
-    const makeTime = (time) => {
-      if (parseInt(time.slice(0, 2)) < 12) return '오전';
-      return '오후';
-    };
     return {
       nickname,
-      makeTime,
     };
   },
 };

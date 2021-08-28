@@ -34,7 +34,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/router/index.js", "src/composable/mockJoin.js"  ],
+, "src/router/index.js"],
   "exclude": [
     "node_modules"
   ]

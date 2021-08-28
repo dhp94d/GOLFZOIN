@@ -7,15 +7,40 @@ import {
 } from '@/api/dto/joinTypes';
 
 const myJoinList = async (userid: string) => {
-  return await notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
+  try {
+    const res = await notLoggedAxios.get(`api/join/myjoinlist/${userid}`);
+
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const detailJoin = async (roomNo: string) => {
-  return await notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
+  try {
+    const res = await notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
+
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const registJoin = async (data: registOnlineDTO | registOfflineDTO) => {
-  return await notLoggedAxios.post(`api/join/registjoin`);
+  console.log(data);
+  try {
+    const res = await notLoggedAxios.post(`api/join/registjoin`, data);
+    console.log('왜', res);
+    if (res.status === 200) {
+      return true;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const cancelJoin = async (roomNo: string) => {
@@ -23,19 +48,48 @@ const cancelJoin = async (roomNo: string) => {
 };
 
 const mainOfflineList = async () => {
-  return await notLoggedAxios.get(`api/join/mainofflist`);
+  try {
+    const res = await notLoggedAxios.get(`api/join/mainofflist`);
+    if ((res.status = 200)) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const mainOnlineList = async () => {
-  return await notLoggedAxios.get(`api/join/mainonlist`);
+  try {
+    const res = await notLoggedAxios.get(`api/join/mainonlist`);
+    if ((res.status = 200)) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const offlineJoinList = async (data: offlineJoinListDTO) => {
-  return await notLoggedAxios.post(`api/join/offlinejoinlist`, data);
+  try {
+    const res = await notLoggedAxios.post(`api/join/offlinejoinlist`, data);
+    if ((res.status = 200)) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const onlineJoinList = async (data: onlineJoinListDTO) => {
-  return await notLoggedAxios.post(`api/join/onlinejoinlist`, data);
+  try {
+    console.log(data);
+    const res = await notLoggedAxios.post(`api/join/onlinejoinlist`, data);
+    if ((res.status = 200)) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export {

@@ -91,7 +91,7 @@ function beforeEnter(to: any, from: any, next: any) {
     next();
   } else {
     alert('sign in please');
-    next('/login');
+    next('/');
   }
 }
 
