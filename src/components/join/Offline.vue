@@ -71,24 +71,24 @@ export default {
   },
   setup() {
     const { updateTarget } = useJoin();
-    const { SearchDate, SearchPNumber, init } = useSearch();
+    const { SearchDate, SearchPNumber, SearchAddress, init } = useSearch();
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
-    const bounds = new kakao.maps.LatLngBounds();
     const positions = ref([]);
     const title = ref([]);
     const showDetailJoin = ref(false);
     const mapSize = ref(7);
-    const showOverlay = ref('false');
 
     const userData = ref(JSON.parse(getUserFromCookie()));
-    const lat = ref();
-    const lon = ref();
+    const lat = ref(userData.value.lat);
+    const lon = ref(userData.value.lon);
 
-    watch([SearchDate, SearchPNumber], () => {
+    watch([SearchDate, SearchPNumber, SearchAddress.value, mapSize], () => {
+      lat.value = SearchAddress.value.longitude;
+      lon.value = SearchAddress.value.latitude;
+
       getOfflineData();
-      initMap();
     });
 
     const getOfflineData = async () => {
@@ -100,11 +100,13 @@ export default {
         date: SearchDate.value,
       });
       offlineJoinData.value = res;
-      offlineJoinData.value.map((join, i) => {
-        console.log(join);
+      title.value = [];
+      positions.value = [];
+      offlineJoinData.value.map((join) => {
         title.value.push(join.title);
         positions.value.push({ lat: join.latitude, lng: join.longitude });
       });
+      initMap();
     };
     const offlineJoinClick = (offlinejoin) => {
       updateTarget(offlinejoin.roomNo);
@@ -112,9 +114,7 @@ export default {
     };
 
     const initMap = () => {
-      lat.value = userData.value.lat;
-      lon.value = userData.value.lon;
-
+      console.log(lat.value, lon.value);
       const container = document.querySelector('#map');
       const options = {
         center: new kakao.maps.LatLng(lon.value, lat.value),
@@ -126,6 +126,11 @@ export default {
       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
+      kakao.maps.event.addListener(map, 'zoom_changed', function () {
+        // 지도의 현재 레벨을 얻어옵니다
+        var level = map.getLevel();
+        mapSize.value = level;
+      });
       var clusterer = new kakao.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
@@ -152,13 +157,9 @@ export default {
         });
         overlay.setMap(null);
         kakao.maps.event.addListener(marker, 'mouseover', function () {
-          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
           overlay.setMap(map);
         });
-
-        // 마커에 마우스아웃 이벤트를 등록합니다
         kakao.maps.event.addListener(marker, 'mouseout', function () {
-          // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
           overlay.setMap(null);
         });
         return marker;
@@ -171,7 +172,6 @@ export default {
         function (cluster) {
           // 현재 지도 레벨에서 1레벨 확대한 레벨
           var level = map.getLevel() - 1;
-
           // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
           map.setLevel(level, { anchor: cluster.getCenter() });
         }
@@ -194,7 +194,6 @@ export default {
       offlineJoinClick,
       showDetailJoin,
       detailJoinToggle,
-      display: showOverlay,
     };
   },
 };
@@ -226,6 +225,8 @@ export default {
 }
 .offline-box {
   cursor: pointer;
+  display: flex;
+  width: 50vw;
   word-break: break-all;
   color: #717188;
   img {
@@ -301,7 +302,7 @@ export default {
   font-weight: bold;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1000px) {
   .offline-box {
     flex-direction: column;
   }

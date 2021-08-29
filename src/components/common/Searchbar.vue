@@ -44,6 +44,7 @@ import { useSearch } from '@/composable/search';
 import NumberUpDown from '@/components/common/NumberUpDown.vue';
 import HeaderCalendar from '@/components/header/HeaderCalendar.vue';
 import FindAddress from '@/components/common/FindAddress.vue';
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 export default {
@@ -56,11 +57,12 @@ export default {
   props: {
     type: String,
   },
-  setup() {
+  setup(props) {
     const { updatePNumber, updateData, updateFollow } = useSearch();
     const pNumber = ref(0);
     const Follow = ref(0);
     const searchData = ref('');
+    const router = useRouter();
 
     const countPNumber = (number) => {
       pNumber.value = number;
@@ -73,9 +75,14 @@ export default {
       updatePNumber(pNumber.value);
       updateData(searchData.value);
       updateFollow(Follow.value);
+      if (props.type === '온라인') {
+        router.push('/join/onlinejoin');
+      } else {
+        router.push('/join/offlinejoin');
+      }
       pNumber.value = 0;
       Follow.value = 0;
-      searchData.value = 0;
+      searchData.value = '';
     };
     return {
       pNumber,

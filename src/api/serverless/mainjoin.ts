@@ -103,7 +103,17 @@ const fbOfflineJoinList = async (data: any) => {
       .where('type', '==', 'offline')
       .get();
     res.forEach((join) => joinList.push(join.data()));
-    return joinList;
+    if (!data.count && data.date === '') {
+      return joinList;
+    }
+
+    const searchJoinList = joinList.filter((join: any) => {
+      if (join.date < data.date) return false;
+      if (join.totalcount - join.members.length < data.count) return false;
+      return true;
+    });
+    console.log(searchJoinList);
+    return searchJoinList;
   } catch (e) {
     console.error(e);
   }
