@@ -57,7 +57,7 @@
 </template>
 <script>
 import Searchbar from '@/components/common/Searchbar.vue';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useJoin } from '@/composable/join';
 import { mwOfflineJoinList } from '@/api/middleware/mainJoin.ts';
 import OfflineJoinDetail from '@/components/join/OfflineJoinDetail.vue';

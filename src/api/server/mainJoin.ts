@@ -80,9 +80,23 @@ const offlineJoinList = async (data: any) => {
   }
 };
 
-const onlineJoinList = async (data: any) => {
+const onlineJoinList = async (inputData: any) => {
   try {
-    console.log(data);
+    let data = {};
+    if (inputData.data !== '') {
+      data = { ...data, title: inputData.data };
+    }
+    if (inputData.follow !== 0) {
+      data = { ...data, follow: inputData.follow };
+    }
+    if (inputData.date !== '') {
+      data = { ...data, date: inputData.date };
+    }
+    if (inputData.pNumber !== 0) {
+      data = { ...data, date: inputData.pNumber };
+    }
+    data = { ...data, start: inputData.start };
+
     const res = await notLoggedAxios.post(`api/join/onlinejoinlist`, data);
     if ((res.status = 200)) {
       return res.data;

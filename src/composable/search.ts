@@ -26,7 +26,10 @@ export const useSearch = () => {
     });
   const updatePNumber = (data: number) =>
     store.commit('search/SET_SEARCH_PNUMBER', data);
-  const init = () => store.commit('search/ SET_SEARCH_INIT');
+  const init = () => {
+    console.log('먹히지');
+    store.commit('search/SET_SEARCH_INIT');
+  };
   return {
     SearchDate,
     SearchAddress,

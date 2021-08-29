@@ -39,17 +39,17 @@ export default {
       state.follow = payload;
     },
     SET_SEARCH_INIT(state: any) {
-      state = {
-        data: '',
-        follow: 0,
-        date: '',
-        address: {
-          latitude: '',
-          longitude: '',
-          addressName: '',
-        },
-        pNumber: 0,
-      };
+      console.log('왜글');
+
+      state.data = '';
+      state.follow = 0;
+      state.date = '';
+      (state.address = {
+        latitude: '',
+        longitude: '',
+        addressName: '',
+      }),
+        (state.pNumber = 0);
     },
   },
   actions: {},
