@@ -73,6 +73,9 @@ export default {
       updatePNumber(pNumber.value);
       updateData(searchData.value);
       updateFollow(Follow.value);
+      pNumber.value = 0;
+      Follow.value = 0;
+      searchData.value = 0;
     };
     return {
       pNumber,

@@ -70,7 +70,8 @@ export default {
   },
   setup() {
     const { updateTarget } = useJoin();
-    const { SearchDate, SearchPNumber, SearchData, SearchFollow } = useSearch();
+    const { SearchDate, SearchPNumber, SearchData, SearchFollow, init } =
+      useSearch();
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
@@ -85,6 +86,7 @@ export default {
     });
 
     const getOfflineData = async () => {
+      console.log('왜 안머겅');
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
         lat: '37.5230059400269',
         lon: '127.054788716295',
@@ -150,6 +152,9 @@ export default {
     onMounted(async () => {
       await getOfflineData();
       initMap();
+    });
+    onUnmounted(() => {
+      init();
     });
     return {
       offlineJoinData,

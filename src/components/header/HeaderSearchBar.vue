@@ -92,6 +92,9 @@ export default {
       updatePNumber(pNumber.value);
       updateData(searchData.value);
       updateFollow(Follow.value);
+      pNumber.value = 0;
+      Follow.value = 0;
+      searchData.value = 0;
       if (joinType.value === '온라인') {
         router.push('/join/onlinejoin');
       } else {

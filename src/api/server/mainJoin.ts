@@ -69,7 +69,7 @@ const mainOnlineList = async () => {
   }
 };
 
-const offlineJoinList = async (data: offlineJoinListDTO) => {
+const offlineJoinList = async (data: any) => {
   try {
     const res = await notLoggedAxios.post(`api/join/offlinejoinlist`, data);
     if ((res.status = 200)) {
@@ -80,7 +80,7 @@ const offlineJoinList = async (data: offlineJoinListDTO) => {
   }
 };
 
-const onlineJoinList = async (data: onlineJoinListDTO) => {
+const onlineJoinList = async (data: any) => {
   try {
     console.log(data);
     const res = await notLoggedAxios.post(`api/join/onlinejoinlist`, data);

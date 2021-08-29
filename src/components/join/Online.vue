@@ -26,7 +26,7 @@
 <script>
 import Searchbar from '@/components/common/Searchbar.vue';
 import JoinItem from '@/components/join/JoinItem.vue';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, onUnmounted } from 'vue';
 import { mwOnlineJoinList } from '@/api/middleware/mainJoin.ts';
 import { useSearch } from '@/composable/search';
 
@@ -36,7 +36,8 @@ export default {
     Searchbar,
   },
   setup() {
-    const { SearchDate, SearchPNumber, SearchData, SearchFollow } = useSearch();
+    const { SearchDate, SearchPNumber, SearchData, SearchFollow, init } =
+      useSearch();
     const startValue = ref(1);
     const onlineJoinData = ref([]);
     const getOnlinJoin = async () => {
@@ -52,6 +53,9 @@ export default {
     };
     onMounted(() => {
       getOnlinJoin();
+    });
+    onUnmounted(() => {
+      init();
     });
     watch([SearchDate, SearchPNumber, SearchData, SearchFollow], () => {
       getOnlinJoin();
