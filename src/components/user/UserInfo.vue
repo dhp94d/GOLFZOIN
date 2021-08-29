@@ -35,7 +35,7 @@
                 type="submit"
                 class="btn btn-danger"
                 @click="
-                  process.env.VUE_APP_SERVER_TYPE === 'server'
+                  TYPE === 'server'
                     ? delFollow(user.userid)
                     : delFollow(user.id)
                 "
@@ -48,7 +48,7 @@
                 type="submit"
                 class="btn btn-primary"
                 @click="
-                  process.env.VUE_APP_SERVER_TYPE === 'server'
+                  TYPE === 'server'
                     ? addFollow(user.userid)
                     : addFollow(user.id)
                 "
@@ -70,6 +70,7 @@ import { mwDetailUser, mwAddFollow, mwDelFollow } from '@/api/middleware/user';
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 
+const TYPE = process.env.VUE_APP_SERVER_TYPE;
 export default {
   components: {
     Modal,
@@ -119,6 +120,7 @@ export default {
       age,
       gender,
       addFollow,
+      TYPE,
       delFollow,
     };
   },
