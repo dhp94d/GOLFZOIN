@@ -84,18 +84,16 @@ export default {
     const lat = ref(userData.value.lat);
     const lon = ref(userData.value.lon);
 
-    watch([SearchDate, SearchPNumber, SearchAddress.value, mapSize], () => {
+    watch([SearchDate, SearchPNumber, SearchAddress.value], () => {
       lat.value = SearchAddress.value.longitude;
       lon.value = SearchAddress.value.latitude;
-
       getOfflineData();
     });
-
     const getOfflineData = async () => {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
-        lat: lat.value ? lat.value : '126.915288945958',
-        lon: lon.value ? lon.value : '37.4802073507036',
-        size: lat.value ? mapSize.value : 13,
+        lat: lat.value,
+        lon: lon.value,
+        size: mapSize.value,
         count: SearchPNumber.value,
         date: SearchDate.value,
       });
@@ -103,9 +101,8 @@ export default {
       title.value = [];
       positions.value = [];
       offlineJoinData.value.map((join) => {
-        join = { ...join, lat: join.latitude, lng: join.longitude };
         title.value.push(join.title);
-        positions.value.push({ lat: join.lat, lng: join.lng });
+        positions.value.push({ lat: join.latitude, lng: join.longitude });
       });
       initMap();
     };
@@ -187,9 +184,7 @@ export default {
       await getOfflineData();
       initMap();
     });
-    onUnmounted(() => {
-      init();
-    });
+    onUnmounted(() => init());
     return {
       offlineJoinData,
       offlineJoinClick,
