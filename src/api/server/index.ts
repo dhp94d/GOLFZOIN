@@ -3,6 +3,7 @@ import { setInterceptors } from './config/interceptors';
 
 function create(url: string, options?: any) {
   const instance = axios.create(Object.assign({ baseURL: url }, options));
+  setInterceptors(instance);
   return instance;
 }
 

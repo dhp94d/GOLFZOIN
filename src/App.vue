@@ -1,19 +1,28 @@
 <template>
   <div class="app">
     <router-view />
+    <Loading :loading="loadingStatus"></Loading>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { useAuth } from '@/composable/auth';
+import { useLoading } from '@/composable/loading';
+import Loading from '@/components/common/Loading.vue';
 export default defineComponent({
   name: 'App',
+  components: {
+    Loading,
+  },
   setup() {
     const { authLoginAction } = useAuth();
-
+    const { loadingStatus } = useLoading();
     onMounted(() => {
       authLoginAction();
     });
+    return {
+      loadingStatus,
+    };
   },
 });
 </script>

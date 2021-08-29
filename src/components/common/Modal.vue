@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoprd>
+<style lang="scss" scoped>
 .modal-wrapper {
   overflow-x: hidden;
   overflow-y: auto;

@@ -103,9 +103,9 @@ export default {
       offlineJoinData.value.map((join) => {
         title.value.push(join.title);
         if (process.env.VUE_APP_SERVER_TYPE === 'server') {
-          positions.value.push({ lat: join.lat, lng: join.lon });
+          positions.value.push({ lat: join.lat, lon: join.lon });
         } else {
-          positions.value.push({ lat: join.latitude, lng: join.longitude });
+          positions.value.push({ lat: join.latitude, lon: join.longitude });
         }
       });
       initMap();
@@ -142,7 +142,7 @@ export default {
 
       const markers = positions.value.map((position, i) => {
         const marker = new kakao.maps.Marker({
-          position: new kakao.maps.LatLng(position.lat, position.lng),
+          position: new kakao.maps.LatLng(position.lat, position.lon),
         });
 
         let iwContent =

@@ -5,15 +5,24 @@ function setInterceptors(instance: any) {
   const store = useStore();
   instance.interceptors.request.use(
     (config: any) => {
-      config.headers.Authorization =
-        store.getters['userToken'] || getAuthFromCookie();
+      store.commit('loading/startSpinner');
       return config;
     },
-    (error: any) => Promise.reject(error.response)
+    (error: any) => {
+      alert('데이터 요청 실패');
+      return Promise.reject(error);
+    }
   );
+
   instance.interceptors.response.use(
-    (config: any) => config,
-    (error: any) => Promise.reject(error.response)
+    (response: any) => {
+      store.commit('loading/endSpinner');
+      return response;
+    },
+    (error: any) => {
+      alert('데이터 응답 실패');
+      return Promise.reject(error);
+    }
   );
   return instance;
 }

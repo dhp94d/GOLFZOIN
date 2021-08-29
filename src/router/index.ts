@@ -95,4 +95,15 @@ function beforeEnter(to: any, from: any, next: any) {
   }
 }
 
+router.beforeEach((to, from, next) => {
+  store.commit('loading/startSpinner');
+  setTimeout(() => {
+    next();
+  }, 1);
+});
+
+router.afterEach((to, from) => {
+  store.commit('loading/endSpinner');
+});
+
 export default router;
