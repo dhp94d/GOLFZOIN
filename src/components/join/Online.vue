@@ -3,7 +3,7 @@
     <div>{{ onlineJoinData?.length }}개 이상의 조인</div>
     <div class="join-page-title">온라인 조인</div>
     <div class="join-page-filter">
-      <Searchbar :join="'온라인'"></Searchbar>
+      <Searchbar :type="'온라인'"></Searchbar>
     </div>
     <div class="join-online-container">
       <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.roomNo">
