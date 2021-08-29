@@ -47,7 +47,7 @@ const addFollow = async (data: addFollowDTO) => {
 const delFollow = async (data: addFollowDTO) => {
   try {
     const res = await notLoggedAxios.delete(
-      `api/user/addfollow?id=${data.userid}`
+      `api/user/addfollow?id=${data.userid}&target=${data.targetid}`
     );
     if ((res.status = 200)) {
       return true;

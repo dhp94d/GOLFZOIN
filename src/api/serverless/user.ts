@@ -29,6 +29,7 @@ const fbDetailUser = async (userId: string) => {
 };
 
 const fbAddFollow = async (data: addFollowDTO) => {
+  console.log(data);
   const { userid, targetid } = data;
   try {
     const targetInfo: any = await fbDetailUser(targetid);

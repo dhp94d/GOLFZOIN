@@ -34,7 +34,11 @@
               <button
                 type="submit"
                 class="btn btn-danger"
-                @click="delFollow(user.id)"
+                @click="
+                  process.env.VUE_APP_SERVER_TYPE === 'server'
+                    ? delFollow(user.userid)
+                    : delFollow(user.id)
+                "
               >
                 팔로우 취소
               </button>
@@ -43,7 +47,11 @@
               <button
                 type="submit"
                 class="btn btn-primary"
-                @click="addFollow(user.id)"
+                @click="
+                  process.env.VUE_APP_SERVER_TYPE === 'server'
+                    ? addFollow(user.userid)
+                    : addFollow(user.id)
+                "
               >
                 팔로우 추가
               </button>

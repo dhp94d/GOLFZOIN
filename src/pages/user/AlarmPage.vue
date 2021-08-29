@@ -67,7 +67,7 @@ import {
   mwJoinAcceptUser,
   mwJoinRefuseUser,
 } from '@/api/middleware/subJoin';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 export default {
@@ -94,6 +94,7 @@ export default {
         logtype: 'accept',
       };
       await mwJoinAcceptUser(process.env.VUE_APP_SERVER_TYPE, data);
+      getAlarm();
     };
     const refuseButton = async (type, roomNo, userid, alarmid) => {
       const data = {
@@ -104,6 +105,7 @@ export default {
         logtype: 'refuse',
       };
       await mwJoinRefuseUser(process.env.VUE_APP_SERVER_TYPE, data);
+      getAlarm();
     };
 
     const getAlarm = async () => {
