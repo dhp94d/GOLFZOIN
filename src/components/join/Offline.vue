@@ -81,8 +81,8 @@ export default {
     const mapSize = ref(7);
 
     const userData = ref(JSON.parse(getUserFromCookie()));
-    const lat = ref(userData.value.lat);
-    const lon = ref(userData.value.lon);
+    const lat = ref(userData.value.lat ? userData.value.lat : 126.915288945958);
+    const lon = ref(userData.value.lon ? userData.value.lon : 37.4802073507036);
 
     watch([SearchDate, SearchPNumber, SearchAddress.value], () => {
       lat.value = SearchAddress.value.longitude;
