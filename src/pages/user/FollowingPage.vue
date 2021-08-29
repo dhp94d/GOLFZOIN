@@ -38,7 +38,7 @@ import UserSidebar from '@/components/user/UserSidevar.vue';
 import UserTapHeader from '@/components/user/UserTapHeader.vue';
 import UserInfo from '@/components/user/UserInfo.vue';
 import { mwGetFollowing } from '@/api/middleware/user';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 export default {
@@ -64,7 +64,7 @@ export default {
       targetId.value = id;
       openUserInfo.value = !openUserInfo.value;
     };
-
+    watch(openUserInfo, () => getFollowing());
     onMounted(() => getFollowing());
     return {
       targetId,

@@ -38,7 +38,7 @@ import UserSidebar from '@/components/user/UserSidevar.vue';
 import UserTapHeader from '@/components/user/UserTapHeader.vue';
 import UserInfo from '@/components/user/UserInfo.vue';
 import { mwGetFollower } from '@/api/middleware/user';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     const targetId = ref('');
     const openUserInfo = ref(false);
 
-    const getFollowing = async () => {
+    const getFollower = async () => {
       const res = await mwGetFollower(
         process.env.VUE_APP_SERVER_TYPE,
         getAuthFromCookie()
@@ -64,8 +64,7 @@ export default {
       targetId.value = id;
       openUserInfo.value = !openUserInfo.value;
     };
-
-    onMounted(() => getFollowing());
+    onMounted(() => getFollower());
     return {
       targetId,
       userToggle,
