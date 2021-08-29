@@ -39,8 +39,6 @@ export default {
       state.follow = payload;
     },
     SET_SEARCH_INIT(state: any) {
-      console.log('왜글');
-
       state.data = '';
       state.follow = 0;
       state.date = '';

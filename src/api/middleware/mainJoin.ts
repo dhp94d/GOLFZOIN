@@ -32,9 +32,13 @@ const mwMyJoinList = async (type: 'server' | 'serverless', userid: string) => {
   }
 };
 
-const mwDetailJoin = async (type: 'server' | 'serverless', roomNo: string) => {
+const mwDetailJoin = async (
+  type: 'server' | 'serverless',
+  roomNo: string,
+  userid: string
+) => {
   if (type === 'server') {
-    return await detailJoin(roomNo);
+    return await detailJoin(roomNo, userid);
   } else {
     return await fbDetailJoin(roomNo);
   }

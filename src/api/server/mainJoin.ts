@@ -1,10 +1,5 @@
 import { notLoggedAxios } from '@/api/server/index';
-import {
-  onlineJoinListDTO,
-  offlineJoinListDTO,
-  registOnlineDTO,
-  registOfflineDTO,
-} from '@/api/dto/joinTypes';
+import { registOnlineDTO, registOfflineDTO } from '@/api/dto/joinTypes';
 
 const myJoinList = async (userid: string) => {
   try {
@@ -18,9 +13,11 @@ const myJoinList = async (userid: string) => {
   }
 };
 
-const detailJoin = async (roomNo: string) => {
+const detailJoin = async (roomNo: string, userid: string) => {
   try {
-    const res = await notLoggedAxios.get(`api/join/detailjoin/${roomNo}`);
+    const res = await notLoggedAxios.get(
+      `api/join/detailjoin?roomNo=${roomNo}&userid=${userid}`
+    );
 
     if (res.status === 200) {
       return res.data;

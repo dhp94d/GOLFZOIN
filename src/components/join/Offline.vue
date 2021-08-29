@@ -86,13 +86,13 @@ export default {
     });
 
     const getOfflineData = async () => {
-      console.log('왜 안머겅');
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
         lat: '37.5230059400269',
         lon: '127.054788716295',
         size: '3',
       });
-      offlineJoinData.value.push(...res);
+      console.log(res);
+      offlineJoinData.value = res;
       offlineJoinData.value.map((join, i) => {
         title.value.push(join.title);
         positions.value.push(new kakao.maps.LatLng(join.lat, join.lon));

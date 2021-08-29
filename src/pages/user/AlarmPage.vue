@@ -103,7 +103,6 @@ export default {
         alarmid: alarmid,
         logtype: 'refuse',
       };
-      console.log(data);
       await mwJoinRefuseUser(process.env.VUE_APP_SERVER_TYPE, data);
     };
 

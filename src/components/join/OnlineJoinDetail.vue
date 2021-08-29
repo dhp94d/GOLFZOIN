@@ -106,7 +106,8 @@ export default {
     const getJoinData = async () => {
       JoinInfo.value = await mwDetailJoin(
         process.env.VUE_APP_SERVER_TYPE,
-        target.value
+        target.value,
+        getAuthFromCookie()
       );
       JoinInfo.value.members.forEach((user) => {
         if (user.id === getAuthFromCookie()) {
