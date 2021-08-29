@@ -1,6 +1,7 @@
 import { db } from '@/api/serverless/firesbaseinit';
 import { fbDetailUser } from '@/api/serverless/user';
 import { getAuthFromCookie } from '@/composable/cookies';
+import { fbGetFollower } from '@/api/serverless/user';
 import {
   onlineJoinListDTO,
   offlineJoinListDTO,
@@ -94,7 +95,7 @@ const fbMainOnlineList = async () => {
   }
 };
 
-const fbOfflineJoinList = async (data: offlineJoinListDTO) => {
+const fbOfflineJoinList = async (data: any) => {
   try {
     const joinList: any = [];
     const res = await db
@@ -102,18 +103,47 @@ const fbOfflineJoinList = async (data: offlineJoinListDTO) => {
       .where('type', '==', 'offline')
       .get();
     res.forEach((join) => joinList.push(join.data()));
-    return joinList;
+
+    if (!data.pNumber && !data.follow && data.data === '') {
+      return joinList;
+    }
+    const searchJoinList = joinList.filter((join: any) => {
+      if (join.date < data.date) return false;
+      if (!join.title.includes(data.data)) {
+        if (!join.body.includes(data.data)) {
+          return false;
+        }
+      }
+      if (join.totalcount - join.members.length < data.pNumber) return false;
+      return true;
+    });
+    return searchJoinList;
   } catch (e) {
     console.error(e);
   }
 };
 
-const fbOnlineJoinList = async (data: onlineJoinListDTO) => {
+const fbOnlineJoinList = async (data: any) => {
   try {
     const joinList: any = [];
     const res = await db.collection('join').where('type', '==', 'online').get();
     res.forEach((join) => joinList.push(join.data()));
-    return joinList;
+
+    if (!data.pNumber && !data.follow && data.data === '') {
+      return joinList;
+    }
+
+    const searchJoinList = joinList.filter((join: any) => {
+      if (join.date < data.date) return false;
+      if (!join.title.includes(data.data)) {
+        if (!join.body.includes(data.data)) {
+          return false;
+        }
+      }
+      if (join.totalcount - join.members.length < data.pNumber) return false;
+      return true;
+    });
+    return searchJoinList;
   } catch (e) {
     console.error(e);
   }

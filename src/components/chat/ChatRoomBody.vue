@@ -2,7 +2,13 @@
   <div>
     <div class="chat-room-container">
       <div class="day-divider">
-        <div class="date-text">2021년 08월25일</div>
+        <div class="date-text">
+          {{
+            chatData === ''
+              ? '채팅방을 클릭해 주세요.'
+              : '채팅방에 오신것을 환영합니다'
+          }}
+        </div>
       </div>
       <div v-for="message in chatData" :key="message.id">
         <div

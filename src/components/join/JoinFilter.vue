@@ -20,14 +20,14 @@
 <script>
 import Dropdown from '@/components/common/DropDown.vue';
 import NumberUpDown from '@/components/common/NumberUpDown.vue';
-import { useAddress } from '@/composable/address';
+import { useSearch } from '@/composable/search';
 export default {
   components: {
     Dropdown,
     NumberUpDown,
   },
   setup() {
-    const { SearchDate, SearchAddress, SearchPNumber } = useAddress();
+    const { SearchDate, SearchAddress, SearchPNumber } = useSearch();
     return {
       SearchDate,
       SearchAddress,

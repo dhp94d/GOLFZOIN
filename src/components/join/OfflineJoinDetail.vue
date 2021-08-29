@@ -12,13 +12,16 @@
             <div class="join-img">
               <img :src="JoinInfo.thumbnail" />
             </div>
-
             <div class="join-data">
               <div class="join-title">
                 <span>{{ JoinInfo.title }}</span>
               </div>
               <div class="join-time">
                 <span>{{ JoinInfo.date }} {{ JoinInfo.time }}</span>
+                <div>
+                  인원 {{ JoinInfo.members?.length }}/{{ JoinInfo.totalcount }}
+                </div>
+                <div>장소: {{ JoinInfo.place }}</div>
               </div>
               <div class="join-body">
                 <span>{{ JoinInfo.body }}</span>
@@ -27,27 +30,38 @@
           </div>
           <div class="join-member">
             <div class="join-member-title">참여인원</div>
-            <div>
+            <div class="join-member-profile">
               <div
                 v-for="member in JoinInfo.members"
                 :key="`index${member.nickname}`"
-                class="member-data"
+                @mouseover="showUserInfo(member.id)"
               >
                 <div class="memeber-profile">
                   <img :src="member.profile" />
+                </div>
+                <div class="user-info" v-if="showUser === member.id">
+                  <div>닉네임: {{ member.nickname }}</div>
+                  <div>타수: {{ member.hit }}</div>
+                  <div>성별: {{ member.gender === 'man' ? '남' : '여' }}</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="join-button">
-            <button
-              type="submit"
-              class="btn btn-primary auth-button"
-              @click="applyJoin(JoinInfo.roomNo, JoinInfo.hostid)"
-            >
-              조인 신청
-            </button>
-            <button type="submit" class="btn btn btn-danger">조인 취소</button>
+            <div v-if="myJoin">
+              <button type="submit" class="btn btn btn-danger">
+                조인 취소
+              </button>
+            </div>
+            <div v-else>
+              <button
+                type="submit"
+                class="btn btn-primary auth-button"
+                @click="applyJoin(JoinInfo.roomNo, JoinInfo.hostid)"
+              >
+                조인 신청
+              </button>
+            </div>
           </div>
         </div>
       </template>
@@ -66,8 +80,10 @@ export default {
   components: { Modal },
   emits: ['toggle'],
   setup(props, { emit }) {
+    const myJoin = ref(false);
     const JoinInfo = ref({});
     const { target } = useJoin();
+    const showUser = ref('');
     const toggle = () => {
       emit('toggle');
     };
@@ -81,11 +97,20 @@ export default {
       };
       await mwApplyJoin(process.env.VUE_APP_SERVER_TYPE, data);
     };
+    const showUserInfo = (id) => {
+      showUser.value = id;
+    };
+
     const getJoinData = async () => {
       JoinInfo.value = await mwDetailJoin(
         process.env.VUE_APP_SERVER_TYPE,
         target.value
       );
+      JoinInfo.value.members.forEach((user) => {
+        if (user.id === getAuthFromCookie()) {
+          myJoin.value = true;
+        }
+      });
     };
     onMounted(() => {
       getJoinData();
@@ -94,6 +119,9 @@ export default {
       toggle,
       JoinInfo,
       applyJoin,
+      myJoin,
+      showUser,
+      showUserInfo,
     };
   },
 };
@@ -122,8 +150,10 @@ export default {
 .join-img {
   text-align: center;
   margin-bottom: 2rem;
+
   img {
-    object-fit: cover;
+    width: 18rem;
+    height: 16rem;
     box-shadow: 1px 1px 2px 2px gray;
   }
 }
@@ -133,6 +163,7 @@ export default {
   background-color: rgba(33, 33, 36, 0.07);
 }
 .memeber-profile {
+  display: flex;
   img {
     object-fit: cover;
     border-radius: 1rem;
@@ -148,5 +179,16 @@ export default {
   display: flex;
   padding-top: 1rem;
   justify-content: space-around;
+}
+.user-info {
+  position: absolute;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(33, 33, 36, 0.07);
+  background-color: white;
+}
+.join-member-profile {
+  display: flex;
+  gap: 1rem;
 }
 </style>

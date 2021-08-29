@@ -29,7 +29,7 @@ export default {
     title: String,
     time: String,
     date: String,
-    totalcount: Number,
+    totalcount: String,
     body: String,
     thumbnail: String,
     simple: Boolean,

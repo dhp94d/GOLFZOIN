@@ -2,7 +2,9 @@
   <div class="join-page-container">
     <div>{{ onlineJoinData?.length }}개 이상의 조인</div>
     <div class="join-page-title">온라인 조인</div>
-    <JoinFilter class="join-page-filter"></JoinFilter>
+    <div class="join-page-filter">
+      <Searchbar :join="'온라인'"></Searchbar>
+    </div>
     <div class="join-online-container">
       <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.roomNo">
         <div>
@@ -22,25 +24,36 @@
   </div>
 </template>
 <script>
-import JoinFilter from '@/components/join/JoinFilter.vue';
+import Searchbar from '@/components/common/Searchbar.vue';
 import JoinItem from '@/components/join/JoinItem.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { mwOnlineJoinList } from '@/api/middleware/mainJoin.ts';
+import { useSearch } from '@/composable/search';
 
 export default {
   components: {
-    JoinFilter,
     JoinItem,
+    Searchbar,
   },
   setup() {
+    const { SearchDate, SearchPNumber, SearchData, SearchFollow } = useSearch();
+    const startValue = ref(1);
     const onlineJoinData = ref([]);
     const getOnlinJoin = async () => {
+      console.log('왜 안변해');
       const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE, {
-        start: 1,
+        start: startValue,
+        date: SearchDate.value,
+        pNumber: SearchPNumber.value,
+        data: SearchData.value,
+        follow: SearchFollow.value,
       });
-      onlineJoinData.value.push(...res);
+      onlineJoinData.value = res;
     };
     onMounted(() => {
+      getOnlinJoin();
+    });
+    watch([SearchDate, SearchPNumber, SearchData, SearchFollow], () => {
       getOnlinJoin();
     });
     return {

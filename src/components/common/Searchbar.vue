@@ -1,21 +1,5 @@
 <template>
   <div class="search-bar">
-    <div class="search-bar-tap">
-      <Dropdown :marginTop="'0.8'">
-        <template v-slot:header>
-          <div class="search-joint-type">
-            <span>{{ joinType }} </span>
-            <div>
-              <i class="fa fa-caret-down" aria-hidden="true"></i>
-            </div>
-          </div>
-        </template>
-        <template v-slot:body>
-          <div @click="joinType = '온라인'">온라인 조인</div>
-          <div @click="joinType = '오프라인'">오프라인 조인</div>
-        </template>
-      </Dropdown>
-    </div>
     <Dropdown :marginTop="'0.8'">
       <template v-slot:header>
         <div class="search-filter">
@@ -35,7 +19,7 @@
           <span>인원</span>
           <span><NumberUpDown @countNumber="countPNumber"></NumberUpDown></span>
         </div>
-        <div v-if="joinType === '온라인'" class="search-filter-tap">
+        <div v-if="type === '온라인'" class="search-filter-tap">
           <span>팔로우</span>
           <span><NumberUpDown @countNumber="countFollow"></NumberUpDown></span>
         </div>
@@ -60,7 +44,6 @@ import { useSearch } from '@/composable/search';
 import NumberUpDown from '@/components/common/NumberUpDown.vue';
 import HeaderCalendar from '@/components/header/HeaderCalendar.vue';
 import FindAddress from '@/components/common/FindAddress.vue';
-import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 export default {
@@ -71,12 +54,10 @@ export default {
     HeaderCalendar,
   },
   props: {
-    taps: Array,
+    type: String,
   },
   setup() {
-    const router = useRouter();
     const { updatePNumber, updateData, updateFollow } = useSearch();
-    const joinType = ref('온라인');
     const pNumber = ref(0);
     const Follow = ref(0);
     const searchData = ref('');
@@ -92,14 +73,8 @@ export default {
       updatePNumber(pNumber.value);
       updateData(searchData.value);
       updateFollow(Follow.value);
-      if (joinType.value === '온라인') {
-        router.push('/join/onlinejoin');
-      } else {
-        router.push('/join/offlinejoin');
-      }
     };
     return {
-      joinType,
       pNumber,
       Follow,
       countPNumber,
@@ -119,8 +94,7 @@ export default {
   color: #222222;
   position: relative;
   height: 3rem;
-  width: 80%;
-  min-width: 700px;
+  width: 500px;
   background-color: #f7f7f7;
   padding-left: 1rem;
   align-items: center;
@@ -155,6 +129,7 @@ export default {
   }
 }
 .search-filter {
+  width: 5rem;
   display: flex;
   padding: 0 1rem;
 }
@@ -163,7 +138,7 @@ export default {
 
   input {
     position: relative;
-    width: 100%;
+    width: 70%;
     height: 35px;
     border: 1px solid white;
     border-radius: 4px;

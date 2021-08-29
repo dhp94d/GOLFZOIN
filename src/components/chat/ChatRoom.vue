@@ -25,7 +25,7 @@ export default {
     ChatRoomMessage,
   },
   setup() {
-    const chatData = ref([]);
+    const chatData = ref('');
     const { chatTarget } = useChat();
 
     const getChatData = async () => {

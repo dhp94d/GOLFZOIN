@@ -48,7 +48,9 @@ export default defineComponent({
   text-align: center;
 }
 .header-nav-search {
+  display: flex;
   padding: 0 20rem;
+  justify-content: center;
 }
 @media (max-width: 1400px) {
   .header-nav-search {

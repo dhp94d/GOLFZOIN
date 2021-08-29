@@ -13,24 +13,20 @@
 
 <script>
 import { ref } from 'vue';
-import { useStore } from 'vuex';
 export default {
-  setup() {
+  emits: ['countNumber'],
+  setup(props, { emit }) {
     const number = ref(0);
-    const store = useStore();
 
-    const addressMutation = () => {
-      store.commit('search/SET_SEARCH_PNUMBER', number.value);
-    };
     const lClick = () => {
       if (number.value <= 0) return;
       number.value -= 1;
-      addressMutation();
+      emit('countNumber', number.value);
     };
     const RClick = () => {
       if (number.value > 500) return;
       number.value += 1;
-      addressMutation();
+      emit('countNumber', number.value);
     };
     return {
       number,
@@ -43,14 +39,15 @@ export default {
 
 <style scoped>
 .number-updown-container {
+  cursor: pointer;
   display: flex;
 }
 .number-updown-mutation {
-  padding: 0 1rem;
+  cursor: pointer;
 }
 .number-updown-view {
   border: 0;
-  width: 5rem;
+  width: 3rem;
   text-align: center;
 }
 </style>

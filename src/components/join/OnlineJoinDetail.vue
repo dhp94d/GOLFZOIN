@@ -21,6 +21,9 @@
                 <div>
                   인원 {{ JoinInfo.members?.length }}/{{ JoinInfo.totalcount }}
                 </div>
+                <div v-if="JoinInfo.type === 'offline'">
+                  장소: {{ JoinInfo.place }}
+                </div>
               </div>
               <div class="join-body">
                 <span>{{ JoinInfo.body }}</span>
@@ -29,14 +32,19 @@
           </div>
           <div class="join-member">
             <div class="join-member-title">참여인원</div>
-            <div>
+            <div class="join-member-profile">
               <div
                 v-for="member in JoinInfo.members"
                 :key="`index${member.nickname}`"
-                class="member-data"
+                @mouseover="showUserInfo(member.id)"
               >
                 <div class="memeber-profile">
                   <img :src="member.profile" />
+                </div>
+                <div class="user-info" v-if="showUser === member.id">
+                  <div>닉네임: {{ member.nickname }}</div>
+                  <div>타수: {{ member.hit }}</div>
+                  <div>성별: {{ member.gender === 'man' ? '남' : '여' }}</div>
                 </div>
               </div>
             </div>
@@ -77,8 +85,13 @@ export default {
     const myJoin = ref(false);
     const JoinInfo = ref({});
     const { target } = useJoin();
+    const showUser = ref('');
     const toggle = () => {
       emit('toggle');
+    };
+
+    const showUserInfo = (id) => {
+      showUser.value = id;
     };
 
     const applyJoin = async (roomNo, hostid) => {
@@ -109,6 +122,8 @@ export default {
       JoinInfo,
       applyJoin,
       myJoin,
+      showUser,
+      showUserInfo,
     };
   },
 };
@@ -138,7 +153,8 @@ export default {
   text-align: center;
   margin-bottom: 2rem;
   img {
-    object-fit: cover;
+    width: 18rem;
+    height: 16rem;
     box-shadow: 1px 1px 2px 2px gray;
   }
 }
@@ -163,5 +179,16 @@ export default {
   display: flex;
   padding-top: 1rem;
   justify-content: space-around;
+}
+.join-member-profile {
+  display: flex;
+  gap: 1rem;
+}
+.user-info {
+  position: absolute;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(33, 33, 36, 0.07);
+  background-color: white;
 }
 </style>

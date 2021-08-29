@@ -91,7 +91,9 @@ export default {
     };
 
     watch(chatTarget, () => {
-      disconnect(), connect();
+      if (process.env.VUE_APP_SERVER_TYPE === 'server') {
+        disconnect(), connect();
+      }
     });
     return {
       addMessage,

@@ -1,7 +1,9 @@
 <template>
   <div class="chat-room-header">
     <div class="chat-header-profile">
-      <img :src="chatTitleData.thumbnail" />
+      <img
+        :src="chatTitleData.thumbnail ? chatTitleData.thumbnail : DEFAULT_IMG"
+      />
       <div class="main-title">
         <span>{{ chatTitleData.title }}</span>
       </div>
@@ -42,11 +44,14 @@
 <script>
 import { useChat } from '@/composable/chat';
 
+const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
+
 export default {
   setup() {
     const { chatTitleData } = useChat();
     return {
       chatTitleData,
+      DEFAULT_IMG,
     };
   },
 };

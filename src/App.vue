@@ -18,7 +18,6 @@ export default defineComponent({
         'src',
         '//dapi.kakao.com/v2/maps/sdk.js?appkey=15ac0683efa77658fcfebb90ca8d1bc4&libraries=services'
       );
-      console.log(document.head);
 
       document.head.appendChild(stripeScript);
     };

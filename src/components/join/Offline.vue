@@ -4,7 +4,9 @@
       <div class="join-page-offline-body">
         <div>{{ offlineJoinData?.length }}개 이상의 조인</div>
         <div class="join-page-offline-title">오프라인 조인</div>
-        <JoinFilter class="join-page-offline-filter"></JoinFilter>
+        <div>
+          <Searchbar :join="'offline'"></Searchbar>
+        </div>
       </div>
       <br />
       <div class="join-page-offline-list">
@@ -37,33 +39,50 @@
                     : offlinejoin.body
                 }}
               </div>
-              <div>최대인원&nbsp;:{{ offlinejoin.totalcount }}</div>
+              <div>
+                인원&nbsp;:{{ offlinejoin.members?.length }}/{{
+                  offlinejoin.totalcount
+                }}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div id="map"></div>
+    <div v-if="showDetailJoin">
+      <OfflineJoinDetail @toggle="detailJoinToggle"></OfflineJoinDetail>
+    </div>
   </div>
 </template>
 <script>
-import JoinFilter from '@/components/join/JoinFilter.vue';
-import { ref, onMounted } from 'vue';
+import Searchbar from '@/components/common/Searchbar.vue';
+import { ref, onMounted, watch } from 'vue';
 import { useJoin } from '@/composable/join';
 import { mwOfflineJoinList } from '@/api/middleware/mainJoin.ts';
+import OfflineJoinDetail from '@/components/join/OfflineJoinDetail.vue';
+import { useSearch } from '@/composable/search';
 
 export default {
   components: {
-    JoinFilter,
+    OfflineJoinDetail,
+    Searchbar,
   },
   setup() {
     const { updateTarget } = useJoin();
+    const { SearchDate, SearchPNumber, SearchData, SearchFollow } = useSearch();
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
     const bounds = new kakao.maps.LatLngBounds();
     const positions = ref([]);
     const title = ref([]);
+    const showDetailJoin = ref(false);
+
+    watch([SearchDate, SearchPNumber, SearchData, SearchFollow], () => {
+      getOfflineData();
+      initMap();
+    });
 
     const getOfflineData = async () => {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
@@ -71,17 +90,16 @@ export default {
         lon: '127.054788716295',
         size: '3',
       });
-      console.log(res);
       offlineJoinData.value.push(...res);
       offlineJoinData.value.map((join, i) => {
         title.value.push(join.title);
-        console.log(join.lat, join.lon);
         positions.value.push(new kakao.maps.LatLng(join.lat, join.lon));
       });
     };
 
     const offlineJoinClick = (offlinejoin) => {
       updateTarget(offlinejoin.roomNo);
+      detailJoinToggle();
     };
 
     const initMap = () => {
@@ -126,6 +144,9 @@ export default {
         bounds.extend(positions.value[i]);
       }
     };
+    const detailJoinToggle = () => {
+      showDetailJoin.value = !showDetailJoin.value;
+    };
     onMounted(async () => {
       await getOfflineData();
       initMap();
@@ -133,6 +154,8 @@ export default {
     return {
       offlineJoinData,
       offlineJoinClick,
+      showDetailJoin,
+      detailJoinToggle,
     };
   },
 };

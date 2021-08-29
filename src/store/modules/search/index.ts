@@ -1,6 +1,8 @@
 export default {
   namespaced: true,
   state: {
+    data: '',
+    follow: 0,
     date: '',
     address: {
       latitude: '',
@@ -29,6 +31,25 @@ export default {
     },
     SET_SEARCH_PNUMBER(state: { pNumber: number }, payload: number) {
       state.pNumber = payload;
+    },
+    SET_SEARCH_DATA(state: { data: string }, payload: string) {
+      state.data = payload;
+    },
+    SET_SEARCH_FOLLOW(state: { follow: number }, payload: number) {
+      state.follow = payload;
+    },
+    SET_SEARCH_INIT(state: any) {
+      state = {
+        data: '',
+        follow: 0,
+        date: '',
+        address: {
+          latitude: '',
+          longitude: '',
+          addressName: '',
+        },
+        pNumber: 0,
+      };
     },
   },
   actions: {},

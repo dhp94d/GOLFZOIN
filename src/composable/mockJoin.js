@@ -112,7 +112,7 @@ export const makeOnlinJoin = async () => {
       thumbnail: '',
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
       title: '온라인 조인 같이해요',
-      totalcount: 10,
+      totalcount: '10',
       type: 'online',
     };
   }
@@ -135,7 +135,7 @@ export const makeOfflinJoin = async () => {
       thumbnail: '',
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
       title: OFFLINETITLE[Math.floor(Math.random() * 7)],
-      totalcount: 10,
+      totalcount: '10',
       type: 'offline',
     };
   }
