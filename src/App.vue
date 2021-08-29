@@ -11,17 +11,6 @@ export default defineComponent({
   setup() {
     const { authLoginAction } = useAuth();
 
-    const init = () => {
-      let stripeScript = document.createElement('script');
-      stripeScript.setAttribute('type', 'text/javascript');
-      stripeScript.setAttribute(
-        'src',
-        '//dapi.kakao.com/v2/maps/sdk.js?appkey=15ac0683efa77658fcfebb90ca8d1bc4&libraries=services'
-      );
-
-      document.head.appendChild(stripeScript);
-    };
-    init();
     onMounted(() => {
       authLoginAction();
     });

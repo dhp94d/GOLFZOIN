@@ -87,7 +87,6 @@ export default {
     const toggle = () => {
       emit('toggle');
     };
-
     const applyJoin = async (roomNo, hostid) => {
       const data = {
         type: 'online',

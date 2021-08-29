@@ -103,22 +103,7 @@ const fbOfflineJoinList = async (data: any) => {
       .where('type', '==', 'offline')
       .get();
     res.forEach((join) => joinList.push(join.data()));
-    console.log(joinList, data);
-    if (!data.pNumber && !data.follow && data.data === '') {
-      console.log('너 왜 안돼');
-      return joinList;
-    }
-    const searchJoinList = joinList.filter((join: any) => {
-      if (join.date < data.date) return false;
-      if (!join.title.includes(data.data)) {
-        if (!join.body.includes(data.data)) {
-          return false;
-        }
-      }
-      if (join.totalcount - join.members.length < data.pNumber) return false;
-      return true;
-    });
-    return searchJoinList;
+    return joinList;
   } catch (e) {
     console.error(e);
   }

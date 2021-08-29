@@ -41,7 +41,6 @@ export default {
     const startValue = ref(1);
     const onlineJoinData = ref([]);
     const getOnlinJoin = async () => {
-      console.log('왜 안변해');
       const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE, {
         start: startValue.value,
         date: SearchDate.value,

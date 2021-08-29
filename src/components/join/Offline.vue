@@ -60,6 +60,7 @@ import Searchbar from '@/components/common/Searchbar.vue';
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useJoin } from '@/composable/join';
 import { mwOfflineJoinList } from '@/api/middleware/mainJoin.ts';
+import { getUserFromCookie } from '@/composable/cookies';
 import OfflineJoinDetail from '@/components/join/OfflineJoinDetail.vue';
 import { useSearch } from '@/composable/search';
 
@@ -70,8 +71,7 @@ export default {
   },
   setup() {
     const { updateTarget } = useJoin();
-    const { SearchDate, SearchPNumber, SearchData, SearchFollow, init } =
-      useSearch();
+    const { SearchDate, SearchPNumber, init } = useSearch();
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
@@ -79,36 +79,46 @@ export default {
     const positions = ref([]);
     const title = ref([]);
     const showDetailJoin = ref(false);
+    const mapSize = ref(7);
+    const showOverlay = ref('false');
 
-    watch([SearchDate, SearchPNumber, SearchData, SearchFollow], () => {
+    const userData = ref(JSON.parse(getUserFromCookie()));
+    const lat = ref();
+    const lon = ref();
+
+    watch([SearchDate, SearchPNumber], () => {
       getOfflineData();
       initMap();
     });
 
     const getOfflineData = async () => {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
-        lat: '37.5230059400269',
-        lon: '127.054788716295',
-        size: '3',
+        lat: lat.value,
+        lon: lon.value,
+        size: mapSize.value,
+        count: SearchPNumber.value,
+        date: SearchDate.value,
       });
-      console.log(res);
       offlineJoinData.value = res;
       offlineJoinData.value.map((join, i) => {
+        console.log(join);
         title.value.push(join.title);
-        positions.value.push(new kakao.maps.LatLng(join.lat, join.lon));
+        positions.value.push({ lat: join.latitude, lng: join.longitude });
       });
     };
-
     const offlineJoinClick = (offlinejoin) => {
       updateTarget(offlinejoin.roomNo);
       detailJoinToggle();
     };
 
     const initMap = () => {
+      lat.value = userData.value.lat;
+      lon.value = userData.value.lon;
+
       const container = document.querySelector('#map');
       const options = {
-        center: new kakao.maps.LatLng(37.4645001795391, 126.919613685063),
-        level: 7,
+        center: new kakao.maps.LatLng(lon.value, lat.value),
+        level: mapSize.value,
       };
 
       const map = new kakao.maps.Map(container, options);
@@ -116,39 +126,62 @@ export default {
       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      for (let i = 0; i < positions.value.length; i++) {
-        // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다.
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: positions.value[i],
+      var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 2, // 클러스터 할 최소 지도 레벨
+        disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+      });
+
+      const markers = positions.value.map((position, i) => {
+        const marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(position.lat, position.lng),
         });
 
-        let content =
+        let iwContent =
           '<div class="join-page-offline-customoverlay" >' +
           '  <div>' +
           `    <span class="join-page-offline-customoverlay-title">${title.value[i]}</span>` +
           '  </div>' +
           '</div>';
-
-        let customOverlay = new kakao.maps.CustomOverlay({
+        var overlay = new kakao.maps.CustomOverlay({
+          content: iwContent,
           map: map,
-          position: positions.value[i],
-          content: content,
-          yAnchor: 1,
-          clickable: true,
+          position: marker.getPosition(),
+          setMap: null,
+        });
+        overlay.setMap(null);
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+          overlay.setMap(map);
         });
 
-        (function (customOverlay) {
-          // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-          kakao.maps.event.addListener(customOverlay, 'click', function () {});
-        })(customOverlay);
+        // 마커에 마우스아웃 이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+          overlay.setMap(null);
+        });
+        return marker;
+      });
+      clusterer.addMarkers(markers);
 
-        bounds.extend(positions.value[i]);
-      }
+      kakao.maps.event.addListener(
+        clusterer,
+        'clusterclick',
+        function (cluster) {
+          // 현재 지도 레벨에서 1레벨 확대한 레벨
+          var level = map.getLevel() - 1;
+
+          // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
+          map.setLevel(level, { anchor: cluster.getCenter() });
+        }
+      );
     };
+
     const detailJoinToggle = () => {
       showDetailJoin.value = !showDetailJoin.value;
     };
+
     onMounted(async () => {
       await getOfflineData();
       initMap();
@@ -161,6 +194,7 @@ export default {
       offlineJoinClick,
       showDetailJoin,
       detailJoinToggle,
+      display: showOverlay,
     };
   },
 };
@@ -191,7 +225,6 @@ export default {
   padding-left: 2rem;
 }
 .offline-box {
-  display: flex;
   cursor: pointer;
   word-break: break-all;
   color: #717188;
@@ -226,15 +259,11 @@ export default {
   object-fit: cover;
 }
 .join-page-offline-customoverlay {
+  padding-bottom: 7rem;
   position: relative;
   border-radius: 6px;
-  border: 1px solid #ccc;
   border-bottom: 2px solid #ddd;
   float: left;
-  &:nth-of-type(n) {
-    border: 0;
-    box-shadow: 0px 1px 2px #888;
-  }
   div {
     display: block;
     text-decoration: none;
@@ -250,6 +279,8 @@ export default {
       no-repeat right 14px center;
   }
   :after {
+    border: 0;
+    margin-bottom: 7rem;
     content: '';
     position: absolute;
     margin-left: -12px;

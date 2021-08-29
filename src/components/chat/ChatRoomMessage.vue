@@ -25,7 +25,6 @@ import { watch, ref } from 'vue';
 import { mwAddMessage } from '@/api/middleware/chat';
 import { useAuth } from '@/composable/auth';
 import { useChat } from '@/composable/chat';
-import { getAuthFromCookie } from '@/composable/cookies';
 import Stomp from 'webstomp-client';
 import SockJS from 'sockjs-client';
 import dayjs from 'dayjs';
