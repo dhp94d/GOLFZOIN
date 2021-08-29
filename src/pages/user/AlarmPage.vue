@@ -21,6 +21,7 @@
                 </div>
               </div>
               <div>
+                {{ alarm }}
                 <div
                   @click="
                     accepButton(
@@ -97,6 +98,7 @@ export default {
       getAlarm();
     };
     const refuseButton = async (type, roomNo, userid, alarmid) => {
+      console.log('왜', type, roomNo, userid, alarmid);
       const data = {
         type: type,
         roomNo: roomNo,

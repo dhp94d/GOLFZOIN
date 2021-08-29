@@ -103,8 +103,9 @@ export default {
       title.value = [];
       positions.value = [];
       offlineJoinData.value.map((join) => {
+        join = { ...join, lat: join.latitude, lng: join.longitude };
         title.value.push(join.title);
-        positions.value.push({ lat: join.latitude, lng: join.longitude });
+        positions.value.push({ lat: join.lat, lng: join.lng });
       });
       initMap();
     };
