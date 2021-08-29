@@ -6,6 +6,7 @@ import {
   getFollower,
   getFollowing,
   findUser,
+  delFollow,
 } from '@/api/server/user';
 import {
   fbModifyUser,
@@ -14,6 +15,7 @@ import {
   fbGetFollower,
   fbGetFollowing,
   fbFindUser,
+  fbDelFollow,
 } from '@/api/serverless/user';
 
 const mwModifyUser = async (
@@ -43,6 +45,17 @@ const mwAddFollow = async (
     return await addFollow(data);
   } else {
     return await fbAddFollow(data);
+  }
+};
+
+const mwDelFollow = async (
+  type: 'server' | 'serverless',
+  data: addFollowDTO
+) => {
+  if (type === 'server') {
+    return await delFollow(data);
+  } else {
+    return await fbDelFollow(data);
   }
 };
 
@@ -84,4 +97,5 @@ export {
   mwGetFollower,
   mwGetFollowing,
   mwFindUser,
+  mwDelFollow,
 };

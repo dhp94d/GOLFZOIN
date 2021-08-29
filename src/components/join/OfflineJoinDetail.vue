@@ -86,7 +86,6 @@ export default {
         process.env.VUE_APP_SERVER_TYPE,
         target.value
       );
-      console.log(JoinInfo.value);
     };
     onMounted(() => {
       getJoinData();

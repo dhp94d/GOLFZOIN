@@ -8,9 +8,8 @@
         </div>
         <button class="user-profile" width="200px">
           <label for="input-file">프로필 수정</label>
-          <input type="file" id="input-file" @change="getImgPath" /></button
-        >\
-        {{ user }}
+          <input type="file" id="input-file" @change="getImgPath" />
+        </button>
         <form @submit.prevent="submitForm" class="user-info-data">
           <div>
             <span>이름</span>

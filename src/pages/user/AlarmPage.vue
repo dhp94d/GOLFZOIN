@@ -26,14 +26,23 @@
                     accepButton(
                       alarm.type,
                       alarm.roomNo,
-                      alarm.userid,
+                      alarm.id,
                       alarm.alarmid
                     )
                   "
                 >
                   <i class="fa fa-check accept-icon" aria-hidden="true"></i>
                 </div>
-                <div @click="refuseButton()">
+                <div
+                  @click="
+                    refuseButton(
+                      alarm.type,
+                      alarm.roomNo,
+                      alarm.id,
+                      alarm.alarmid
+                    )
+                  "
+                >
                   <i class="fa fa-times cancel-icon" aria-hidden="true"></i>
                 </div>
               </div>
@@ -53,7 +62,11 @@
 import UserSidebar from '@/components/user/UserSidevar.vue';
 import UserTapHeader from '@/components/user/UserTapHeader.vue';
 import UserInfo from '@/components/user/UserInfo.vue';
-import { mwGetAlarm } from '@/api/middleware/subJoin';
+import {
+  mwGetAlarm,
+  mwJoinAcceptUser,
+  mwJoinRefuseUser,
+} from '@/api/middleware/subJoin';
 import { onMounted, ref } from 'vue';
 import { getAuthFromCookie } from '@/composable/cookies';
 
@@ -72,21 +85,26 @@ export default {
       targetId.value = userId;
       openUserInfo.value = !openUserInfo.value;
     };
-    const accepButton = (type, roomNo, userid) => {
+    const accepButton = async (type, roomNo, userid, alarmid) => {
       const data = {
         type: type,
         roomNo: roomNo,
         userid: userid,
+        alarmid: alarmid,
         logtype: 'accept',
       };
+      await mwJoinAcceptUser(process.env.VUE_APP_SERVER_TYPE, data);
     };
-    const refuseButton = (type, roomNo, userid) => {
+    const refuseButton = async (type, roomNo, userid, alarmid) => {
       const data = {
         type: type,
         roomNo: roomNo,
         userid: userid,
+        alarmid: alarmid,
         logtype: 'refuse',
       };
+      console.log(data);
+      await mwJoinRefuseUser(process.env.VUE_APP_SERVER_TYPE, data);
     };
 
     const getAlarm = async () => {

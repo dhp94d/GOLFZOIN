@@ -13,8 +13,16 @@ const fbModifyUser = async (data: modifyUserDTO) => {
 
 const fbDetailUser = async (userId: string) => {
   try {
+    let isFollowing = false;
     const res = await db.collection('users').doc(userId).get();
-    return res.data();
+    const userData = res.data();
+    const following = await fbGetFollowing(getAuthFromCookie());
+    following?.forEach((user: any) => {
+      if (user.id === userData?.id) {
+        isFollowing = true;
+      }
+    });
+    return { ...userData, isFollowing: isFollowing };
   } catch (e) {
     console.error(e);
   }
@@ -37,6 +45,29 @@ const fbAddFollow = async (data: addFollowDTO) => {
       .collection('follower')
       .doc(userid)
       .set(userInfo);
+
+    return true;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const fbDelFollow = async (data: addFollowDTO) => {
+  const { userid, targetid } = data;
+  console.log('하이');
+  try {
+    await db
+      .collection('users')
+      .doc(userid)
+      .collection('following')
+      .doc(targetid)
+      .delete();
+    await db
+      .collection('users')
+      .doc(targetid)
+      .collection('follower')
+      .doc(userid)
+      .delete();
 
     return true;
   } catch (e) {
@@ -108,4 +139,5 @@ export {
   fbGetFollower,
   fbGetFollowing,
   fbFindUser,
+  fbDelFollow,
 };

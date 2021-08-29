@@ -12,13 +12,15 @@
             <div class="join-img">
               <img :src="JoinInfo.thumbnail" />
             </div>
-
             <div class="join-data">
               <div class="join-title">
                 <span>{{ JoinInfo.title }}</span>
               </div>
               <div class="join-time">
                 <span>{{ JoinInfo.date }} {{ JoinInfo.time }}</span>
+                <div>
+                  인원 {{ JoinInfo.members?.length }}/{{ JoinInfo.totalcount }}
+                </div>
               </div>
               <div class="join-body">
                 <span>{{ JoinInfo.body }}</span>
@@ -40,14 +42,20 @@
             </div>
           </div>
           <div class="join-button">
-            <button
-              type="submit"
-              class="btn btn-primary auth-button"
-              @click="applyJoin(JoinInfo.roomNo, JoinInfo.hostid)"
-            >
-              조인 신청
-            </button>
-            <button type="submit" class="btn btn btn-danger">조인 취소</button>
+            <div v-if="myJoin">
+              <button type="submit" class="btn btn btn-danger">
+                조인 취소
+              </button>
+            </div>
+            <div v-else>
+              <button
+                type="submit"
+                class="btn btn-primary auth-button"
+                @click="applyJoin(JoinInfo.roomNo, JoinInfo.hostid)"
+              >
+                조인 신청
+              </button>
+            </div>
           </div>
         </div>
       </template>
@@ -66,6 +74,7 @@ export default {
   components: { Modal },
   emits: ['toggle'],
   setup(props, { emit }) {
+    const myJoin = ref(false);
     const JoinInfo = ref({});
     const { target } = useJoin();
     const toggle = () => {
@@ -86,7 +95,11 @@ export default {
         process.env.VUE_APP_SERVER_TYPE,
         target.value
       );
-      console.log(JoinInfo.value);
+      JoinInfo.value.members.forEach((user) => {
+        if (user.id === getAuthFromCookie()) {
+          myJoin.value = true;
+        }
+      });
     };
     onMounted(() => {
       getJoinData();
@@ -95,6 +108,7 @@ export default {
       toggle,
       JoinInfo,
       applyJoin,
+      myJoin,
     };
   },
 };

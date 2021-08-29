@@ -19,6 +19,7 @@ export default {
       state.user = { ...payload };
     },
     LOGOUT(state: { user: object }) {
+      console.log('머야');
       state.user = {};
       deleteCookie('til_auth');
       deleteCookie('til_user');

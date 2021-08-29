@@ -41,6 +41,7 @@ const mwJoinRefuseUser = async (
   type: 'server' | 'serverless',
   data: joinIsOkDTO
 ) => {
+  console.log(data);
   if (type === 'server') {
     return joinRefuseUser(data);
   } else {

@@ -9,7 +9,6 @@
           <div class="user-img">
             <img :src="user?.profile" />
           </div>
-
           <div class="user-data">
             <div>
               <div>이름:</div>
@@ -31,16 +30,22 @@
               <div>타수:</div>
               <span>{{ user?.hit }}</span>
             </div>
-            <div class="follow-button">
+            <div v-if="user?.isFollowing">
               <button
                 type="submit"
-                class="btn btn-primary auth-button"
+                class="btn btn-danger"
+                @click="delFollow(user.id)"
+              >
+                팔로우 취소
+              </button>
+            </div>
+            <div v-else>
+              <button
+                type="submit"
+                class="btn btn-primary"
                 @click="addFollow(user.id)"
               >
                 팔로우 추가
-              </button>
-              <button type="submit" class="btn btn btn-danger">
-                팔로우 취소
               </button>
             </div>
           </div>
@@ -53,7 +58,7 @@
 <script>
 import Modal from '@/components/common/Modal.vue';
 import { getAuthFromCookie } from '@/composable/cookies';
-import { mwDetailUser, mwAddFollow } from '@/api/middleware/user';
+import { mwDetailUser, mwAddFollow, mwDelFollow } from '@/api/middleware/user';
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 
@@ -72,6 +77,14 @@ export default {
 
     const addFollow = async (id) => {
       await mwAddFollow(process.env.VUE_APP_SERVER_TYPE, {
+        userid: getAuthFromCookie(),
+        targetid: id,
+      });
+      emit('toggle');
+    };
+
+    const delFollow = async (id) => {
+      await mwDelFollow(process.env.VUE_APP_SERVER_TYPE, {
         userid: getAuthFromCookie(),
         targetid: id,
       });
@@ -98,6 +111,7 @@ export default {
       age,
       gender,
       addFollow,
+      delFollow,
     };
   },
 };
