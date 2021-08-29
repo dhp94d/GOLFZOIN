@@ -93,9 +93,9 @@ export default {
 
     const getOfflineData = async () => {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
-        lat: lat.value,
-        lon: lon.value,
-        size: mapSize.value,
+        lat: lat.value ? lat.value : '126.915288945958',
+        lon: lon.value ? lon.value : '37.4802073507036',
+        size: lat.value ? mapSize.value : 11,
         count: SearchPNumber.value,
         date: SearchDate.value,
       });
