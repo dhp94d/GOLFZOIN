@@ -93,7 +93,7 @@ const onlineJoinList = async (inputData: any) => {
       data = { ...data, date: inputData.date };
     }
     if (inputData.pNumber !== 0) {
-      data = { ...data, date: inputData.pNumber };
+      data = { ...data, count: inputData.pNumber };
     }
     data = { ...data, start: inputData.start };
 
