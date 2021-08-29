@@ -95,7 +95,7 @@ export default {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
         lat: lat.value ? lat.value : '126.915288945958',
         lon: lon.value ? lon.value : '37.4802073507036',
-        size: lat.value ? mapSize.value : 11,
+        size: lat.value ? mapSize.value : 13,
         count: SearchPNumber.value,
         date: SearchDate.value,
       });
