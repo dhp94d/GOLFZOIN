@@ -58,6 +58,11 @@
             </div>
           </div>
         </div>
+        <Alarmtransition
+          v-if="showToast"
+          :message="toastMessage"
+          :type="toastAlertType"
+        ></Alarmtransition>
       </template>
     </Modal>
   </div>
@@ -69,17 +74,22 @@ import { getAuthFromCookie } from '@/composable/cookies';
 import { mwDetailUser, mwAddFollow, mwDelFollow } from '@/api/middleware/user';
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
+import { useToast } from '@/composable/toast';
+import Alarmtransition from '@/components/common/Alarmtransition.vue';
 
 const TYPE = process.env.VUE_APP_SERVER_TYPE;
 export default {
   components: {
     Modal,
+    Alarmtransition,
   },
   props: {
     userId: String,
   },
   emits: ['toggle'],
   setup(props, { emit }) {
+    const { toastMessage, toastAlertType, showToast, triggerToast } =
+      useToast();
     const user = ref();
     const age = ref();
     const gender = ref();
@@ -89,6 +99,7 @@ export default {
         userid: getAuthFromCookie(),
         targetid: id,
       });
+      triggerToast('팔로우가 추가되었습니다.');
       emit('toggle');
     };
 
@@ -97,6 +108,7 @@ export default {
         userid: getAuthFromCookie(),
         targetid: id,
       });
+      triggerToast('팔로우가 삭제되었습니다.');
       emit('toggle');
     };
 
@@ -111,7 +123,9 @@ export default {
       );
       user.value = res;
       age.value = dayjs().year() - Number(user.value.birthday.slice(0, 4)) + 1;
-      user.gender === 'man' ? (gender.value = '남') : (gender.value = '여');
+      user.gender === 'man' || 'Male'
+        ? (gender.value = '남')
+        : (gender.value = '여');
     });
 
     return {
@@ -122,6 +136,9 @@ export default {
       addFollow,
       TYPE,
       delFollow,
+      toastMessage,
+      toastAlertType,
+      showToast,
     };
   },
 };

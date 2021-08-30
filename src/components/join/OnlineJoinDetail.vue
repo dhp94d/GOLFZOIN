@@ -1,5 +1,12 @@
 <template>
   <div>
+    <transition name="fade">
+      <Alarmtransition
+        v-if="showToast"
+        :message="toastMessage"
+        :type="toastAlertType"
+      ></Alarmtransition>
+    </transition>
     <Modal @toggle="toggle">
       <template #header>
         <div class="join-type">
@@ -44,14 +51,29 @@
                 <div class="user-info" v-if="showUser === member.id">
                   <div>닉네임: {{ member.nickname }}</div>
                   <div>타수: {{ member.hit }}</div>
-                  <div>성별: {{ member.gender === 'man' ? '남' : '여' }}</div>
+                  <div>
+                    성별: {{ member.gender === 'man' || 'Male' ? '남' : '여' }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="join-button">
-            <div v-if="myJoin">
-              <button type="submit" class="btn btn btn-danger">
+            <div v-if="myJoin === 'host'">
+              <button
+                type="submit"
+                class="btn btn btn-danger"
+                @click="delJoin(JoinInfo.roomNo)"
+              >
+                조인 삭제
+              </button>
+            </div>
+            <div v-else-if="myJoin === 'true'">
+              <button
+                type="submit"
+                class="btn btn btn-danger"
+                @click="calcelJoin(JoinInfo.roomNo, JoinInfo.userid)"
+              >
                 조인 취소
               </button>
             </div>
@@ -73,16 +95,20 @@
 
 <script>
 import Modal from '@/components/common/Modal.vue';
-import { mwDetailJoin } from '@/api/middleware/mainJoin';
+import { mwDetailJoin, mwCancelJoin } from '@/api/middleware/mainJoin';
 import { onMounted, ref } from 'vue';
 import { useJoin } from '@/composable/join';
 import { getAuthFromCookie } from '@/composable/cookies';
-import { mwApplyJoin } from '@/api/middleware/subJoin';
+import { mwApplyJoin, mwCancelApply } from '@/api/middleware/subJoin';
+import { useToast } from '@/composable/toast';
+import Alarmtransition from '@/components/common/Alarmtransition.vue';
 export default {
-  components: { Modal },
+  components: { Modal, Alarmtransition },
   emits: ['toggle'],
   setup(props, { emit }) {
-    const myJoin = ref(false);
+    const { toastMessage, toastAlertType, showToast, triggerToast } =
+      useToast();
+    const myJoin = ref('false');
     const JoinInfo = ref({});
     const { target } = useJoin();
     const showUser = ref('');
@@ -101,6 +127,7 @@ export default {
         roomNo: roomNo,
         userid: getAuthFromCookie(),
       };
+      triggerToast('온라인 조인을 신청하였습니다.');
       await mwApplyJoin(process.env.VUE_APP_SERVER_TYPE, data);
     };
     const getJoinData = async () => {
@@ -109,11 +136,25 @@ export default {
         target.value,
         getAuthFromCookie()
       );
+      if (JoinInfo.value.hostid === getAuthFromCookie()) {
+        myJoin.value = 'host';
+        console.log('왜');
+        return;
+      }
       JoinInfo.value.members.forEach((user) => {
         if (user.id === getAuthFromCookie()) {
-          myJoin.value = true;
+          myJoin.value = 'true';
         }
       });
+    };
+    const calcelJoin = async (roomNo, userid) => {
+      await mwCancelApply(process.env.VUE_APP_SERVER_TYPE, roomNo, userid);
+      triggerToast('조인을 취소 하였습니다.');
+    };
+
+    const delJoin = async (roomNo) => {
+      await mwCancelJoin(process.env.VUE_APP_SERVER_TYPE, roomNo);
+      triggerToast('조인을 삭제하였습니다.');
     };
     onMounted(() => {
       getJoinData();
@@ -125,6 +166,11 @@ export default {
       myJoin,
       showUser,
       showUserInfo,
+      toastMessage,
+      toastAlertType,
+      showToast,
+      calcelJoin,
+      delJoin,
     };
   },
 };

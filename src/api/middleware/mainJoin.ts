@@ -56,6 +56,7 @@ const mwRegistJoin = async (
 };
 
 const mwCancelJoin = async (type: 'server' | 'serverless', roomNo: string) => {
+  console.log(roomNo);
   if (type === 'server') {
     return await cancelJoin(roomNo);
   } else {

@@ -27,6 +27,19 @@ const fbApplyJoin = async (data: applyJoinDTO) => {
   } catch (e) {}
 };
 
+const fbCancelApply = async (roomNo: string, userid: string) => {
+  try {
+    store.commit('loading/startSpinner');
+
+    await db
+      .collection('users')
+      .doc(userid)
+      .collection('joinlist')
+      .doc(roomNo)
+      .delete();
+    store.commit('loading/endSpinner');
+  } catch (e) {}
+};
 const fbJoinAcceptUser = async (data: joinIsOkDTO) => {
   try {
     store.commit('loading/startSpinner');
@@ -143,4 +156,5 @@ export {
   fbJoinRefuseUser,
   fbGetAlarm,
   fbUserDelAlarm,
+  fbCancelApply,
 };

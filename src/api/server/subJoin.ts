@@ -13,6 +13,19 @@ const applyJoin = async (data: applyJoinDTO) => {
   }
 };
 
+const cancelApply = async (roomNo: string, userid: string) => {
+  try {
+    const res = await notLoggedAxios.post(`api/join/cancelApply`, {
+      roomNo: roomNo,
+      userid: userid,
+    });
+    if ((res.status = 200)) {
+      return true;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
 const joinAcceptUser = async (data: joinIsOkDTO) => {
   try {
     console.log(data);
@@ -82,4 +95,5 @@ export {
   getHostAlarm,
   getApplyAlarm,
   userDelAlarm,
+  cancelApply,
 };

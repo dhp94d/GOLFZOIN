@@ -9,6 +9,7 @@ import { defineComponent, onMounted } from 'vue';
 import { useAuth } from '@/composable/auth';
 import { useLoading } from '@/composable/loading';
 import Loading from '@/components/common/Loading.vue';
+
 export default defineComponent({
   name: 'App',
   components: {
@@ -17,6 +18,7 @@ export default defineComponent({
   setup() {
     const { authLoginAction } = useAuth();
     const { loadingStatus } = useLoading();
+
     onMounted(() => {
       authLoginAction();
     });
@@ -69,5 +71,19 @@ body {
     border-left: 0;
     border-right: 0;
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
 }
 </style>

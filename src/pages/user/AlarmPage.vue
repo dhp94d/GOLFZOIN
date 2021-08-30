@@ -21,7 +21,6 @@
                 </div>
               </div>
               <div>
-                {{ alarm }}
                 <div
                   @click="
                     accepButton(
@@ -68,7 +67,7 @@ import {
   mwJoinAcceptUser,
   mwJoinRefuseUser,
 } from '@/api/middleware/subJoin';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 export default {
@@ -98,7 +97,6 @@ export default {
       getAlarm();
     };
     const refuseButton = async (type, roomNo, userid, alarmid) => {
-      console.log('왜', type, roomNo, userid, alarmid);
       const data = {
         type: type,
         roomNo: roomNo,

@@ -6,6 +6,7 @@ import {
   getHostAlarm,
   getApplyAlarm,
   userDelAlarm,
+  cancelApply,
 } from '@/api/server/subJoin';
 import {
   fbApplyJoin,
@@ -13,6 +14,7 @@ import {
   fbJoinRefuseUser,
   fbGetAlarm,
   fbUserDelAlarm,
+  fbCancelApply,
 } from '@/api/serverless/subJoin';
 
 const mwApplyJoin = async (
@@ -68,10 +70,23 @@ const mwUserDelAlarm = async (
   }
 };
 
+const mwCancelApply = async (
+  type: 'server' | 'serverless',
+  roomNo: string,
+  userid: string
+) => {
+  console.log(roomNo);
+  if (type === 'server') {
+    return await cancelApply(roomNo, userid);
+  } else {
+    return await fbCancelApply(roomNo, userid);
+  }
+};
 export {
   mwApplyJoin,
   mwJoinAcceptUser,
   mwJoinRefuseUser,
   mwGetAlarm,
   mwUserDelAlarm,
+  mwCancelApply,
 };

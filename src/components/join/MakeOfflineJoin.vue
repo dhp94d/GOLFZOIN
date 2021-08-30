@@ -1,5 +1,10 @@
 <template>
   <div class="make-join-page">
+    <Alarmtransition
+      v-if="showToast"
+      :message="toastMessage"
+      :type="toastAlertType"
+    ></Alarmtransition>
     <div class="join-container">
       <div class="make-join-body">
         <div class="body-detail">
@@ -70,7 +75,11 @@
             </form>
           </div>
         </div>
-        <button @click="submitForm" type="submit" class="btn btn btn-primary">
+        <button
+          @click="submitForm"
+          type="submit"
+          class="btn btn btn-primary makebutton"
+        >
           만들기
         </button>
       </div>
@@ -85,11 +94,16 @@ import dayjs from 'dayjs';
 import { uploadFile, getOneThumbnail } from '@/api/middleware/utils.ts';
 import { getAuthFromCookie } from '@/composable/cookies';
 import { mwRegistJoin } from '@/api/middleware/mainJoin';
+import { useToast } from '@/composable/toast';
+import Alarmtransition from '@/components/common/Alarmtransition.vue';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default {
+  components: { Alarmtransition },
   setup() {
+    const { toastMessage, toastAlertType, showToast, triggerToast } =
+      useToast();
     const title = ref('');
     const totalCount = ref('');
     const time = ref('');
@@ -174,6 +188,7 @@ export default {
         lat: String(latitude.value),
         lon: String(longitude.value),
       };
+
       if (!!newImg.value) {
         const url = await getOneThumbnail(
           'join',
@@ -186,6 +201,8 @@ export default {
       }
 
       await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
+      triggerToast('오프라인 조인을 만들었습니다.');
+      history.go();
     };
     return {
       title,
@@ -202,6 +219,9 @@ export default {
       getLocation,
       latitude,
       longitude,
+      toastMessage,
+      toastAlertType,
+      showToast,
     };
   },
 };
@@ -257,5 +277,14 @@ export default {
 .profile-img {
   object-fit: cover;
   margin: auto;
+}
+.makebutton {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
 }
 </style>

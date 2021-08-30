@@ -1,6 +1,11 @@
 <template>
   <Modal>
     <template #body>
+      <Alarmtransition
+        v-if="showToast"
+        :message="toastMessage"
+        :type="toastAlertType"
+      ></Alarmtransition>
       <div class="user-info">
         <h4>내 정보</h4>
         <div class="user-img">
@@ -68,6 +73,8 @@ import { useRouter } from 'vue-router';
 import { uploadFile, getOneThumbnail } from '@/api/middleware/utils.ts';
 import { getAuthFromCookie } from '@/composable/cookies';
 import Modal from '@/components/common/Modal.vue';
+import { useToast } from '@/composable/toast';
+import Alarmtransition from '@/components/common/Alarmtransition.vue';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
@@ -77,8 +84,11 @@ export default {
   },
   components: {
     Modal,
+    Alarmtransition,
   },
   setup(props) {
+    const { toastMessage, toastAlertType, showToast, triggerToast } =
+      useToast();
     const user = ref({});
     const nickname = ref('');
     const id = ref('');
@@ -128,7 +138,10 @@ export default {
 
     const submitForm = async () => {
       const data = {};
-      data.id = user.value.userid;
+      data.id =
+        process.env.VUE_APP_SERVER_TYPE === 'server'
+          ? user.value.userid
+          : user.value.id;
       if (!!nickname.value) data.nickname = nickname.value;
       if (!!address.value) data.address = address.value;
       if (!!hit.value) data.hit = hit.value;
@@ -144,11 +157,12 @@ export default {
         data.profile = url;
       }
       if (Object.keys(data).length < 2) {
+        triggerToast('내 정보를 수정하였습니다..');
         router.go();
         return;
       }
+      triggerToast('내 정보를 수정하였습니다..');
       await mwModifyUser(process.env.VUE_APP_SERVER_TYPE, data);
-
       router.go();
     };
     return {
@@ -165,6 +179,9 @@ export default {
       getImgPath,
       newImg,
       saveImg,
+      toastMessage,
+      toastAlertType,
+      showToast,
     };
   },
 };
