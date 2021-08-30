@@ -24,7 +24,6 @@ export default {
   min-width: 16vw;
   flex-direction: column;
   -webkit-box-pack: justify;
-  justify-content: space-between;
   background-color: rgb(255, 255, 255);
 }
 </style>

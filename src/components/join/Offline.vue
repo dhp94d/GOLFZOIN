@@ -118,7 +118,6 @@ export default {
     };
 
     const initMap = () => {
-      console.log(lat.value, lon.value);
       const container = document.querySelector('#map');
       const options = {
         center: new kakao.maps.LatLng(lon.value, lat.value),

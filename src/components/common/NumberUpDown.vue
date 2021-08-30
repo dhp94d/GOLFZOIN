@@ -4,7 +4,7 @@
     <input
       class="number-updown-view"
       type="text"
-      :value="number"
+      v-model="number"
       maxlength="500"
     />
     <div class="number-updown-mutation" @click="RClick">&gt;</div>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 export default {
   emits: ['countNumber'],
   setup(props, { emit }) {
@@ -28,6 +28,10 @@ export default {
       number.value += 1;
       emit('countNumber', number.value);
     };
+
+    watch(number, () => {
+      emit('countNumber', number.value);
+    });
     return {
       number,
       lClick,
