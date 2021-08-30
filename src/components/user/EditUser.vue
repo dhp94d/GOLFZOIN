@@ -171,9 +171,6 @@ export default {
       getImgPath,
       newImg,
       saveImg,
-      toastMessage,
-      toastAlertType,
-      showToast,
     };
   },
 };
