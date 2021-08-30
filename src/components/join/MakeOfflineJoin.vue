@@ -1,10 +1,5 @@
 <template>
   <div class="make-join-page">
-    <Alarmtransition
-      v-if="showToast"
-      :message="toastMessage"
-      :type="toastAlertType"
-    ></Alarmtransition>
     <div class="join-container">
       <div class="make-join-body">
         <div class="body-detail">
@@ -94,16 +89,13 @@ import dayjs from 'dayjs';
 import { uploadFile, getOneThumbnail } from '@/api/middleware/utils.ts';
 import { getAuthFromCookie } from '@/composable/cookies';
 import { mwRegistJoin } from '@/api/middleware/mainJoin';
-import { useToast } from '@/composable/toast';
-import Alarmtransition from '@/components/common/Alarmtransition.vue';
+import { useAlarm } from '@/composable/alarm';
 
 const DEFAULT_IMG = process.env.VUE_APP_FIREBASE_GOLFZOIN;
 
 export default {
-  components: { Alarmtransition },
   setup() {
-    const { toastMessage, toastAlertType, showToast, triggerToast } =
-      useToast();
+    const { alarmTriggerToast } = useAlarm();
     const title = ref('');
     const totalCount = ref('');
     const time = ref('');
@@ -201,7 +193,7 @@ export default {
       }
 
       await mwRegistJoin(process.env.VUE_APP_SERVER_TYPE, data);
-      triggerToast('오프라인 조인을 만들었습니다.');
+      alarmTriggerToast('오프라인 조인을 만들었습니다.');
       history.go();
     };
     return {
@@ -219,9 +211,6 @@ export default {
       getLocation,
       latitude,
       longitude,
-      toastMessage,
-      toastAlertType,
-      showToast,
     };
   },
 };

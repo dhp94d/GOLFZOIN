@@ -1,12 +1,5 @@
 <template>
   <div>
-    <transition name="fade">
-      <Alarmtransition
-        v-if="showToast"
-        :message="toastMessage"
-        :type="toastAlertType"
-      ></Alarmtransition>
-    </transition>
     <Modal @toggle="toggle">
       <template #header>
         <div class="join-type">
@@ -101,14 +94,12 @@ import { onMounted, ref } from 'vue';
 import { useJoin } from '@/composable/join';
 import { getAuthFromCookie } from '@/composable/cookies';
 import { mwApplyJoin, mwCancelApply } from '@/api/middleware/subJoin';
-import { useToast } from '@/composable/toast';
-import Alarmtransition from '@/components/common/Alarmtransition.vue';
+import { useAlarm } from '@/composable/alarm';
 export default {
-  components: { Modal, Alarmtransition },
+  components: { Modal },
   emits: ['toggle'],
   setup(props, { emit }) {
-    const { toastMessage, toastAlertType, showToast, triggerToast } =
-      useToast();
+    const { alarmTriggerToast } = useAlarm();
     const myJoin = ref('false');
     const JoinInfo = ref({});
     const { target } = useJoin();
@@ -128,7 +119,7 @@ export default {
         roomNo: roomNo,
         userid: getAuthFromCookie(),
       };
-      triggerToast('온라인 조인을 신청하였습니다.');
+      alarmTriggerToast('온라인 조인을 신청하였습니다.');
       await mwApplyJoin(process.env.VUE_APP_SERVER_TYPE, data);
     };
     const getJoinData = async () => {
@@ -140,7 +131,6 @@ export default {
 
       if (JoinInfo.value.hostid === getAuthFromCookie()) {
         myJoin.value = 'host';
-        console.log('왜');
         return;
       }
       JoinInfo.value.members.forEach((user) => {
@@ -151,12 +141,12 @@ export default {
     };
     const calcelJoin = async (roomNo, userid) => {
       await mwCancelApply(process.env.VUE_APP_SERVER_TYPE, roomNo, userid);
-      triggerToast('조인을 취소 하였습니다.');
+      alarmTriggerToast('조인을 취소 하였습니다.');
     };
 
     const delJoin = async (roomNo) => {
       await mwCancelJoin(process.env.VUE_APP_SERVER_TYPE, roomNo);
-      triggerToast('조인을 삭제하였습니다.');
+      alarmTriggerToast('조인을 삭제하였습니다.');
     };
     onMounted(() => {
       getJoinData();
@@ -168,9 +158,6 @@ export default {
       myJoin,
       showUser,
       showUserInfo,
-      toastMessage,
-      toastAlertType,
-      showToast,
       calcelJoin,
       delJoin,
     };
