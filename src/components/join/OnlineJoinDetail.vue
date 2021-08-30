@@ -47,6 +47,7 @@
               >
                 <div class="memeber-profile">
                   <img :src="member.profile" />
+                  <div class="member-name">{{ member.nickname }}</div>
                 </div>
                 <div class="user-info" v-if="showUser === member.id">
                   <div>닉네임: {{ member.nickname }}</div>
@@ -211,11 +212,17 @@ export default {
   background-color: rgba(33, 33, 36, 0.07);
 }
 .memeber-profile {
+  display: flex;
   img {
     object-fit: cover;
     border-radius: 1rem;
     width: 50px;
     height: 50px;
+  }
+  div {
+    display: flex;
+    padding-left: 0.5rem;
+    align-items: center;
   }
 }
 .join-member-title {
@@ -233,6 +240,7 @@ export default {
 }
 .user-info {
   position: absolute;
+  margin-top: 0.3rem;
   border-radius: 1rem;
   padding: 0.3rem;
   border: 1px solid rgba(33, 33, 36, 0.07);
