@@ -5,14 +5,10 @@ export const useToast = () => {
   const showToast = ref(false);
   const timeout = ref();
   const triggerToast = (message: string, type = 'success') => {
+    console.log('넘어왔냐');
     toastMessage.value = message;
     toastAlertType.value = type;
     showToast.value = true;
-    timeout.value = setTimeout(() => {
-      toastMessage.value = '';
-      toastAlertType.value = '';
-      showToast.value = false;
-    }, 5000);
   };
 
   onUnmounted(() => {

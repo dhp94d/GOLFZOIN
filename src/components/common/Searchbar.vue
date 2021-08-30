@@ -23,9 +23,14 @@
           <span>팔로우</span>
           <span><NumberUpDown @countNumber="countFollow"></NumberUpDown></span>
         </div>
-        <div v-else class="search-filter-tap">
-          <span>위치</span>
-          <span><FindAddress></FindAddress></span>
+        <div v-else>
+          <div class="search-filter-tap">
+            <span>타수</span>
+            <span><NumberUpDown @countNumber="countHit"></NumberUpDown></span>
+          </div>
+          <div class="search-filter-tap">
+            <span>위치</span> <span><FindAddress></FindAddress></span>
+          </div>
         </div>
       </template>
     </Dropdown>
@@ -58,15 +63,19 @@ export default {
     type: String,
   },
   setup(props) {
-    const { updatePNumber, updateData, updateFollow } = useSearch();
+    const { updatePNumber, updateData, updateFollow, updateHit } = useSearch();
     const pNumber = ref(0);
     const Follow = ref(0);
     const searchData = ref('');
+    const hit = ref(0);
     const router = useRouter();
 
     const countPNumber = (number) => {
-      console.log(number);
       pNumber.value = number;
+    };
+
+    const countHit = (number) => {
+      hit.value = number;
     };
 
     const countFollow = (number) => {
@@ -76,6 +85,7 @@ export default {
       updatePNumber(pNumber.value);
       updateData(searchData.value);
       updateFollow(Follow.value);
+      updateHit(hit.value);
       console.log(pNumber.value);
       if (props.type === '온라인') {
         router.push('/join/onlinejoin');
@@ -93,6 +103,7 @@ export default {
       countFollow,
       searchData,
       searchInputData,
+      countHit,
     };
   },
 };

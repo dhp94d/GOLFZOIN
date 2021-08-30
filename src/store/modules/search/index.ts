@@ -4,6 +4,7 @@ export default {
     data: '',
     follow: 0,
     date: '',
+    hit: '',
     address: {
       latitude: '',
       longitude: '',
@@ -38,10 +39,14 @@ export default {
     SET_SEARCH_FOLLOW(state: { follow: number }, payload: number) {
       state.follow = payload;
     },
+    SET_SEARCH_HIT(state: { hit: number }, payload: number) {
+      state.hit = payload;
+    },
     SET_SEARCH_INIT(state: any) {
       state.data = '';
       state.follow = 0;
       state.date = '';
+      state.hit = '';
       (state.address = {
         latitude: '',
         longitude: '',

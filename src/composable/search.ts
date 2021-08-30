@@ -8,12 +8,15 @@ export const useSearch = () => {
   const SearchFollow = computed(() => store.state.search.follow);
   const SearchAddress = computed(() => store.state.search.address);
   const SearchPNumber = computed(() => store.state.search.pNumber);
+  const SearchHit = computed(() => store.state.search.hit);
   const updateDate = (data: string) =>
     store.commit('search/SET_SEARCH_DATE', data);
   const updateData = (data: string) =>
     store.commit('search/SET_SEARCH_DATA', data);
   const updateFollow = (data: number) =>
     store.commit('search/SET_SEARCH_FOLLOW', data);
+  const updateHit = (data: number) =>
+    store.commit('search/SET_SEARCH_HIT', data);
   const updateAddress = (
     latitude: string,
     longitude: string,
@@ -30,6 +33,7 @@ export const useSearch = () => {
     store.commit('search/SET_SEARCH_INIT');
   };
   return {
+    SearchHit,
     SearchDate,
     SearchAddress,
     SearchPNumber,
@@ -40,6 +44,7 @@ export const useSearch = () => {
     updateFollow,
     updateAddress,
     updatePNumber,
+    updateHit,
     init,
   };
 };

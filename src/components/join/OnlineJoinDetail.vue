@@ -137,6 +137,7 @@ export default {
         target.value,
         getAuthFromCookie()
       );
+
       if (JoinInfo.value.hostid === getAuthFromCookie()) {
         myJoin.value = 'host';
         console.log('왜');

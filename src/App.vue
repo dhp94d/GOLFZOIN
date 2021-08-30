@@ -2,6 +2,11 @@
   <div class="app">
     <router-view />
     <Loading :loading="loadingStatus"></Loading>
+    <Alarmtransition
+      v-if="alarmShowToast"
+      :message="alarmToastMessage"
+      :type="alarmToastAlertType"
+    ></Alarmtransition>
   </div>
 </template>
 <script lang="ts">
@@ -10,20 +15,29 @@ import { useAuth } from '@/composable/auth';
 import { useLoading } from '@/composable/loading';
 import Loading from '@/components/common/Loading.vue';
 
+import { useAlarm } from '@/composable/alarm';
+import Alarmtransition from '@/components/common/Alarmtransition.vue';
+
 export default defineComponent({
   name: 'App',
   components: {
     Loading,
+    Alarmtransition,
   },
   setup() {
     const { authLoginAction } = useAuth();
     const { loadingStatus } = useLoading();
+    const { alarmToastMessage, alarmShowToast, alarmToastAlertType } =
+      useAlarm();
 
     onMounted(() => {
       authLoginAction();
     });
     return {
       loadingStatus,
+      alarmToastMessage,
+      alarmShowToast,
+      alarmToastAlertType,
     };
   },
 });

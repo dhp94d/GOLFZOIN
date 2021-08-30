@@ -71,7 +71,8 @@ export default {
   },
   setup() {
     const { updateTarget } = useJoin();
-    const { SearchDate, SearchPNumber, SearchAddress, init } = useSearch();
+    const { SearchDate, SearchPNumber, SearchAddress, SearchHit, init } =
+      useSearch();
     const offlineJoinData = ref([]);
     const mapTypeControl = new kakao.maps.MapTypeControl();
     const zoomControl = new kakao.maps.ZoomControl();
@@ -84,7 +85,7 @@ export default {
     const lat = ref(userData.value.lat);
     const lon = ref(userData.value.lon);
 
-    watch([SearchDate, SearchPNumber, SearchAddress.value], () => {
+    watch([SearchDate, SearchPNumber, SearchHit, SearchAddress.value], () => {
       lat.value = SearchAddress.value.longitude;
       lon.value = SearchAddress.value.latitude;
       getOfflineData();
@@ -95,6 +96,7 @@ export default {
         lon: lon.value,
         size: mapSize.value,
         count: SearchPNumber.value,
+        hit: SearchHit.value,
         date: SearchDate.value,
       });
       offlineJoinData.value = res;
