@@ -2,8 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
 import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
-import OnlineJoinPage from '@/pages/join/OnlineJoinPage.vue';
-import OfflineJoinPage from '@/pages/join/OfflineJoinPage.vue';
 import CalendarPage from '@/pages/user/CalendarPage.vue';
 import FollowingPage from '@/pages/user/FollowingPage.vue';
 import FollowerPage from '@/pages/user/FollowerPage.vue';
@@ -75,12 +73,20 @@ const router = createRouter({
         {
           path: '/join/onlineJoin',
           name: 'OnlineJoin',
-          component: OnlineJoinPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "OnlineJoinPage" */ '@/pages/join/OnlineJoinPage.vue'
+            ),
+          beforeEnter,
         },
         {
           path: '/join/offlineJoin',
           name: 'OfflineJoin',
-          component: OfflineJoinPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "OfflineJoinPage" */ '@/pages/join/OfflineJoinPage.vue'
+            ),
+          beforeEnter,
         },
       ],
     },
@@ -99,7 +105,7 @@ router.beforeEach((to, from, next) => {
   store.commit('loading/startSpinner');
   setTimeout(() => {
     next();
-  }, 1);
+  }, 20);
 });
 
 router.afterEach((to, from) => {

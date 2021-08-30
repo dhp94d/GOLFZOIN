@@ -1,8 +1,6 @@
-import { useStore } from 'vuex';
-import { getAuthFromCookie } from '@/composable/cookies';
+import store from '@/store';
 
 function setInterceptors(instance: any) {
-  const store = useStore();
   instance.interceptors.request.use(
     (config: any) => {
       store.commit('loading/startSpinner');

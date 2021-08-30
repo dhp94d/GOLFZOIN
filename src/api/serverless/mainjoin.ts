@@ -1,16 +1,13 @@
 import { db } from '@/api/serverless/firesbaseinit';
 import { fbDetailUser } from '@/api/serverless/user';
 import { getAuthFromCookie } from '@/composable/cookies';
-import { fbGetFollower } from '@/api/serverless/user';
-import {
-  onlineJoinListDTO,
-  offlineJoinListDTO,
-  registOnlineDTO,
-  registOfflineDTO,
-} from '@/api/dto/joinTypes';
+import { registOnlineDTO, registOfflineDTO } from '@/api/dto/joinTypes';
+import store from '@/store';
 
 const fbMyJoinList = async (userid: string) => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinList: any = [];
     const res = await db
       .collection('users')
@@ -21,6 +18,7 @@ const fbMyJoinList = async (userid: string) => {
     res.forEach((join) => {
       joinList.push({ ...join.data(), roomNo: join.id });
     });
+    store.commit('loading/endSpinner');
     return joinList;
   } catch (e) {
     console.error(e);
@@ -29,7 +27,10 @@ const fbMyJoinList = async (userid: string) => {
 
 const fbDetailJoin = async (roomNo: string) => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinData = await db.collection('join').doc(roomNo).get();
+    store.commit('loading/endSpinner');
     return joinData.data();
   } catch (e) {
     console.error(e);
@@ -38,6 +39,8 @@ const fbDetailJoin = async (roomNo: string) => {
 
 const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
   try {
+    store.commit('loading/startSpinner');
+
     const res = await db.collection('join').add(data);
     const userData = await fbDetailUser(getAuthFromCookie());
     await db
@@ -50,6 +53,7 @@ const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
       .collection('joinlist')
       .doc(res.id)
       .set(data);
+    store.commit('loading/endSpinner');
   } catch (e) {
     console.error(e);
   }
@@ -57,7 +61,10 @@ const fbRegistJoin = async (data: registOnlineDTO | registOfflineDTO) => {
 
 const fbCancelJoin = async (roomNo: string) => {
   try {
+    store.commit('loading/startSpinner');
+
     const res = await db.collection('join').doc(roomNo).delete();
+    store.commit('loading/endSpinner');
     return res;
   } catch (e) {
     console.error(e);
@@ -66,6 +73,8 @@ const fbCancelJoin = async (roomNo: string) => {
 
 const fbMainOfflineList = async () => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinList: any = [];
     const res = await db
       .collection('join')
@@ -73,6 +82,7 @@ const fbMainOfflineList = async () => {
       .limit(7)
       .get();
     res.forEach((join) => joinList.push(join.data()));
+    store.commit('loading/endSpinner');
     return joinList;
   } catch (e) {
     console.error(e);
@@ -81,6 +91,8 @@ const fbMainOfflineList = async () => {
 
 const fbMainOnlineList = async () => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinList: any = [];
     const res = await db
       .collection('join')
@@ -89,6 +101,7 @@ const fbMainOnlineList = async () => {
       .get();
 
     res.forEach((join) => joinList.push(join.data()));
+    store.commit('loading/endSpinner');
     return joinList;
   } catch (e) {
     console.error(e);
@@ -97,6 +110,8 @@ const fbMainOnlineList = async () => {
 
 const fbOfflineJoinList = async (data: any) => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinList: any = [];
     const res = await db
       .collection('join')
@@ -104,6 +119,7 @@ const fbOfflineJoinList = async (data: any) => {
       .get();
     res.forEach((join) => joinList.push(join.data()));
     if (!data.count && data.date === '') {
+      store.commit('loading/endSpinner');
       return joinList;
     }
 
@@ -112,7 +128,7 @@ const fbOfflineJoinList = async (data: any) => {
       if (join.totalcount - join.members.length < data.count) return false;
       return true;
     });
-    console.log(searchJoinList);
+    store.commit('loading/endSpinner');
     return searchJoinList;
   } catch (e) {
     console.error(e);
@@ -121,11 +137,14 @@ const fbOfflineJoinList = async (data: any) => {
 
 const fbOnlineJoinList = async (data: any) => {
   try {
+    store.commit('loading/startSpinner');
+
     const joinList: any = [];
     const res = await db.collection('join').where('type', '==', 'online').get();
     res.forEach((join) => joinList.push(join.data()));
 
     if (!data.pNumber && !data.follow && data.data === '') {
+      store.commit('loading/endSpinner');
       return joinList;
     }
 
@@ -139,6 +158,7 @@ const fbOnlineJoinList = async (data: any) => {
       if (join.totalcount - join.members.length < data.pNumber) return false;
       return true;
     });
+    store.commit('loading/endSpinner');
     return searchJoinList;
   } catch (e) {
     console.error(e);

@@ -1,11 +1,13 @@
-import { notLoggedAxios } from '@/api/server/index';
+import store from '@/store';
 import { modifyUserDTO, addFollowDTO } from '@/api/dto/userTypes';
 import { db } from '@/api/serverless/firesbaseinit';
 import { getAuthFromCookie } from '@/composable/cookies';
 
 const fbModifyUser = async (data: modifyUserDTO) => {
   try {
+    store.commit('loading/startSpinner');
     await db.collection('users').doc(getAuthFromCookie()).update(data);
+    store.commit('loading/endSpinner');
   } catch (e) {
     console.error(e);
   }
@@ -13,6 +15,8 @@ const fbModifyUser = async (data: modifyUserDTO) => {
 
 const fbDetailUser = async (userId: string) => {
   try {
+    store.commit('loading/startSpinner');
+
     let isFollowing = false;
     const res = await db.collection('users').doc(userId).get();
     const userData = res.data();
@@ -22,6 +26,7 @@ const fbDetailUser = async (userId: string) => {
         isFollowing = true;
       }
     });
+    store.commit('loading/endSpinner');
     return { ...userData, isFollowing: isFollowing };
   } catch (e) {
     console.error(e);
@@ -29,7 +34,8 @@ const fbDetailUser = async (userId: string) => {
 };
 
 const fbAddFollow = async (data: addFollowDTO) => {
-  console.log(data);
+  store.commit('loading/startSpinner');
+
   const { userid, targetid } = data;
   try {
     const targetInfo: any = await fbDetailUser(targetid);
@@ -46,7 +52,7 @@ const fbAddFollow = async (data: addFollowDTO) => {
       .collection('follower')
       .doc(userid)
       .set(userInfo);
-
+    store.commit('loading/endSpinner');
     return true;
   } catch (e) {
     console.error(e);
@@ -54,6 +60,8 @@ const fbAddFollow = async (data: addFollowDTO) => {
 };
 
 const fbDelFollow = async (data: addFollowDTO) => {
+  store.commit('loading/startSpinner');
+
   const { userid, targetid } = data;
   console.log('하이');
   try {
@@ -69,7 +77,7 @@ const fbDelFollow = async (data: addFollowDTO) => {
       .collection('follower')
       .doc(userid)
       .delete();
-
+    store.commit('loading/endSpinner');
     return true;
   } catch (e) {
     console.error(e);
@@ -77,6 +85,8 @@ const fbDelFollow = async (data: addFollowDTO) => {
 };
 
 const fbGetFollowing = async (userId: string) => {
+  store.commit('loading/startSpinner');
+
   try {
     const userList: Array<object> = [];
     const users = await db
@@ -87,6 +97,7 @@ const fbGetFollowing = async (userId: string) => {
     users.forEach((user) => {
       userList.push(user.data());
     });
+    store.commit('loading/endSpinner');
     return userList;
   } catch (e) {
     console.error(e);
@@ -94,6 +105,8 @@ const fbGetFollowing = async (userId: string) => {
 };
 
 const fbGetFollower = async (userId: string) => {
+  store.commit('loading/startSpinner');
+
   try {
     const userList: Array<object> = [];
     const users = await db
@@ -104,6 +117,7 @@ const fbGetFollower = async (userId: string) => {
     users.forEach((user) => {
       userList.push(user.data());
     });
+    store.commit('loading/endSpinner');
     return userList;
   } catch (e) {
     console.error(e);
@@ -111,6 +125,8 @@ const fbGetFollower = async (userId: string) => {
 };
 
 const fbFindUser = async (keyword: string, userid: string) => {
+  store.commit('loading/startSpinner');
+
   try {
     const userList: Array<object> = [];
     const users = await db.collection('users').get();
@@ -127,6 +143,7 @@ const fbFindUser = async (keyword: string, userid: string) => {
         userList.push(userInfo);
       }
     });
+    store.commit('loading/endSpinner');
     return userList;
   } catch (e) {
     console.error(e);
