@@ -36,13 +36,13 @@
               <div
                 v-for="member in JoinInfo.members"
                 :key="`index${member.nickname}`"
-                @mouseover="showUserInfo(member.id)"
+                @mouseover="showUserInfo(member.id, member.nickname)"
               >
                 <div class="memeber-profile">
                   <img :src="member.profile" />
                   <div class="member-name">{{ member.nickname }}</div>
                 </div>
-                <div class="user-info" v-if="showUser === member.id">
+                <div class="user-info" v-if="showUser === member.nickname">
                   <div>닉네임: {{ member.nickname }}</div>
                   <div>타수: {{ member.hit }}</div>
                   <div>
@@ -66,9 +66,18 @@
               <button
                 type="submit"
                 class="btn btn btn-danger"
-                @click="calcelJoin(JoinInfo.roomNo, JoinInfo.userid)"
+                @click="calcelJoin(JoinInfo.roomNo)"
               >
                 조인 취소
+              </button>
+            </div>
+            <div v-else-if="myJoin === 'wait'">
+              <button
+                type="submit"
+                class="btn btn-primary auth-button"
+                disabled="true"
+              >
+                조인 대기 중입니다.
               </button>
             </div>
             <div v-else>
@@ -92,7 +101,7 @@ import Modal from '@/components/common/Modal.vue';
 import { mwDetailJoin, mwCancelJoin } from '@/api/middleware/mainJoin';
 import { onMounted, ref } from 'vue';
 import { useJoin } from '@/composable/join';
-import { getAuthFromCookie } from '@/composable/cookies';
+import { getAuthFromCookie, getUserFromCookie } from '@/composable/cookies';
 import { mwApplyJoin, mwCancelApply } from '@/api/middleware/subJoin';
 import { useAlarm } from '@/composable/alarm';
 export default {
@@ -104,12 +113,17 @@ export default {
     const JoinInfo = ref({});
     const { target } = useJoin();
     const showUser = ref('');
+    const userData = ref(JSON.parse(getUserFromCookie()));
     const toggle = () => {
       emit('toggle');
     };
 
-    const showUserInfo = (id) => {
-      showUser.value = id;
+    const showUserInfo = (id, nickname) => {
+      showUser.value =
+        process.env.VUE_APP_SERVER_TYPE === 'server' ? nickname : id;
+      setTimeout(() => {
+        showUser.value = '';
+      }, 1000);
     };
 
     const applyJoin = async (roomNo, hostid) => {
@@ -121,6 +135,7 @@ export default {
       };
       alarmTriggerToast('온라인 조인을 신청하였습니다.');
       await mwApplyJoin(process.env.VUE_APP_SERVER_TYPE, data);
+      emit('toggle');
     };
     const getJoinData = async () => {
       JoinInfo.value = await mwDetailJoin(
@@ -133,20 +148,36 @@ export default {
         myJoin.value = 'host';
         return;
       }
+      if (JoinInfo.value.isaccept === 1) {
+        myJoin.value = 'true';
+        return;
+      }
+      if (JoinInfo.value.isapply === 1) {
+        myJoin.value = 'wait';
+        return;
+      }
       JoinInfo.value.members.forEach((user) => {
         if (user.id === getAuthFromCookie()) {
           myJoin.value = 'true';
         }
       });
     };
-    const calcelJoin = async (roomNo, userid) => {
-      await mwCancelApply(process.env.VUE_APP_SERVER_TYPE, roomNo, userid);
+    const calcelJoin = async (roomNo) => {
+      await mwCancelApply(
+        process.env.VUE_APP_SERVER_TYPE,
+        roomNo,
+        process.env.VUE_APP_SERVER_TYPE === 'server'
+          ? userData.value.userid
+          : getAuthFromCookie()
+      );
       alarmTriggerToast('조인을 취소 하였습니다.');
+      emit('toggle');
     };
 
     const delJoin = async (roomNo) => {
       await mwCancelJoin(process.env.VUE_APP_SERVER_TYPE, roomNo);
       alarmTriggerToast('조인을 삭제하였습니다.');
+      emit('toggle');
     };
     onMounted(() => {
       getJoinData();

@@ -14,7 +14,7 @@
           <th scope="col">조인명</th>
           <th scope="col">날짜</th>
           <th scope="col">주최자</th>
-          <th scope="col">인원</th>
+          <th scope="col">총 인원</th>
           <th scope="col">자세히 보기</th>
         </tr>
       </thead>
@@ -26,7 +26,8 @@
             날짜 : {{ join.date }} {{ join.time }}<br />
           </td>
           <td>{{ join.hostid }}</td>
-          <td>{{ join.members?.length }}/{{ join.totalcount }}</td>
+
+          <td>{{ join.totalcount }}</td>
           <td>
             <div @click="showJoinInfo(join.type, join.roomNo)">
               <svg

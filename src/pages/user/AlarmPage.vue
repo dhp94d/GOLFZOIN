@@ -14,7 +14,7 @@
                 <div class="alarm-title">조인 명: {{ alarm.title }}</div>
                 <div class="alarm-body">
                   신청자: {{ alarm.nickname }}
-                  <span @click="showUser(alarm.id)">
+                  <span @click="showUser(alarm.id, alarm.userid)">
                     유저 정보보기
                     <i class="fa fa-external-link" aria-hidden="true"></i>
                   </span>
@@ -27,7 +27,8 @@
                       alarm.type,
                       alarm.roomNo,
                       alarm.id,
-                      alarm.alarmid
+                      alarm.alarmid,
+                      alarm.nickname
                     )
                   "
                 >
@@ -39,7 +40,8 @@
                       alarm.type,
                       alarm.roomNo,
                       alarm.id,
-                      alarm.alarmid
+                      alarm.alarmid,
+                      alarm.nickname
                     )
                   "
                 >
@@ -85,25 +87,33 @@ export default {
       targetId.value = userId;
       openUserInfo.value = !openUserInfo.value;
     };
-    const accepButton = async (type, roomNo, userid, alarmid) => {
+    const accepButton = async (type, roomNo, userid, alarmid, nickname) => {
       const data = {
         type: type,
         roomNo: roomNo,
-        userid: userid,
         alarmid: alarmid,
         logtype: 'accept',
       };
+      if (process.env.VUE_APP_SERVER_TYPE === 'server') {
+        data.nickname = nickname;
+      } else {
+        data.userid = userid;
+      }
       await mwJoinAcceptUser(process.env.VUE_APP_SERVER_TYPE, data);
       getAlarm();
     };
-    const refuseButton = async (type, roomNo, userid, alarmid) => {
+    const refuseButton = async (type, roomNo, userid, alarmid, nickname) => {
       const data = {
         type: type,
         roomNo: roomNo,
-        userid: userid,
         alarmid: alarmid,
         logtype: 'refuse',
       };
+      if (process.env.VUE_APP_SERVER_TYPE === 'server') {
+        data.nickname = nickname;
+      } else {
+        data.userid = userid;
+      }
       await mwJoinRefuseUser(process.env.VUE_APP_SERVER_TYPE, data);
       getAlarm();
     };

@@ -94,7 +94,7 @@ export default {
       const res = await mwOfflineJoinList(process.env.VUE_APP_SERVER_TYPE, {
         lat: lat.value,
         lon: lon.value,
-        size: mapSize.value,
+        size: mapSize.value > 7 ? mapSize.value * 25 : mapSize.value * 10,
         count: SearchPNumber.value,
         hit: SearchHit.value,
         date: SearchDate.value,
@@ -134,6 +134,7 @@ export default {
         // 지도의 현재 레벨을 얻어옵니다
         var level = map.getLevel();
         mapSize.value = level;
+        getOfflineData();
       });
       var clusterer = new kakao.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
