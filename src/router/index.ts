@@ -1,13 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/index.vue';
-import ChatPage from '@/pages/user/ChatPage.vue';
 import JoinPage from '@/pages/join/index.vue';
-import CalendarPage from '@/pages/user/CalendarPage.vue';
-import FollowingPage from '@/pages/user/FollowingPage.vue';
-import FollowerPage from '@/pages/user/FollowerPage.vue';
-import AlarmPage from '@/pages/user/AlarmPage.vue';
-import UserPage from '@/pages/user/index.vue';
-import UserSearchPage from '@/pages/user/UserSearchPage.vue';
 import { getUserFromCookie } from '@/composable/cookies';
 import store from '@/store';
 
@@ -23,37 +16,51 @@ const router = createRouter({
     {
       path: '/chat',
       name: 'ChatPage',
-      component: ChatPage,
+      component: () =>
+        import(/* webpackChunkName: "ChatPage" */ '@/pages/user/ChatPage.vue'),
       beforeEnter,
     },
     {
       path: '/user',
       name: 'UserPage',
-      component: UserPage,
+      component: () =>
+        import(/* webpackChunkName: "UserPage" */ '@/pages/user/index.vue'),
       beforeEnter,
       children: [
         {
           path: '/user/search',
           name: 'UserSearchPage',
-          component: UserSearchPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "UserSearchPage" */ '@/pages/user/UserSearchPage.vue'
+            ),
           beforeEnter,
         },
         {
           path: '/user/following',
           name: 'FollowingPage',
-          component: FollowingPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "FollowingPage" */ '@/pages/user/FollowingPage.vue'
+            ),
           beforeEnter,
         },
         {
           path: '/user/follower',
           name: 'FollowerPage',
-          component: FollowerPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "FollowerPage" */ '@/pages/user/FollowerPage.vue'
+            ),
           beforeEnter,
         },
         {
           path: '/user/alarm',
           name: 'AlarmPage',
-          component: AlarmPage,
+          component: () =>
+            import(
+              /* webpackChunkName: "AlarmPage" */ '@/pages/user/AlarmPage.vue'
+            ),
           beforeEnter,
         },
       ],
@@ -62,7 +69,10 @@ const router = createRouter({
     {
       path: '/calendar',
       name: 'CalendarPage',
-      component: CalendarPage,
+      component: () =>
+        import(
+          /* webpackChunkName: "CalendarPage" */ '@/pages/user/CalendarPage.vue'
+        ),
       beforeEnter,
     },
     {

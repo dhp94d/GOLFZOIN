@@ -1,4 +1,4 @@
-import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/joinTypes';
+import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/JoinTypes';
 import { fbDetailJoin } from '@/api/serverless/mainJoin';
 import { getAuthFromCookie } from '@/composable/cookies';
 import { db, arrayStore } from '@/api/serverless/firesbaseinit';

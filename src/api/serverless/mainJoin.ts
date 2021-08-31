@@ -1,7 +1,7 @@
 import { db } from '@/api/serverless/firesbaseinit';
 import { fbDetailUser } from '@/api/serverless/user';
 import { getAuthFromCookie } from '@/composable/cookies';
-import { registOnlineDTO, registOfflineDTO } from '@/api/dto/joinTypes';
+import { registOnlineDTO, registOfflineDTO } from '@/api/dto/JoinTypes';
 import store from '@/store';
 
 const fbMyJoinList = async (userid: string) => {

@@ -2,7 +2,7 @@ import {
   offlineJoinListDTO,
   registOnlineDTO,
   registOfflineDTO,
-} from '@/api/dto/joinTypes';
+} from '@/api/dto/JoinTypes';
 import {
   myJoinList,
   detailJoin,

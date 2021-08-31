@@ -1,10 +1,9 @@
-import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/joinTypes';
+import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/JoinTypes';
 import {
   applyJoin,
   joinAcceptUser,
   joinRefuseUser,
   getHostAlarm,
-  getApplyAlarm,
   userDelAlarm,
   cancelApply,
 } from '@/api/server/subJoin';

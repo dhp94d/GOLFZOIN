@@ -1,5 +1,5 @@
 import { notLoggedAxios } from '@/api/server/index';
-import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/joinTypes';
+import { applyJoinDTO, joinIsOkDTO, delAlarmDTO } from '@/api/dto/JoinTypes';
 
 const applyJoin = async (data: applyJoinDTO) => {
   try {

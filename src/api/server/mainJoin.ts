@@ -1,5 +1,5 @@
 import { notLoggedAxios } from '@/api/server/index';
-import { registOnlineDTO, registOfflineDTO } from '@/api/dto/joinTypes';
+import { registOnlineDTO, registOfflineDTO } from '@/api/dto/JoinTypes';
 
 const myJoinList = async (userid: string) => {
   try {
