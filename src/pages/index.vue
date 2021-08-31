@@ -9,11 +9,13 @@
         <Banner></Banner>
       </div>
     </div>
-    <div class="main-join">
-      <MainOnline></MainOnline>
-    </div>
-    <div class="main-join">
-      <MainOffline></MainOffline>
+    <div class="main-join-container">
+      <div>
+        <MainOnline></MainOnline>
+      </div>
+      <div>
+        <MainOffline></MainOffline>
+      </div>
     </div>
   </div>
 </template>
@@ -56,14 +58,17 @@ export default {
   display: block;
   margin-top: 8rem;
 }
-.main-join {
+.main-join-container {
   padding: 3rem 10rem;
 }
 
 @media (max-width: 1400px) {
-  .main-join {
-    padding: 1rem 2rem;
-    padding-top: 5rem;
+  .main-join-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 02rem;
+    margin-top: 5rem;
   }
   .header-web {
     display: none;

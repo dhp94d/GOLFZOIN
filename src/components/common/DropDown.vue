@@ -14,7 +14,7 @@
 import { ref } from '@vue/reactivity';
 export default {
   props: {
-    bottom: String,
+    bottom: Boolean || undefined,
     marginTop: String,
   },
   setup() {

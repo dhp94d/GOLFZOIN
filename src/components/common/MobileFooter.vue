@@ -87,9 +87,6 @@
       </router-link>
       <div class="footer-tap">
         <HeaderUserIcon :bottom="true"></HeaderUserIcon>
-        <div v-if="openUser">
-          <EditUser @toggle="userToggle"></EditUser>
-        </div>
         <div class="footer-title">프로필</div>
       </div>
     </div>

@@ -106,7 +106,7 @@ body {
     border-right: 0;
   }
   body {
-    padding-bottom: 3rem;
+    margin-bottom: 3rem;
   }
 }
 .fade-enter-active,

@@ -5,7 +5,7 @@
     <div class="join-page-filter">
       <Searchbar :type="'온라인'"></Searchbar>
     </div>
-    <div id="joino" class="join-online-container">
+    <div class="join-online-container">
       <div v-for="onlinejoin in onlineJoinData" :key="onlinejoin.roomNo">
         <div>
           <JoinItem
@@ -20,6 +20,7 @@
           ></JoinItem>
         </div>
       </div>
+      <div ref="joinContainer"></div>
     </div>
   </div>
 </template>
@@ -29,7 +30,6 @@ import JoinItem from '@/components/join/JoinItem.vue';
 import { ref, onMounted, watch, onUnmounted } from 'vue';
 import { mwOnlineJoinList } from '@/api/middleware/mainJoin.ts';
 import { useSearch } from '@/composable/search';
-import { useAlarm } from '@/composable/alarm';
 export default {
   components: {
     JoinItem,
@@ -40,7 +40,7 @@ export default {
       useSearch();
     const startValue = ref(1);
     const onlineJoinData = ref([]);
-    const { alarmTriggerToast } = useAlarm();
+    const joinContainer = ref(null);
 
     const getOnlinJoin = async () => {
       const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE, {
@@ -52,8 +52,37 @@ export default {
       });
       onlineJoinData.value = res;
     };
+
+    const debounce = (func, delay) => {
+      let timeoutId = null;
+      return (...arg) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(func.bind(null, ...arg), delay);
+      };
+    };
+
+    const addOnlinJoin = async () => {
+      const res = await mwOnlineJoinList(process.env.VUE_APP_SERVER_TYPE, {
+        start: startValue.value / 2,
+        date: SearchDate.value,
+        pNumber: SearchPNumber.value,
+        data: SearchData.value,
+        follow: SearchFollow.value,
+      });
+      onlineJoinData.value.push(...res);
+    };
+
     onMounted(() => {
       getOnlinJoin();
+      const fetchMoreObserver = new IntersectionObserver(
+        ([{ isIntersecting }]) => {
+          startValue.value += 1;
+          if (isIntersecting) {
+            debounce(addOnlinJoin(), 300);
+          }
+        }
+      );
+      fetchMoreObserver.observe(joinContainer.value);
     });
 
     onUnmounted(() => {
@@ -65,6 +94,7 @@ export default {
     });
     return {
       onlineJoinData,
+      joinContainer,
     };
   },
 };
