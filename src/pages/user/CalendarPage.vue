@@ -15,7 +15,6 @@
           </div>
           <MatrixView :headers="WEEK_DAYS" :matrix="matrix" />
         </div>
-        <div>12월</div>
         <div class="scrollc">
           <CalendarJoinList></CalendarJoinList>
         </div>

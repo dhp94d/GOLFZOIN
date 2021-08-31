@@ -2,7 +2,7 @@
   <div>
     <div class="main-join-header">
       <router-link to="/join/offlinejoin">
-        <div class="main-join-title">온프라인 조인</div>
+        <div class="main-join-title">오프라인 조인</div>
       </router-link>
       <router-link to="/join/offlinejoin">
         <div class="main-join-detail">자세히 보기</div>
