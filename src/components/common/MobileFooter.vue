@@ -2,6 +2,14 @@
   <nav class="footer-container">
     <teleport to="#teleport-modal">
       <div class="footer-searchbar" v-show="showSearch">
+        <div class="move-join">
+          <router-link to="/join/onlinejoin">
+            <div @click="showSearchButton">온라인 조인</div>
+          </router-link>
+          <router-link to="/join/offlinejoin">
+            <div @click="showSearchButton">오프라인 조인</div>
+          </router-link>
+        </div>
         <span>조인을 검색하세요</span>
         <HeaderSearchBar @toggle="showSearchButton"></HeaderSearchBar>
       </div>
@@ -149,10 +157,9 @@ export default {
   position: fixed;
   background-color: white;
   border-radius: 2rem 2rem 0 0;
-  height: 28vh;
+  height: 40vh;
   bottom: 3.5rem;
-  border-top: 2px solid rgba(33, 33, 36, 0.07);
-  border-bottom: 2px solid rgba(33, 33, 36, 0.07);
+  border: 2px solid rgba(33, 33, 36, 0.07);
   left: 0;
   right: 0;
   z-index: 0;
@@ -218,5 +225,19 @@ export default {
   margin-bottom: 2px;
   color: #b0b0b0;
   position: relative;
+}
+.move-join {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  gap: 3rem;
+  font-weight: bold;
+  a {
+    color: gray;
+    text-decoration: none;
+    &:hover {
+      color: black;
+    }
+  }
 }
 </style>
