@@ -13,7 +13,7 @@
         </div>
         <div class="thumbnail-body">
           <p>
-            {{ body?.length > 40 ? body.slice(0, 40) + '...' : body }}
+            {{ body?.length > 30 ? body.slice(0, 30) + '...' : body }}
           </p>
         </div>
       </div>
