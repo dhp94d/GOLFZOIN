@@ -6,7 +6,6 @@ import { getAuthFromCookie } from '@/composable/cookies';
 const fbModifyUser = async (data: modifyUserDTO) => {
   try {
     store.commit('loading/startSpinner');
-    console.log(data);
     await db.collection('users').doc(getAuthFromCookie()).update(data);
     store.commit('loading/endSpinner');
   } catch (e) {
@@ -64,7 +63,6 @@ const fbDelFollow = async (data: addFollowDTO) => {
   store.commit('loading/startSpinner');
 
   const { userid, targetid } = data;
-  console.log('하이');
   try {
     await db
       .collection('users')

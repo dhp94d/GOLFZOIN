@@ -43,7 +43,6 @@ const mwJoinRefuseUser = async (
   type: 'server' | 'serverless',
   data: joinIsOkDTO
 ) => {
-  console.log(data);
   if (type === 'server') {
     return joinRefuseUser(data);
   } else {
@@ -75,7 +74,6 @@ const mwCancelApply = async (
   roomNo: string,
   userid: string
 ) => {
-  console.log(roomNo);
   if (type === 'server') {
     return await cancelApply(roomNo, userid);
   } else {

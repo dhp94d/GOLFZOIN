@@ -9,7 +9,7 @@ const modifyUser = async (data: modifyUserDTO) => {
       return true;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -29,7 +29,7 @@ const detailUser = async (userId: string) => {
       return { ...res.data, isFollowing: isFollowing };
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -40,7 +40,7 @@ const addFollow = async (data: addFollowDTO) => {
       return true;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -53,7 +53,7 @@ const delFollow = async (data: addFollowDTO) => {
       return true;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -64,7 +64,7 @@ const getFollowing = async (userId: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -75,7 +75,7 @@ const getFollower = async (userId: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -88,7 +88,7 @@ const findUser = async (keyword: string, userid: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 

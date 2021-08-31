@@ -28,10 +28,8 @@ const detailJoin = async (roomNo: string, userid: string) => {
 };
 
 const registJoin = async (data: registOnlineDTO | registOfflineDTO) => {
-  console.log(data);
   try {
     const res = await notLoggedAxios.post(`api/join/registjoin`, data);
-    console.log('왜', res);
     if (res.status === 200) {
       return true;
     }

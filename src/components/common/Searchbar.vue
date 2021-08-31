@@ -86,7 +86,6 @@ export default {
       updateData(searchData.value);
       updateFollow(Follow.value);
       updateHit(hit.value);
-      console.log(pNumber.value);
       if (props.type === '온라인') {
         router.push('/join/onlinejoin');
       } else {

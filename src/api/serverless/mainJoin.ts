@@ -136,7 +136,6 @@ const fbOfflineJoinList = async (data: any) => {
       if (!!data.hit && sum > Number(data.hit)) return false;
       return true;
     });
-    console.log(searchJoinList);
     store.commit('loading/endSpinner');
     return searchJoinList;
   } catch (e) {

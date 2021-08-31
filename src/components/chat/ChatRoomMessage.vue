@@ -40,7 +40,6 @@ export default {
       const socket = new SockJS('http://localhost:8080/ws-stomp');
       stompClient = Stomp.over(socket);
       stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
         stompClient.subscribe(
           `/sub/chat/${chatTarget.value}`,
           function (roomMessage) {
@@ -53,7 +52,6 @@ export default {
       if (stompClient !== null) {
         stompClient.disconnect();
       }
-      console.log('Disconnected');
     }
 
     function sendName(data) {

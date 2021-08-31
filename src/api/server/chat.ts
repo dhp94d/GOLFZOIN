@@ -13,7 +13,6 @@ const enterChatRoom = async (roomNo: string) => {
 
 const addMessage = async (roomNo: string, data: object) => {
   try {
-    console.log(roomNo, data);
     const res = await notLoggedAxios.get(
       `/api/chat/enterchatroom/${roomNo}`,
       data

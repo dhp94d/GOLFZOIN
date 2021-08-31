@@ -80,7 +80,6 @@ export default {
         process.env.VUE_APP_SERVER_TYPE,
         getAuthFromCookie()
       );
-      console.log(res);
       if (res) {
         joinList.value = res;
         setCurrentJoinList();

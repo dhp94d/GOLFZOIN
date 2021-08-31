@@ -126,7 +126,6 @@ export default {
       );
       if (JoinInfo.value.hostid === getAuthFromCookie()) {
         myJoin.value = 'host';
-        console.log('왜');
         return;
       }
       JoinInfo.value.members.forEach((user) => {

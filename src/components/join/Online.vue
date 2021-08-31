@@ -1,7 +1,7 @@
 <template>
   <div class="join-page-container">
     <div>{{ onlineJoinData?.length }}개 이상의 조인</div>
-    <div class="join-page-title" @click="event">온라인 조인</div>
+    <div class="join-page-title">온라인 조인</div>
     <div class="join-page-filter">
       <Searchbar :type="'온라인'"></Searchbar>
     </div>
@@ -52,10 +52,6 @@ export default {
       });
       onlineJoinData.value = res;
     };
-    const event = () => {
-      console.log('하이');
-      alarmTriggerToast('안녕하세용');
-    };
     onMounted(() => {
       getOnlinJoin();
     });
@@ -69,7 +65,6 @@ export default {
     });
     return {
       onlineJoinData,
-      event,
     };
   },
 };
