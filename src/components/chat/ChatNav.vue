@@ -28,7 +28,7 @@ export default {
 }
 @media (max-width: 1400px) {
   .chat-nav-container {
-    width: 25vw;
+    width: 20vw;
   }
 }
 </style>

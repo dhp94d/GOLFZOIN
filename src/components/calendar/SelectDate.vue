@@ -37,4 +37,9 @@ export default {
     background-color: white;
   }
 }
+@media (max-width: 1400px) {
+  .calendar-date-container {
+    padding: 0.5rem;
+  }
+}
 </style>

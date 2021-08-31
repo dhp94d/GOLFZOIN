@@ -154,4 +154,19 @@ export default {
     width: 50vw;
   }
 }
+@media (max-width: 1400px) {
+  .user-join-list-table {
+    margin-bottom: 10px;
+  }
+  .user-join-list-thead-tr {
+    th {
+      height: 30px;
+    }
+  }
+  .user-join-list-tbody-tr {
+    td {
+      height: 70px;
+    }
+  }
+}
 </style>

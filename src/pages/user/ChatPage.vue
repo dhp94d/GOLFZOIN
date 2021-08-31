@@ -56,7 +56,7 @@ export default defineComponent({
     display: none;
   }
   .chat-nav {
-    width: 25vw;
+    width: 20vw;
   }
   .chat-room {
     width: 80vw;

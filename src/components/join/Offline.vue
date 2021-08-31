@@ -331,7 +331,7 @@ export default {
     right: 0;
     top: 1;
     height: 30vh;
-    width: 100%;
+    width: 99vw;
   }
 }
 @media (max-width: 1400px) {
@@ -342,7 +342,7 @@ export default {
     font-size: 1.5rem;
   }
   .offline-box {
-    width: 100vw;
+    width: 99vw;
     img {
       border: 1px solid black;
       border-radius: 1rem;
@@ -352,6 +352,13 @@ export default {
   }
   .offline-box-body {
     height: 5rem;
+  }
+  .join-page-offline-container {
+    padding-left: 1vw;
+  }
+
+  .join-page-offline-body {
+    padding-left: 1vw;
   }
 }
 </style>

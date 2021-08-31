@@ -20,7 +20,7 @@
               <img class="profile-image" :src="message.profile" />
             </div>
             <div>
-              <div>{{ message.author }}</div>
+              <div class="mData">{{ message.author }}</div>
               <div class="chat-room-message-data">
                 <div class="temp-message-wrap">
                   <div>
@@ -91,7 +91,7 @@ export default {
   margin-bottom: 16px;
 }
 .chat-room-profile {
-  margin-right: 8px;
+  margin: 0 8px;
   .profile-image {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 50%;
@@ -100,9 +100,9 @@ export default {
   }
 }
 .chat-room-message-data {
+  max-width: 400px;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 20px;
-  width: 250px;
   font-size: 0px;
 }
 .temp-message-wrap {
@@ -129,8 +129,16 @@ export default {
 .right {
   .message-form {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    text-align: end;
     padding: 4px;
+    .chat-room-profile {
+      display: none;
+    }
+    .mData {
+      display: none;
+    }
   }
   .chat-room-message-data {
     background-color: blanchedalmond;
@@ -147,7 +155,10 @@ export default {
 
 @media (max-width: 1400px) {
   .chat-room-message-data {
-    width: 160px;
+    max-width: 160px;
+  }
+  .chat-room-container {
+    padding: 0;
   }
 }
 </style>

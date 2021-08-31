@@ -1,6 +1,6 @@
 <template>
   <div class="header-icon">
-    <DropDown :marginTop="'0.3'">
+    <DropDown :marginTop="'0.3'" :bottom="bottom">
       <template v-slot:header>
         <div class="header-user">
           <i class="fa fa-bars fa-1x tap" aria-hidden="true"></i>
@@ -70,6 +70,9 @@ export default defineComponent({
     LoginForm,
     SignupForm,
     EditUser,
+  },
+  props: {
+    bottom: Boolean,
   },
   setup() {
     const router = useRouter();
@@ -174,6 +177,21 @@ export default defineComponent({
       cursor: pointer;
       font-weight: 800;
       color: black;
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .tap {
+    display: none;
+  }
+  .header-user {
+    border: 0;
+    padding: 0.2rem;
+    color: gray;
+  }
+  .header-user-dropdown {
+    li {
+      width: 80px;
     }
   }
 }

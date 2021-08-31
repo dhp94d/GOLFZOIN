@@ -3,7 +3,7 @@
     <div class="dropdown-title" @click="toggleButton">
       <slot name="header"></slot>
     </div>
-    <div class="dropdown-body" v-show="toggle">
+    <div :class="bottom ? 'dropup-body' : 'dropdown-body'" v-show="toggle">
       <slot name="body"> </slot>
       <div class="dropdown-background" @click="toggleButton"></div>
     </div>
@@ -14,6 +14,7 @@
 import { ref } from '@vue/reactivity';
 export default {
   props: {
+    bottom: String,
     marginTop: String,
   },
   setup() {
@@ -53,5 +54,15 @@ export default {
   right: 0;
   opacity: 1;
   z-index: -1;
+}
+.dropup-body {
+  position: absolute;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0px 0px 1px 1px #ebebeb;
+  z-index: 5;
+  bottom: 100%;
+  right: 0;
 }
 </style>

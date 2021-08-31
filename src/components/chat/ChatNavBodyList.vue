@@ -60,15 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 .chat-nav-container {
-  height: 78vh;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    width: 0.5vw;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: hsla(0, 0%, 42%, 0.49);
-    border-radius: 100px;
-  }
+  height: 77vh;
 }
 li {
   display: list-item;
@@ -133,7 +125,7 @@ li {
 }
 @media (max-width: 1400px) {
   .chat-nav-room-profile {
-    padding: 16px;
+    padding: 8px;
     height: 72px;
   }
   .chat-nav-room-body {
@@ -142,6 +134,9 @@ li {
   }
   .nickname {
     display: none;
+  }
+  .chat-nav-room {
+    padding: 0;
   }
 }
 </style>

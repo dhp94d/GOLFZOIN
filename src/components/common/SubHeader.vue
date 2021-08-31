@@ -48,9 +48,7 @@ export default defineComponent({
     display: none;
   }
   .icon-position {
-    position: absolute;
-    margin-right: 1rem;
-    right: 0;
+    display: none;
   }
 }
 </style>
