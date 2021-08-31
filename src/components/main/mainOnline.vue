@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="main-join-header">
+      <div class="mobile-join"></div>
       <router-link to="/join/onlinejoin">
         <div class="main-join-title">온라인 조인</div>
       </router-link>
@@ -90,6 +91,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.mobile-join {
+  display: none;
+}
 .main-join-header {
   display: flex;
   justify-content: space-between;
@@ -132,5 +136,26 @@ export default {
 }
 .carousel__slide--active > .carousel__item {
   transform: scale(1);
+}
+
+@media (max-width: 1400px) {
+  .mobile-join {
+    display: block;
+  }
+  .main-join-title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  .main-join-detail {
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: gray;
+    cursor: pointer;
+    margin: 0 0 auto 0;
+
+    &:hover {
+      color: black;
+    }
+  }
 }
 </style>

@@ -82,12 +82,26 @@ export default {
     const mapSize = ref(7);
 
     const userData = ref(JSON.parse(getUserFromCookie()));
-    const lat = ref(userData.value.lat);
-    const lon = ref(userData.value.lon);
+    const lat = ref(
+      process.env.VUE_APP_SERVER_TYPE === 'server'
+        ? '37.5230059400269'
+        : userData.value.lat
+    );
+    const lon = ref(
+      process.env.VUE_APP_SERVER_TYPE === 'server'
+        ? '127.054788716295 '
+        : userData.value.lon
+    );
 
     watch([SearchDate, SearchPNumber, SearchHit, SearchAddress.value], () => {
-      lat.value = SearchAddress.value.longitude;
-      lon.value = SearchAddress.value.latitude;
+      lat.value =
+        process.env.VUE_APP_SERVER_TYPE === 'server'
+          ? SearchAddress.value.latitude
+          : SearchAddress.value.longitude;
+      lon.value =
+        process.env.VUE_APP_SERVER_TYPE === 'server'
+          ? SearchAddress.value.longitude
+          : SearchAddress.value.latitude;
       getOfflineData();
     });
     const getOfflineData = async () => {
@@ -120,7 +134,10 @@ export default {
     const initMap = () => {
       const container = document.querySelector('#map');
       const options = {
-        center: new kakao.maps.LatLng(lon.value, lat.value),
+        center: new kakao.maps.LatLng(
+          process.env.VUE_APP_SERVER_TYPE === 'server' ? lat.value : lon.value,
+          process.env.VUE_APP_SERVER_TYPE === 'server' ? lon.value : lat.value
+        ),
         level: mapSize.value,
       };
 

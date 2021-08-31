@@ -1,6 +1,8 @@
 <template>
   <div class="header-fixed-container">
-    <HeaderLogo></HeaderLogo>
+    <div class="header-logo">
+      <HeaderLogo></HeaderLogo>
+    </div>
     <div class="fixed-toggle" style="padding-top: 1rem">
       <HeaderNavTap :navColor="'#4b4b4b'" :hoverColor="'black'"></HeaderNavTap>
     </div>
@@ -39,19 +41,32 @@ export default {
 }
 @media (max-width: 1400px) {
   .header-fixed-container {
-    display: flex;
     position: fixed;
+    top: 0;
+    padding: 0;
+    /* width: 100% */
+    left: 0;
+    right: 0;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
+    padding-bottom: 1rem;
   }
   .fixed-toggle {
     display: none;
   }
   .icon-position {
+    display: none;
     position: absolute;
     margin-right: 1rem;
     right: 0;
+  }
+  .icon-position {
+    display: none;
+  }
+  .header-logo {
+    justify-content: center;
+    align-content: center;
+    text-align: center;
   }
 }
 </style>

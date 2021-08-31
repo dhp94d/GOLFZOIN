@@ -40,10 +40,9 @@ export default defineComponent({
 @media (max-width: 1400px) {
   .header-fixed-container {
     display: flex;
-    position: static;
+    position: sticky;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
   }
   .fixed-toggle {
     display: none;

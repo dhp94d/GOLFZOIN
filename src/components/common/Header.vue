@@ -1,21 +1,14 @@
 <template>
   <div>
-    <div v-if="scrollPosition < 200 && screenWidth > 1000">
-      <HeaderMain></HeaderMain>
-    </div>
-    <div v-else>
-      <HeaderFixed></HeaderFixed>
-    </div>
+    <HeaderMain></HeaderMain>
   </div>
 </template>
 
 <script>
-import HeaderFixed from '@/components/header/HeaderFixed.vue';
 import HeaderMain from '@/components/header/HeaderMain.vue';
 import { ref, onMounted } from 'vue';
 export default {
   components: {
-    HeaderFixed,
     HeaderMain,
   },
   setup() {

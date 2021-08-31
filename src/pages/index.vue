@@ -2,7 +2,8 @@
   <div class="main-page">
     <div class="header-contianer">
       <div>
-        <Header></Header>
+        <HeaderMain class="header-web"></HeaderMain>
+        <HeaderFixed class="header-mobile"></HeaderFixed>
       </div>
       <div>
         <Banner></Banner>
@@ -18,22 +19,27 @@
 </template>
 
 <script>
-import Header from '@/components/common/Header.vue';
 import Banner from '@/components/main/Banner.vue';
 import MainOnline from '@/components/main/mainOnline.vue';
 import MainOffline from '@/components/main/mainOffline.vue';
+import HeaderMain from '@/components/header/HeaderMain.vue';
+import HeaderFixed from '@/components/header/HeaderFixed.vue';
 export default {
   components: {
-    Header,
     Banner,
     MainOnline,
     MainOffline,
+    HeaderMain,
+    HeaderFixed,
   },
   setup() {},
 };
 </script>
 
 <style lang="scss" scoped>
+.header-mobile {
+  display: none;
+}
 .main-page {
   display: flex;
   box-sizing: border-box;
@@ -52,5 +58,18 @@ export default {
 }
 .main-join {
   padding: 3rem 10rem;
+}
+
+@media (max-width: 1400px) {
+  .main-join {
+    padding: 1rem 2rem;
+    padding-top: 5rem;
+  }
+  .header-web {
+    display: none;
+  }
+  .header-mobile {
+    display: block;
+  }
 }
 </style>

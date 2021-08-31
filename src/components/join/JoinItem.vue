@@ -105,4 +105,28 @@ export default {
   text-align: start;
   color: #515151;
 }
+
+@media (max-width: 1400px) {
+  .thumbnail {
+    padding: 0.3rem;
+    border-radius: 1rem;
+    object-fit: cover;
+    height: 24rem;
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 1px 10px 1px #000;
+      background-color: rgba(33, 33, 36, 0.07);
+      position: relative;
+    }
+
+    img {
+      display: flex;
+      border: 1px solid #b8b8b8;
+      border-radius: 1rem;
+      width: 18rem;
+      height: 16rem;
+      margin: auto;
+    }
+  }
+}
 </style>
