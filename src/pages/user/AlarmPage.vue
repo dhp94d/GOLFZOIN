@@ -209,4 +209,16 @@ li {
     font-size: 0.7rem;
   }
 }
+@media (max-width: 1400px) {
+  .user-body {
+    width: 85vw;
+    height: 78vh;
+  }
+  .user-search-body {
+    width: 85vw;
+  }
+  .user-search-footer {
+    width: 85vw;
+  }
+}
 </style>

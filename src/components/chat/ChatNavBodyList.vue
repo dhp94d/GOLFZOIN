@@ -18,7 +18,6 @@
             <div class="preview-title-wrap">
               <span class="nickname">{{ join.title }}</span>
             </div>
-            <div class="preview-description"></div>
           </div>
         </div>
       </li>
@@ -131,16 +130,18 @@ li {
     letter-spacing: -0.02em;
     color: #212124;
   }
-  .css-1kscqop .preview-title-wrap .sub-text {
-    margin-left: 4px;
-    color: #868b94;
-    font-size: 12px;
-  }
 }
-.preview-description {
-  display: block;
-  height: 20px;
-  font-size: 13px;
-  color: var(--gray-700);
+@media (max-width: 1400px) {
+  .chat-nav-room-profile {
+    padding: 16px;
+    height: 72px;
+  }
+  .chat-nav-room-body {
+    font-size: 5rem;
+    height: 50px;
+  }
+  .nickname {
+    display: none;
+  }
 }
 </style>

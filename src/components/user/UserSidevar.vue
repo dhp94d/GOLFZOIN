@@ -113,4 +113,9 @@ export default {
   -webkit-box-align: center;
   align-items: center;
 }
+@media (max-width: 1400px) {
+  .sidebar-body {
+    width: 15vw;
+  }
+}
 </style>

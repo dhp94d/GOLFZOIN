@@ -11,10 +11,10 @@
       <thead>
         <tr class="user-join-list-thead-tr">
           <th scope="col">타입</th>
-          <th scope="col">조인명</th>
-          <th scope="col">날짜</th>
-          <th scope="col">주최자</th>
-          <th scope="col">총 인원</th>
+          <th scope="col" class="mobile-join-title">조인명</th>
+          <th scope="col" class="web-clist">날짜</th>
+          <th scope="col" class="web-clist">주최자</th>
+          <th scope="col" class="web-clist">총 인원</th>
           <th scope="col">자세히 보기</th>
         </tr>
       </thead>
@@ -22,12 +22,12 @@
         <tr class="user-join-list-tbody-tr">
           <td>{{ join.type == 'online' ? '온라인' : '오프라인' }}</td>
           <td>{{ join.title }}</td>
-          <td class="tour_date">
+          <td class="tour_date web-clist">
             날짜 : {{ join.date }} {{ join.time }}<br />
           </td>
-          <td>{{ join.hostid }}</td>
+          <td class="web-clist">{{ join.hostid }}</td>
 
-          <td>{{ join.totalcount }}</td>
+          <td class="web-clist">{{ join.totalcount }}</td>
           <td>
             <div @click="showJoinInfo(join.type, join.roomNo)">
               <svg
@@ -146,18 +146,12 @@ export default {
     line-height: 1.5em;
   }
 }
-.ico_progress {
-  display: inline-block;
-  width: 89px;
-  height: 36px;
-  background: url(http://i.gzcdn.net/images/v3/gft/glt_progress.png) no-repeat;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  line-height: 36px;
-  letter-spacing: 1px;
-  padding-right: 7px;
-  font-style: normal;
+@media (max-width: 1400px) {
+  .web-clist {
+    display: none;
+  }
+  .mobile-join-title {
+    width: 50vw;
+  }
 }
 </style>

@@ -19,11 +19,16 @@ export default {
 <style lang="scss" scpoed>
 .chat-nav-container {
   display: flex;
+  height: 84vh;
   border-right: 1px solid rgba(33, 33, 36, 0.07);
   width: 16vw;
-  min-width: 16vw;
   flex-direction: column;
   -webkit-box-pack: justify;
   background-color: rgb(255, 255, 255);
+}
+@media (max-width: 1400px) {
+  .chat-nav-container {
+    width: 25vw;
+  }
 }
 </style>

@@ -144,4 +144,10 @@ export default {
     padding: 4px;
   }
 }
+
+@media (max-width: 1400px) {
+  .chat-room-message-data {
+    width: 160px;
+  }
+}
 </style>

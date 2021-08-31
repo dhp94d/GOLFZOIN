@@ -220,8 +220,8 @@ export default {
   text-align: center;
   margin-bottom: 2rem;
   img {
-    width: 18rem;
-    height: 16rem;
+    width: 17rem;
+    height: 15rem;
     box-shadow: 1px 1px 2px 2px gray;
   }
 }
@@ -264,5 +264,10 @@ export default {
   padding: 0.3rem;
   border: 1px solid rgba(33, 33, 36, 0.07);
   background-color: white;
+}
+@media (max-width: 1400px) {
+  .join-container {
+    padding: 0;
+  }
 }
 </style>

@@ -3,7 +3,7 @@
     <teleport to="#teleport-modal">
       <div class="footer-searchbar" v-show="showSearch">
         <span>조인을 검색하세요</span>
-        <HeaderSearchBar></HeaderSearchBar>
+        <HeaderSearchBar @toggle="showSearchButton"></HeaderSearchBar>
       </div>
     </teleport>
     <div class="footer-div"></div>
@@ -130,7 +130,6 @@ export default {
       openUser.value = !openUser.value;
     };
     const showSearchButton = () => {
-      console.log(showSearch.value);
       showSearch.value = !showSearch.value;
     };
     return {

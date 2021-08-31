@@ -3,9 +3,15 @@
     <SubHeader></SubHeader>
     <div class="chat-container">
       <div class="chat-Frame">
-        <ChatSidebar></ChatSidebar>
-        <Chatnav></Chatnav>
-        <ChatRoom></ChatRoom>
+        <div class="chat-sidebar">
+          <ChatSidebar></ChatSidebar>
+        </div>
+        <div class="chat-nav">
+          <Chatnav></Chatnav>
+        </div>
+        <div class="chat-room">
+          <ChatRoom></ChatRoom>
+        </div>
       </div>
     </div>
   </div>
@@ -43,5 +49,18 @@ export default defineComponent({
   display: flex;
   object-fit: cover;
   justify-content: space-between;
+}
+
+@media (max-width: 1400px) {
+  .chat-sidebar {
+    display: none;
+  }
+  .chat-nav {
+    width: 25vw;
+  }
+  .chat-room {
+    width: 80vw;
+    height: 80vh;
+  }
 }
 </style>

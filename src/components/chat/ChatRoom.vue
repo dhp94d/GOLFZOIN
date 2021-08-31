@@ -75,7 +75,7 @@ export default {
   flex-direction: column;
   border-right: 1px solid rgba(33, 33, 36, 0.14);
   min-width: 50vw;
-  max-width: 50vw;
+  height: 84vh;
   background-color: rgb(255, 255, 255);
 }
 .chat-room-wrap {

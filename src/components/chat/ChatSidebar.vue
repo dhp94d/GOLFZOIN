@@ -22,7 +22,7 @@ export default {};
   color: rgb(33, 33, 36);
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 84vh;
   width: 3.8vw;
   letter-spacing: -0.32px;
   line-height: 24px;

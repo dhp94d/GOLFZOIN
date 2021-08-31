@@ -62,8 +62,8 @@ import HeaderCalendar from '@/components/header/HeaderCalendar.vue';
 import FindAddress from '@/components/common/FindAddress.vue';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-
 export default {
+  emits: ['toggle'],
   components: {
     Dropdown,
     NumberUpDown,
@@ -73,7 +73,7 @@ export default {
   props: {
     taps: Array,
   },
-  setup() {
+  setup(props, { emit }) {
     const router = useRouter();
     const { updatePNumber, updateData, updateFollow } = useSearch();
     const joinType = ref('온라인');
@@ -95,6 +95,7 @@ export default {
       pNumber.value = 0;
       Follow.value = 0;
       searchData.value = 0;
+      emit('toggle');
       if (joinType.value === '온라인') {
         router.push('/join/onlinejoin');
       } else {

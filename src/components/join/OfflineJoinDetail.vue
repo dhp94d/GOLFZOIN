@@ -185,8 +185,8 @@ export default {
   margin-bottom: 2rem;
 
   img {
-    width: 18rem;
-    height: 16rem;
+    width: 10rem;
+    height: 10rem;
     box-shadow: 1px 1px 2px 2px gray;
   }
 }

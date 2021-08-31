@@ -18,7 +18,6 @@ export default {
   position: relative;
   display: flex;
   height: 7vh;
-  min-height: 64px;
   border-bottom: 1px solid $gray;
   justify-content: space-between;
   padding: 0px 20px;
