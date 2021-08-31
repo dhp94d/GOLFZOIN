@@ -147,4 +147,15 @@ export default {
     color: #0f95ff;
   }
 }
+@media (max-width: 1400px) {
+  .calendar-Frame {
+    width: 100vw;
+  }
+  .calendar-join-length {
+    width: 90%;
+  }
+  .scrollc {
+    width: 100vw;
+  }
+}
 </style>

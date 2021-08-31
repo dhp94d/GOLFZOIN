@@ -127,6 +127,8 @@ export default {
   background-color: #f7f7f7;
   padding-left: 1rem;
   align-items: center;
+  align-self: center;
+  align-content: center;
 }
 .search-button {
   position: absolute;
@@ -178,5 +180,23 @@ export default {
 .search-filter-tap {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 1400px) {
+  .search-bar {
+    min-width: 98vw;
+  }
+  .search-input {
+    width: 35vw;
+  }
+  .search-joint-type {
+    width: 6rem;
+    font-size: 1rem;
+    margin-right: 0;
+  }
+  .search-filter {
+    display: flex;
+    padding: 0 0.3rem;
+  }
 }
 </style>

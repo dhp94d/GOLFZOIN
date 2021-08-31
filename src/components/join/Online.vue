@@ -88,7 +88,16 @@ export default {
 }
 .join-online-container {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+}
+@media (max-width: 1400px) {
+  .join-page-container {
+    margin: 2rem;
+  }
+  .join-page-title {
+    font-size: 1.5rem;
+  }
 }
 </style>

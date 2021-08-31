@@ -132,4 +132,28 @@ export default {
     cursor: pointer;
   }
 }
+@media (max-width: 1400px) {
+  .calendar-table {
+    width: 100%;
+  }
+  thead {
+    height: 2rem;
+  }
+  .calendar-table-body {
+    font-size: 0.8rem;
+    height: 3rem;
+    color: #616060;
+  }
+  .online-length {
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: #ff6541;
+  }
+
+  .offline-length {
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: #0f95ff;
+  }
+}
 </style>

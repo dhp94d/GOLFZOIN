@@ -230,11 +230,13 @@ export default {
 .join-page-offline-filter {
   margin-bottom: 2rem;
 }
+
 .join-page-offline-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   padding-left: 1rem;
+  padding-bottom: 2rem;
 }
 .join-page-offline-body {
   display: flex;
@@ -247,7 +249,7 @@ export default {
   display: flex;
   width: 50vw;
   word-break: break-all;
-  color: #717188;
+  color: #151546;
   img {
     border: 1px solid black;
     border-radius: 1rem;
@@ -322,18 +324,34 @@ export default {
 }
 
 @media (max-width: 1000px) {
-  .offline-box {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 1000px) {
   #map {
     display: inline-flex;
-    right: 1;
+    left: 0;
+    background-color: white;
+    right: 0;
     top: 1;
-    height: 50vh;
+    height: 30vh;
     width: 100%;
+  }
+}
+@media (max-width: 1400px) {
+  .join-page-offline-map {
+    padding-top: 30vh;
+  }
+  .join-page-title {
+    font-size: 1.5rem;
+  }
+  .offline-box {
+    width: 100vw;
+    img {
+      border: 1px solid black;
+      border-radius: 1rem;
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+  .offline-box-body {
+    height: 5rem;
   }
 }
 </style>

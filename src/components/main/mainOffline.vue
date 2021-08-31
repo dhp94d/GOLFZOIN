@@ -54,26 +54,12 @@ export default {
       getOfflineJoin();
     });
     const settings = {
-      itemsToShow: 1,
+      itemsToShow: 2,
       modelValue: 1,
       wrapAround: true,
     };
     const breakpoints = {
-      100: {
-        itemsToShow: 1,
-      },
-      // 700px and up
-      800: {
-        itemsToShow: 1.4,
-      },
-      1100: {
-        itemsToShow: 2.4,
-      },
-      1400: {
-        itemsToShow: 3.4,
-      },
-      // 1024 and up
-      1700: {
+      1000: {
         itemsToShow: 4.8,
       },
     };
@@ -92,6 +78,7 @@ export default {
 }
 .main-join-header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: 1rem;
 
@@ -101,10 +88,14 @@ export default {
   }
 }
 .main-join-title {
+  display: flex;
+  justify-content: center;
   font-size: 2rem;
   font-weight: bold;
 }
 .main-join-detail {
+  display: flex;
+  justify-content: flex-end;
   font-weight: bold;
   color: gray;
   cursor: pointer;
@@ -138,7 +129,7 @@ export default {
     display: block;
   }
   .main-join-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
   .main-join-detail {

@@ -173,4 +173,12 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+@media (max-width: 1400px) {
+  .search-bar {
+    width: 90vw;
+  }
+  .search-input {
+    width: 50vw;
+  }
+}
 </style>

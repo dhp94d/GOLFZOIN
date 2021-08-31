@@ -1,16 +1,16 @@
 <template>
-  <nav class="_1m294zs">
-    <div class="_16dj02j"></div>
-    <div class="_h0klba">
-      <a
-        class="_1e1aumhl"
-        type="button"
-        aria-current="page"
-        aria-disabled="true"
-        aria-label="둘러보기"
-        href="/"
-        ><div class="_jro6t0">
-          <div class="_jgit7bg">
+  <nav class="footer-container">
+    <teleport to="#teleport-modal">
+      <div class="footer-searchbar" v-show="showSearch">
+        <span>조인을 검색하세요</span>
+        <HeaderSearchBar></HeaderSearchBar>
+      </div>
+    </teleport>
+    <div class="footer-div"></div>
+    <div class="footer-wrapper">
+      <router-link to="" class="footer-tap">
+        <div class="footer-title-container" @click="showSearchButton">
+          <div class="icon">
             <svg
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
@@ -35,77 +35,27 @@
             </svg>
           </div>
         </div>
-        <div class="_no3jwgi">둘러보기</div></a
-      ><a
-        class="_45o9ez"
-        type="button"
-        aria-current="false"
-        aria-disabled="false"
-        aria-label="위시리스트"
-        href="/wishlists"
-        ><div class="_jro6t0">
-          <div class="_tbbnrnx">
-            <svg
-              viewBox="0 0 32 32"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              role="presentation"
-              focusable="false"
-              style="
-                display: block;
-                fill: none;
-                height: 24px;
-                width: 24px;
-                stroke: currentcolor;
-                stroke-width: 2.66667;
-                overflow: visible;
-              "
-            >
-              <path
-                d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"
-              ></path>
-            </svg>
+        <div class="footer-title">검색</div>
+      </router-link>
+      <router-link to="/user/search" class="footer-tap">
+        <div class="footer-title-container">
+          <div class="icon">
+            <i class="fa fa-users fa-3x" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="_1bntpbx">위시리스트</div></a
-      ><a
-        class="_45o9ez"
-        type="button"
-        aria-current="false"
-        aria-disabled="false"
-        aria-label="여행"
-        href="/trips/v1"
-        ><div class="_jro6t0">
-          <div class="_tbbnrnx" style="top: -1px">
-            <svg
-              viewBox="0 0 32 32"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              role="presentation"
-              focusable="false"
-              style="
-                display: block;
-                height: 24px;
-                width: 24px;
-                fill: currentcolor;
-              "
-            >
-              <path
-                d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.01.415.001.228c0 4.062-2.877 6.478-6.357 6.478-2.224 0-4.556-1.258-6.709-3.386l-.257-.26-.172-.179h-.011l-.176.185c-2.044 2.1-4.267 3.42-6.414 3.615l-.28.019-.267.006C5.377 31 2.5 28.584 2.5 24.522l.005-.469c.026-.928.23-1.768.83-3.244l.216-.524c.966-2.298 6.083-12.989 7.707-16.034C12.537 1.963 13.992 1 16 1zm0 2c-1.239 0-2.053.539-2.987 2.21l-.523 1.008c-1.926 3.776-6.06 12.43-7.031 14.692l-.345.836c-.427 1.071-.573 1.655-.605 2.24l-.009.33v.206C4.5 27.395 6.411 29 8.857 29c1.773 0 3.87-1.236 5.831-3.354-2.295-2.938-3.855-6.45-3.855-8.91 0-2.913 1.933-5.386 5.178-5.42 3.223.034 5.156 2.507 5.156 5.42 0 2.456-1.555 5.96-3.855 8.907C19.277 27.766 21.37 29 23.142 29c2.447 0 4.358-1.605 4.358-4.478l-.004-.411c-.019-.672-.17-1.296-.714-2.62l-.248-.6c-1.065-2.478-5.993-12.768-7.538-15.664C18.053 3.539 17.24 3 16 3zm.01 10.316c-2.01.021-3.177 1.514-3.177 3.42 0 1.797 1.18 4.58 2.955 7.044l.21.287.174-.234c1.73-2.385 2.898-5.066 2.989-6.875l.006-.221c0-1.906-1.167-3.4-3.156-3.421h-.001z"
-              ></path>
-            </svg>
+        <div class="footer-title">유저</div>
+      </router-link>
+      <router-link to="/calendar" class="footer-tap">
+        <div class="footer-title-container">
+          <div class="icon" style="top: -1px">
+            <i class="fa fa-calendar fa-3x" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="_1bntpbx">여행</div></a
-      ><a
-        class="_45o9ez"
-        type="button"
-        aria-current="false"
-        aria-disabled="false"
-        aria-label="메시지"
-        href="/guest/inbox"
-        ><div class="_jro6t0">
-          <div class="_tbbnrnx" style="top: 1px">
+        <div class="footer-title">일정관리</div>
+      </router-link>
+      <router-link to="/chat" class="footer-tap"
+        ><div class="footer-title-container">
+          <div class="icon" style="top: 1px">
             <svg
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
@@ -125,17 +75,11 @@
             </svg>
           </div>
         </div>
-        <div class="_1bntpbx">메시지</div></a
-      ><a
-        class="_45o9ez"
-        type="button"
-        aria-current="false"
-        aria-disabled="false"
-        aria-label="프로필"
-        href="/account-settings"
-        data-veloute="pwa-tab-bar-item-profile"
-        ><div class="_jro6t0">
-          <div class="_tbbnrnx">
+        <div class="footer-title">채팅</div>
+      </router-link>
+      <div class="footer-tap" @click="userToggle">
+        <div class="footer-title-container">
+          <div class="icon">
             <svg
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
@@ -155,14 +99,125 @@
             </svg>
           </div>
         </div>
-        <div class="_1bntpbx">프로필</div></a
-      >
+        <div v-if="openUser">
+          <EditUser @toggle="userToggle"></EditUser>
+        </div>
+        <div class="footer-title">프로필</div>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
-export default {};
+import EditUser from '@/components/user/EditUser.vue';
+import HeaderSearchBar from '@/components/header/HeaderSearchBar.vue';
+import { ref } from 'vue';
+
+export default {
+  components: {
+    EditUser,
+    HeaderSearchBar,
+  },
+  setup() {
+    const showSearch = ref(false);
+    const openUser = ref(false);
+    const userToggle = () => {
+      if (openUser.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      openUser.value = !openUser.value;
+    };
+    const showSearchButton = () => {
+      console.log(showSearch.value);
+      showSearch.value = !showSearch.value;
+    };
+    return {
+      openUser,
+      userToggle,
+      showSearchButton,
+      showSearch,
+    };
+  },
+};
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.footer-searchbar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  background-color: white;
+  border-radius: 2rem 2rem 0 0;
+  height: 28vh;
+  bottom: 3.5rem;
+  border-top: 2px solid rgba(33, 33, 36, 0.07);
+  border-bottom: 2px solid rgba(33, 33, 36, 0.07);
+  left: 0;
+  right: 0;
+  z-index: 0;
+  align-items: center;
+  padding-top: 1rem;
+}
+.footer-container {
+  border-top: 2px solid rgba(33, 33, 36, 0.07);
+  padding-top: 2px;
+  display: flex;
+}
+.footer-div {
+  max-width: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 149px;
+  left: 0px;
+  &:hover {
+    color: black;
+  }
+}
+.footer-wrapper {
+  flex: 1 0 auto;
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 560px;
+}
+.footer-tap {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: center;
+  text-decoration: none;
+  border: 0px;
+  max-width: 20%;
+  min-width: 0px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  padding: 0 2px;
+  color: black;
+}
+.footer-title-container {
+  display: flex;
+}
+.footer-title {
+  font-size: 0.7rem;
+  padding-bottom: 0.3rem;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  font-size: 0.5rem;
+
+  justify-content: center;
+
+  align-items: center;
+  margin-bottom: 2px;
+  color: #b0b0b0;
+  position: relative;
+}
+</style>

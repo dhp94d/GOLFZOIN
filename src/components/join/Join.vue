@@ -35,4 +35,10 @@ export default {
   border: none;
   background-color: #f7f7f7;
 }
+@media (max-width: 1400px) {
+  .join-page-container {
+    margin: 0;
+    padding-bottom: 3rem;
+  }
+}
 </style>

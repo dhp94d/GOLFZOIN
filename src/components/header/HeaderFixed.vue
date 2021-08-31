@@ -35,9 +35,7 @@ export default {
   top: 0;
   z-index: 1;
   padding: 1rem 10rem;
-  -webkit-box-shadow: 0 0.5rem 0.5rem -0.5rem #000000;
-  -moz-box-shadow: 0 0.5rem 0.5rem -0.5rem #000000;
-  box-shadow: 0 0.5rem 0.5rem -0.5rem #000000;
+  border-bottom: 2px solid rgba(33, 33, 36, 0.07);
 }
 @media (max-width: 1400px) {
   .header-fixed-container {
@@ -49,7 +47,7 @@ export default {
     right: 0;
     justify-content: center;
     align-items: center;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
   }
   .fixed-toggle {
     display: none;

@@ -7,6 +7,9 @@
       :message="alarmToastMessage"
       :type="alarmToastAlertType"
     ></Alarmtransition>
+    <div class="main-footer">
+      <MobileFooter></MobileFooter>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -14,6 +17,7 @@ import { defineComponent, onMounted } from 'vue';
 import { useAuth } from '@/composable/auth';
 import { useLoading } from '@/composable/loading';
 import Loading from '@/components/common/Loading.vue';
+import MobileFooter from '@/components/common/MobileFooter.vue';
 
 import { useAlarm } from '@/composable/alarm';
 import Alarmtransition from '@/components/common/Alarmtransition.vue';
@@ -23,6 +27,7 @@ export default defineComponent({
   components: {
     Loading,
     Alarmtransition,
+    MobileFooter,
   },
   setup() {
     const { authLoginAction } = useAuth();
@@ -79,11 +84,29 @@ body {
     border-radius: 100px;
   }
 }
+.main-footer {
+  display: none;
+}
 @media (max-width: 1400px) {
+  .main-footer {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    /* width: 100% */
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
   #app {
     width: 100%;
     border-left: 0;
     border-right: 0;
+  }
+  body {
+    padding-bottom: 3rem;
   }
 }
 .fade-enter-active,

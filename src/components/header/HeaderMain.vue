@@ -18,7 +18,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import HeaderNavTap from '@/components/header/HeaderNavTap.vue';
 import HeaderSearchBar from '@/components/header/HeaderSearchBar.vue';
 import HeaderUserIcon from '@/components/header/HeaderUserIcon.vue';

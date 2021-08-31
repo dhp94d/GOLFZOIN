@@ -111,7 +111,7 @@ export default {
     padding: 0.3rem;
     border-radius: 1rem;
     object-fit: cover;
-    height: 24rem;
+    height: 18rem;
     &:hover {
       cursor: pointer;
       box-shadow: 2px 1px 10px 1px #000;
@@ -123,10 +123,18 @@ export default {
       display: flex;
       border: 1px solid #b8b8b8;
       border-radius: 1rem;
-      width: 18rem;
-      height: 16rem;
+      width: 10rem;
+      height: 10rem;
       margin: auto;
     }
+  }
+}
+.thumbnail-title {
+  padding: 0.5rem;
+  width: 10rem;
+  h5 {
+    font-weight: 600;
+    color: #525252;
   }
 }
 </style>
