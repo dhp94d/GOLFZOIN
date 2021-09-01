@@ -65,6 +65,7 @@ export default {
 li {
   display: list-item;
   text-align: -webkit-match-parent;
+  list-style: none;
   div {
     background-color: transparent;
     color: inherit;
