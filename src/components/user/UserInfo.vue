@@ -9,52 +9,56 @@
           <div class="user-img">
             <img :src="user?.profile" />
           </div>
-          <div class="user-data">
-            <div>
-              <div>이름:</div>
-              <span>{{ user?.name }}</span>
+          <div class="data-form">
+            <div class="user-data">
+              <div>
+                <div>이름:</div>
+                <span>{{ user?.name }}</span>
+              </div>
+              <div>
+                <div>닉네임:</div>
+                <span>{{ user?.nickname }}</span>
+              </div>
+              <div>
+                <div>성별:</div>
+                <span>{{ gender }}</span>
+              </div>
+              <div>
+                <div>나이:</div>
+                <span>{{ age }}</span>
+              </div>
+              <div>
+                <div>타수:</div>
+                <span>{{ user?.hit }}</span>
+              </div>
             </div>
             <div>
-              <div>닉네임:</div>
-              <span>{{ user?.nickname }}</span>
-            </div>
-            <div>
-              <div>성별:</div>
-              <span>{{ gender }}</span>
-            </div>
-            <div>
-              <div>나이:</div>
-              <span>{{ age }}</span>
-            </div>
-            <div>
-              <div>타수:</div>
-              <span>{{ user?.hit }}</span>
-            </div>
-            <div v-if="user?.isFollowing">
-              <button
-                type="submit"
-                class="btn btn-danger"
-                @click="
-                  TYPE === 'server'
-                    ? delFollow(user.userid)
-                    : delFollow(user.id)
-                "
-              >
-                팔로우 취소
-              </button>
-            </div>
-            <div v-else>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                @click="
-                  TYPE === 'server'
-                    ? addFollow(user.userid)
-                    : addFollow(user.id)
-                "
-              >
-                팔로우 추가
-              </button>
+              <div v-if="user?.isFollowing">
+                <button
+                  type="submit"
+                  class="btn btn-danger btn-text"
+                  @click="
+                    TYPE === 'server'
+                      ? delFollow(user.userid)
+                      : delFollow(user.id)
+                  "
+                >
+                  팔로우 취소
+                </button>
+              </div>
+              <div v-else>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-text"
+                  @click="
+                    TYPE === 'server'
+                      ? addFollow(user.userid)
+                      : addFollow(user.id)
+                  "
+                >
+                  팔로우 추가
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -134,6 +138,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.data-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
 .user-title {
   font-weight: bold;
   font-size: 1.2rem;
@@ -166,5 +176,11 @@ export default {
   position: relative;
   bottom: 0;
   margin-top: 2rem;
+}
+
+@media (max-width: 1400px) {
+  .btn-text {
+    font-size: 0.5rem;
+  }
 }
 </style>

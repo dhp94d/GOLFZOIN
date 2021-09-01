@@ -1,6 +1,6 @@
 <template>
   <router-link to="/">
-    <img src="@/assets/logo.png" />
+    <img src="@/assets/golfzoin.png" />
   </router-link>
 </template>
 

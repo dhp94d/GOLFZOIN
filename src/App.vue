@@ -21,7 +21,6 @@ import MobileFooter from '@/components/common/MobileFooter.vue';
 
 import { useAlarm } from '@/composable/alarm';
 import Alarmtransition from '@/components/common/Alarmtransition.vue';
-
 export default defineComponent({
   name: 'App',
   components: {
@@ -34,7 +33,6 @@ export default defineComponent({
     const { loadingStatus } = useLoading();
     const { alarmToastMessage, alarmShowToast, alarmToastAlertType } =
       useAlarm();
-
     onMounted(() => {
       authLoginAction();
     });

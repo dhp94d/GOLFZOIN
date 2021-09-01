@@ -85,12 +85,12 @@ export default {
     const lat = ref(
       process.env.VUE_APP_SERVER_TYPE === 'server'
         ? '37.5230059400269'
-        : userData.value.lat
+        : userData.value.lon
     );
     const lon = ref(
       process.env.VUE_APP_SERVER_TYPE === 'server'
         ? '127.054788716295 '
-        : userData.value.lon
+        : userData.value.lat
     );
 
     watch([SearchDate, SearchPNumber, SearchHit, SearchAddress.value], () => {
