@@ -139,5 +139,8 @@ li {
   .chat-nav-room {
     padding: 0;
   }
+  .preview-title-wrap {
+    display: none;
+  }
 }
 </style>

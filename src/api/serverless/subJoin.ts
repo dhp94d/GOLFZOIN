@@ -69,7 +69,7 @@ const fbJoinAcceptUser = async (data: joinIsOkDTO) => {
       .collection('users')
       .doc(data.userid)
       .collection('joinlist')
-      .doc(data.roomNo)
+      .doc(joinData.roomNo)
       .set(joinData);
 
     const resUser = await db.collection('users').doc(data.userid).get();
@@ -80,12 +80,6 @@ const fbJoinAcceptUser = async (data: joinIsOkDTO) => {
       .doc(joinData.roomNo)
       .update({
         members: arrayStore.arrayUnion(userData),
-      });
-    await db
-      .collection('join')
-      .doc(joinData.roomNo)
-      .update({
-        members: arrayStore.arrayUnion('머야대체'),
       });
     store.commit('loading/endSpinner');
   } catch (e) {}

@@ -25,6 +25,6 @@ export default {
   color: var(--default-font-color);
   letter-spacing: -0.02em;
   background: rgb(242, 243, 246);
-  height: 84vh;
+  height: 90vh;
 }
 </style>

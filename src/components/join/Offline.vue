@@ -262,6 +262,10 @@ export default {
   word-break: break-all;
   white-space: pre-line;
   padding: 0 1rem;
+  text-align: center;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
 }
 .offline-box-body {
   color: black;

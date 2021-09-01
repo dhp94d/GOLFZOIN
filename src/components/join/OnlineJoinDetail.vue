@@ -34,6 +34,7 @@
             <div class="join-member-title">참여인원</div>
             <div class="join-member-profile">
               <div
+                class="member-box"
                 v-for="member in JoinInfo.members"
                 :key="`index${member.nickname}`"
                 @mouseover="showUserInfo(member.id, member.nickname)"
@@ -226,9 +227,30 @@ export default {
   }
 }
 .join-member {
+  dispay: block;
+  overflow: scroll;
+  box-sizing: border-box;
+  line-break: auto;
+  word-break: keep-all;
   border-radius: 1rem;
   padding: 1rem;
   background-color: rgba(33, 33, 36, 0.07);
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3.5px;
+    background-color: #ced4da;
+
+    &:hover {
+      background-color: #adb5bd;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
 }
 .memeber-profile {
   display: flex;
