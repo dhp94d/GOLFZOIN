@@ -19,7 +19,6 @@ export default {
   position: relative;
   height: calc(100% - 56px);
   list-style: none;
-  overflow: hidden auto;
   background-color: #fff;
   list-style: none;
   padding: 0px;

@@ -45,7 +45,7 @@
         </div>
         <div class="footer-title">검색</div>
       </router-link>
-      <router-link to="/user/search" class="footer-tap">
+      <router-link to="/user/following" class="footer-tap">
         <div class="footer-title-container">
           <div class="icon">
             <i class="fa fa-users fa-3x" aria-hidden="true"></i>
