@@ -118,11 +118,7 @@ export default {
       positions.value = [];
       offlineJoinData.value.map((join) => {
         title.value.push(join.title);
-        if (process.env.VUE_APP_SERVER_TYPE === 'server') {
-          positions.value.push({ lat: join.lat, lon: join.lon });
-        } else {
-          positions.value.push({ lat: join.latitude, lon: join.longitude });
-        }
+        positions.value.push({ lat: join.lat, lon: join.lon });
       });
       initMap();
     };

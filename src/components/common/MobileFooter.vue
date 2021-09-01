@@ -9,6 +9,12 @@
           <router-link to="/join/offlinejoin">
             <div @click="showSearchButton">오프라인 조인</div>
           </router-link>
+          <div @click="makejoinToggle">
+            <div>조인 만들기</div>
+            <div v-if="toggle">
+              <MakeJoin @toggle="makejoinToggle"></MakeJoin>
+            </div>
+          </div>
         </div>
         <span>조인을 검색하세요</span>
         <HeaderSearchBar @toggle="showSearchButton"></HeaderSearchBar>
@@ -96,21 +102,34 @@
 <script>
 import HeaderSearchBar from '@/components/header/HeaderSearchBar.vue';
 import HeaderUserIcon from '@/components/header/HeaderUserIcon.vue';
+import MakeJoin from '@/components/join/MakeJoin.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
     HeaderSearchBar,
     HeaderUserIcon,
+    MakeJoin,
   },
   setup() {
+    const toggle = ref(false);
     const showSearch = ref(false);
     const showSearchButton = () => {
       showSearch.value = !showSearch.value;
     };
+    const makejoinToggle = () => {
+      if (toggle.value) {
+        document.querySelector('body')?.classList.remove('overflow-hidden');
+      } else {
+        document.querySelector('body')?.classList.add('overflow-hidden');
+      }
+      toggle.value = !toggle.value;
+    };
     return {
       showSearchButton,
       showSearch,
+      toggle,
+      makejoinToggle,
     };
   },
 };
@@ -199,6 +218,13 @@ export default {
   gap: 3rem;
   font-weight: bold;
   a {
+    color: gray;
+    text-decoration: none;
+    &:hover {
+      color: black;
+    }
+  }
+  div {
     color: gray;
     text-decoration: none;
     &:hover {

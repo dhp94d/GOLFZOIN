@@ -1,19 +1,29 @@
-import { fbSignup } from '@/api/serverless/auth';
+import { fbRegistJoin } from '@/api/serverless/mainJoin';
 
+//22
 const ONLINEJOINIMG = [
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Fdefault_profile.png1629109231428_250x250?alt=media&token=2a788b78-2f3b-457a-a48b-6681337d9119',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EA%B0%95%EB%8F%99%EC%9B%90.jpg1628659660404_250x250?alt=media&token=7c5d7ad1-62f7-4593-8139-94dfc717dc0a',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EA%B0%95%ED%98%B8%EB%8F%99.jpg1628659740887_250x250?alt=media&token=1c07409c-624d-4cef-bd0b-5fbb36d82dc2',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EA%B9%80%EC%88%98%ED%98%84.jpg1629110834746_250x250?alt=media&token=b50c5620-3a85-47e5-84c9-91794cf1cc97',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EA%B9%80%EC%97%B0%EC%9A%B0.jpg1629110892904_250x250?alt=media&token=05c3f107-a9b3-4a80-aa03-726201e9bd32',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EA%B9%80%EC%9A%B0%EB%B9%88.jpg1629110864572_250x250?alt=media&token=015ae8cf-5615-4c83-a9f2-120c054d7af2',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EB%B0%A9%ED%83%84%EC%86%8C%EB%85%84%EB%8B%A8.jpg1628687216642_250x250?alt=media&token=7c0560ba-e039-4889-a42b-26fc4071595a',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%95%84%EC%9D%B4%EC%9C%A0.jpg1628659628803_250x250?alt=media&token=248e34a5-bede-4d6f-80c1-952740cb933a',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%9C%A0%EC%9E%AC%EC%84%9D.jpg1628659723766_250x250?alt=media&token=9ee7ac1e-a30b-41db-829e-1852a937f81d',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%9C%A4%EC%A2%85%EC%8B%A0.jpg1629110878951_250x250?alt=media&token=ff2969a3-4ec0-4701-8ba3-b7403ab8a3a3',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%9E%84%EC%9E%AC%EB%B2%94.jpg1629110915939_250x250?alt=media&token=b204fd52-4f7b-461a-ac72-13ccdc22fbd2',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%9E%A5%EB%8F%99%EA%B6%8C.jpg1628659687064_250x250?alt=media&token=f3e277b1-5772-4964-99f3-eb0f0391cf35',
-  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2F%EC%A0%84%EC%A7%80%ED%98%84.jpg1628659759238_250x250?alt=media&token=da68b600-18f2-4a8c-842c-acd513c5fa2d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/default_profile_250x250.png?alt=media&token=7cbd3d4c-5e16-4f1d-a634-f8536c81903d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F99.jpg1630309026694_250x250?alt=media&token=1e597a61-9624-409f-9309-4593613e877c',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F88.jpg1630309019109_250x250?alt=media&token=77744d62-e342-4c52-94c8-068234db93fc',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F8.jpg1629111333636_250x250?alt=media&token=9bee0b78-9558-4dc6-b8cf-6ebcec4dc83d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F77.jpg1630309014414_250x250?alt=media&token=3ee4d1fe-4c96-4551-b70f-0912d3cea212',
+  'https://console.firebase.google.com/project/golfzoin-c7351/storage/golfzoin-c7351.appspot.com/files/~2Fjoin~2Foffline',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F6.jpg1629111369730_250x250?alt=media&token=eeeb3dc1-80d2-4389-ae97-3f59b1bb86b2',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F55.jpg1630309008422_250x250?alt=media&token=0eb8d021-e657-4479-82a8-e25d63ef6165',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/default_profile_250x250.png?alt=media&token=7cbd3d4c-5e16-4f1d-a634-f8536c81903d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F44.jpg1630309004254_250x250?alt=media&token=eefe7c77-5e2b-4ed3-ab18-b989dc803c00',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/default_profile_250x250.png?alt=media&token=7cbd3d4c-5e16-4f1d-a634-f8536c81903d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F4.jpg1629111363564_250x250?alt=media&token=861e6bb3-3c12-4eec-a6d3-77c348187df8',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F33.jpg1630309000567_250x250?alt=media&token=5702dff8-1e63-46c7-bf89-e3bbfb2fcd60',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F3.jpg1629111213504_250x250?alt=media&token=8aa3c9ad-50fe-4bf3-ac6e-25d6510b0ff3',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F22.jpg1630308996765_250x250?alt=media&token=97e18008-5195-4f70-85ac-473d2c82d89d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/default_profile_250x250.png?alt=media&token=7cbd3d4c-5e16-4f1d-a634-f8536c81903d',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F2.jpg1629111206654_250x250?alt=media&token=c3dca7d4-0811-40c6-9e76-a1421942c6ec',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F1111.jpg1630371178368_250x250?alt=media&token=79ee2ee7-0695-4e1d-ad6d-292176370036',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F11.jpg1630308991719_250x250?alt=media&token=3a9c75a4-1fef-4a68-beaf-4291cdd400aa',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F1010.jpg1630371134766_250x250?alt=media&token=b82670a5-17ff-4fb8-807e-753b8941f651',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/join%2Foffline%2F10.jpg1629111195409_250x250?alt=media&token=00f44239-feab-45a2-9a31-e9bc57c9368f',
+  'https://firebasestorage.googleapis.com/v0/b/golfzoin-c7351.appspot.com/o/default_profile_250x250.png?alt=media&token=7cbd3d4c-5e16-4f1d-a634-f8536c81903d',
 ];
 
 const ADDRESSLIST = [
@@ -51,6 +61,81 @@ const ADDRESSLIST = [
     addressName: '서울특별시 동작구 보라매로5길 43 지하1층 106-1호',
     longitude: '126.9212143',
     latitude: '37.4913988',
+  },
+  {
+    addressName: '서울특별시 서초구 방배동 1832',
+    longitude: '126.9773695',
+    latitude: '37.4829706',
+  },
+  {
+    addressName: '서울특별시 동작구 사당동 145-26',
+    longitude: '126.9773695',
+    latitude: '37.4829706',
+  },
+  {
+    addressName: '사당동 120, 동작구 서울특별시',
+    longitude: '126.9773695',
+    latitude: '37.4829706',
+  },
+  {
+    addressName: '서울특별시 강남구 역삼동 836-24',
+    longitude: '4939965,127.0439576',
+    latitude: '37.491398837',
+  },
+  {
+    addressName: '역삼동 840-8번지 지하동 1층 상준빌딩 강남구 서울특별시 KR',
+    longitude: '127.0439576',
+    latitude: '37.4939965',
+  },
+  {
+    addressName: '역삼동 840-8번지 지하동 1층 상준빌딩 강남구 서울특별시 KR',
+    longitude: '127.0439576',
+    latitude: '37.4939965',
+  },
+  {
+    addressName: '서울특별시 서초구 서초동 1322-12',
+    longitude: '127.0439576',
+    latitude: '37.4939965',
+  },
+  {
+    addressName: 'KR 서울특별시 강남구 역삼동 831-45번지 지하층 층 B03 B04호',
+    longitude: '127.0439576',
+    latitude: '37.4939965',
+  },
+  {
+    addressName: '서울특별시 강남구 역삼동 648',
+    longitude: '127.0439576',
+    latitude: '37.4939965',
+  },
+  {
+    addressName: '서울특별시 강남구 삼성동 144-1',
+    longitude: '127.0438718',
+    latitude: '37.5013509',
+  },
+  {
+    addressName: '서울특별시 서초구 서초4동 서운로 220',
+    longitude: '127.0438718',
+    latitude: '37.5013509',
+  },
+  {
+    addressName: '서울특별시 강남구 논현동 203',
+    longitude: '127.034537',
+    latitude: '37.5070485',
+  },
+  {
+    addressName: '서울특별시 서초구 잠원동 나루터로 69',
+    longitude: '127.034537',
+    latitude: '37.5070485',
+  },
+  {
+    addressName: '서울특별시 강남구 신사동 선릉로 823',
+    longitude: '127.034537',
+    latitude: '37.5070485',
+  },
+  {
+    addressName: '서울특별시 강남구 신사동 585-13 재경빌딩 지하 1층',
+    longitude: '127.034537',
+    latitude: '37.5070485',
   },
 ];
 
@@ -245,44 +330,65 @@ export const makeUser = async () => {
 };
 
 export const makeOnlinJoin = async () => {
-  for (let i = 0; i < 10; i++) {
-    let day = String(Math.ceil(Math.random() * 31)).padStart(2, '0');
+  for (let i = 0; i < 17; i++) {
+    let day = String(Math.floor(Math.random() * 10));
     let time = String(Math.ceil(Math.random() * 24)).padStart(2, '0');
     let minutes = ['10', '20', '30', '40', '50'];
     let data = {
-      body: BODYLIST[Math.floor(Math.random() * 4)],
-      date: `2021-09-${day}`,
-      hostid: 'dw1156@naver.com',
+      body: [
+        `팬분들과 함께 즐기고 싶어요!`,
+        `${UserData[i].nickname}입니다! 오랜만에 함께 즐겨요^^`,
+        `골프존 네트워크 플레이에서 만나요!`,
+        `반갑습니다~ 오랜만에 같이 칠까요?`,
+        `${UserData[i].nickname}와 함께 즐겨요!`,
+      ][Math.floor(Math.random() * 5)],
+      date: `2021-09-2${day}`,
+      hostid: UserData[i].email,
       pw: '1234',
-      thumbnail: '',
+      thumbnail: UserData[i].profile,
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
-      title: '온라인 조인 같이해요',
+      title: `안녕하세요 ${UserData[i].nickname}`,
       totalcount: '10',
       type: 'online',
     };
+    await fbRegistJoin(data);
   }
-  await fbRegistJoin(data);
 };
 
 export const makeOfflinJoin = async () => {
-  for (let i = 0; i < 10; i++) {
-    let address = ADDRESSLIST[Math.floor(Math.random() * 7)];
-    let day = String(Math.ceil(Math.random() * 31)).padStart(2, '0');
+  for (let i = 0; i < 22; i++) {
+    let day = String(Math.floor(Math.random() * 10));
     let time = String(Math.ceil(Math.random() * 24)).padStart(2, '0');
     let minutes = ['10', '20', '30', '40', '50'];
     let data = {
-      body: OFFLINETITLE[Math.floor(Math.random() * 7)],
-      date: `2021-08-${day}`,
-      latitude: address.latitude,
-      longitude: address.longitude,
-      place: address.addressName,
-      hostid: 'dw1156@naver.com',
-      thumbnail: '',
+      body: [
+        '관악구 사는분!',
+        '평균타수100타 같이쳐요',
+        '2:2로 같이 치러가실분! 얼른 신청해주세요',
+        '안녕하세요 골린이에요 ㅠㅠ 배우고싶어요',
+        '안녕하세요 함께해요',
+        '골프 알려주실분 있나요? ㅠㅠㅠ',
+        '평균타수 90! 같이 쳐요',
+      ][Math.floor(Math.random() * 7)],
+      date: `2021-09-2${day}`,
+      lat: ADDRESSLIST[i].latitude,
+      lon: ADDRESSLIST[i].longitude,
+      place: ADDRESSLIST[i].addressName,
+      hostid: UserData[Math.floor(Math.random() * 17)].email,
+      thumbnail: ONLINEJOINIMG[i],
       time: `${time}:${minutes[Math.floor(Math.random() * 5)]}`,
-      title: OFFLINETITLE[Math.floor(Math.random() * 7)],
-      totalcount: '10',
+      title: [
+        '관악구 사는분!',
+        '평균타수100타 같이쳐요',
+        '2:2로 같이 치러가실분! 얼른 신청해주세요',
+        '안녕하세요 골린이에요 ㅠㅠ 배우고싶어요',
+        '안녕하세요 함께해요',
+        '골프 알려주실분 있나요? ㅠㅠㅠ',
+        '평균타수 90! 같이 쳐요',
+      ][Math.floor(Math.random() * 7)],
+      totalcount: '8',
       type: 'offline',
     };
+    await fbRegistJoin(data);
   }
-  await fbRegistJoin(data);
 };
