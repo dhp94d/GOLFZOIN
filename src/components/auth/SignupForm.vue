@@ -86,15 +86,11 @@
             />
           </div>
 
-          <button
-            type="submit"
-            class="btn btn btn-primary auth-button"
-            :disabled="!isEmailValid || !nickname"
-          >
+          <button type="submit" class="btn btn btn-primary auth-button">
             회원 가입
           </button>
-        </form> </template
-      >process.env.VUE_APP_SEVER_TYPE
+        </form>
+      </template>
     </Modal>
   </div>
 </template>
