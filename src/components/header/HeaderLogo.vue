@@ -1,6 +1,12 @@
 <template>
   <router-link to="/">
-    <img src="@/assets/golfzoin.png" />
+    <img
+      rel="preload"
+      as="image"
+      src="@/assets/golfzoin.png"
+      style="height: 58px; width: 206px"
+      alt="profile"
+    />
   </router-link>
 </template>
 

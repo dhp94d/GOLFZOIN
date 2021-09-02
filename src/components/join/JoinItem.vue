@@ -4,7 +4,7 @@
       <OnlineJoinDetail @toggle="detailJoinToggle"></OnlineJoinDetail>
     </div>
     <div class="thumbnail" @click="updateRoomNo(roomNo)">
-      <img :src="thumbnail" />
+      <img :src="thumbnail" alt="profile" rel="preload" as="image" />
       <div class="thumbnail-title">
         <h5>{{ title }}</h5>
         <div class="thumbnail-time">

@@ -16,7 +16,12 @@
         >
           <hr />
           <div class="offline-box" @click="offlineJoinClick(offlinejoin)">
-            <img :src="offlinejoin.thumbnail" />
+            <img
+              :src="offlinejoin.thumbnail"
+              alt="profile"
+              rel="preload"
+              as="image"
+            />
             <div class="offline-box-detail">
               <div class="offline-box-gray-color">
                 {{ offlinejoin.date }}&nbsp;

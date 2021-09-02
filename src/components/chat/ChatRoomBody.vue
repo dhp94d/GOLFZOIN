@@ -17,7 +17,7 @@
         >
           <div class="template-message message-form">
             <div class="chat-room-profile">
-              <img class="profile-image" :src="message.profile" />
+              <img class="profile-image" :src="message.profile" alt="profile" />
             </div>
             <div>
               <div class="mData">{{ message.author }}</div>

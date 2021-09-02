@@ -3,6 +3,7 @@
     <div class="chat-header-profile">
       <img
         :src="chatTitleData.thumbnail ? chatTitleData.thumbnail : DEFAULT_IMG"
+        alt="profile"
       />
       <div class="main-title">
         <span>{{ chatTitleData.title }}</span>

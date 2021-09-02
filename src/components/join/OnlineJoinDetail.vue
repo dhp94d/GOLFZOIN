@@ -10,7 +10,7 @@
         <div class="join-container">
           <div class="join-info">
             <div class="join-img">
-              <img :src="JoinInfo.thumbnail" />
+              <img :src="JoinInfo.thumbnail" alt="profile" />
             </div>
             <div class="join-data">
               <div class="join-title">
@@ -40,7 +40,7 @@
                 @mouseover="showUserInfo(member.id, member.nickname)"
               >
                 <div class="memeber-profile">
-                  <img :src="member.profile" />
+                  <img :src="member.profile" alt="profile" />
                   <div class="member-name">{{ member.nickname }}</div>
                 </div>
                 <div class="user-info" v-if="showUser === member.nickname">

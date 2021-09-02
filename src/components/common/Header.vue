@@ -6,31 +6,9 @@
 
 <script>
 import HeaderMain from '@/components/header/HeaderMain.vue';
-import { ref, onMounted } from 'vue';
 export default {
   components: {
     HeaderMain,
-  },
-  setup() {
-    const scrollPosition = ref(0);
-    const screenWidth = ref(window.innerWidth);
-
-    const updateScroll = () => {
-      scrollPosition.value = window.scrollY;
-    };
-    const updateWidth = () => {
-      screenWidth.value = window.innerWidth;
-    };
-
-    onMounted(() => {
-      window.addEventListener('scroll', updateScroll);
-      window.addEventListener('resize', updateWidth);
-    });
-
-    return {
-      scrollPosition,
-      screenWidth,
-    };
   },
 };
 </script>

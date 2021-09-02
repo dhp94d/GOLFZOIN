@@ -5,7 +5,7 @@
         <div class="body-detail">
           <div>
             <div class="join-img">
-              <img :src="newImg ? newImg : DEFAULT_IMG" />
+              <img :src="newImg ? newImg : DEFAULT_IMG" alt="profile" />
             </div>
             <button class="join-profile">
               <label for="input-file">썸네일 수정</label>

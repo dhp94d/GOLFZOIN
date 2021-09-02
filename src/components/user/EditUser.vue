@@ -4,7 +4,7 @@
       <div class="user-info">
         <h4>내 정보</h4>
         <div class="user-img">
-          <img :src="newImg ? newImg : user.profile" />
+          <img :src="newImg ? newImg : user.profile" alt="profile" />
         </div>
         <button class="user-profile" width="200px">
           <label for="input-file">프로필 수정</label>

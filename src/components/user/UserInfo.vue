@@ -7,7 +7,7 @@
       <template #body>
         <div class="user-info">
           <div class="user-img">
-            <img :src="user?.profile" />
+            <img :src="user?.profile" alt="profile" />
           </div>
           <div class="data-form">
             <div class="user-data">
