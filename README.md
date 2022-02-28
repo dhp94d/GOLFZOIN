@@ -1,7 +1,7 @@
 # GOLFZOIN
 영상
+http://naver.me/FXZBtZ4N
 
-https://user-images.githubusercontent.com/68668924/155927050-7a3159b4-b7bb-4f61-95f8-aa0d0f2e9d11.mp4
 
 
 기능 소개
