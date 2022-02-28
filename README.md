@@ -1,6 +1,11 @@
 # GOLFZOIN
+영상
+
+https://user-images.githubusercontent.com/68668924/155927050-7a3159b4-b7bb-4f61-95f8-aa0d0f2e9d11.mp4
+
 
 기능 소개
+
 ![image](https://user-images.githubusercontent.com/68668924/131946401-ed7ce9d6-377c-4e1b-bec8-83204a364677.png)
 ![image](https://user-images.githubusercontent.com/68668924/131946376-40f66e0d-6026-4211-8156-85e80a7ce5ad.png)
 ![image](https://user-images.githubusercontent.com/68668924/131946424-0e7dad29-9923-4b74-a9c9-9c67ccca482c.png)
